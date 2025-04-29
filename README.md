@@ -15,9 +15,7 @@
 <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
 <img src="https://img.shields.io/badge/zustand-553830?style=for-the-badge&logo=zustand&logoColor=white">
 <!-- <img src="https://img.shields.io/badge/storybook-pink?style=for-the-badge&logo=storybook&logoColor=white"> -->
-
 </div>
-
 
 <br/>
 
