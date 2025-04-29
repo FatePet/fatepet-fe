@@ -1,0 +1,29 @@
+@import url('./reset.css');
+@import url('./variables.css');
+
+.root_container {
+  max-width: 375px;
+  height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--white);
+}
+
+@font-face {
+  font-family: 'NanumSquare';
+  src: url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body,
+button,
+textarea,
+input {
+  font-family: 'NanumSquare';
+}
+
+div {
+  box-sizing: border-box;
+}
