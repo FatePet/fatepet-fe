@@ -1,0 +1,11 @@
+*.json
+*.md
+node_modules
+*.cjs
+.github
+.gitignore
+.prettierignore
+.prettierrc
+dist
+build
+.next
