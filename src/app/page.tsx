@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import AdminLogin from './admin/login/page';
 import UserMain from './user/main/page';
+import LongInput from '@/components/inputs/LongInput';
 
 export default function Main() {
 	const pathname = usePathname();
@@ -16,6 +17,7 @@ export default function Main() {
 	return (
 		<div className='w-full h-full flex justify-center items-center'>
 			404 | Not Found
+			<LongInput/>
 		</div>
 	);
 }
