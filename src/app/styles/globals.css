@@ -1,5 +1,10 @@
 @import url('./reset.css');
 @import url('./variables.css');
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 .root_container {
 	min-width: 320px;

@@ -1,9 +1,8 @@
-import React from 'react'
+'use client';
+import React from 'react';
 
 function ViewStoreList() {
-  return (
-    <div>ViewStoreList</div>
-  )
+	return <div>ViewStoreList</div>;
 }
 
-export default ViewStoreList
+export default ViewStoreList;

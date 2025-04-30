@@ -1,9 +1,8 @@
-import React from 'react'
+'use client';
+import React from 'react';
 
 function RegisterStore() {
-  return (
-    <div>RegisterStore</div>
-  )
+	return <div>RegisterStore</div>;
 }
 
-export default RegisterStore
+export default RegisterStore;

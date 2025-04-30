@@ -1,9 +1,8 @@
-import React from 'react'
+'use client';
+import React from 'react';
 
 function UserViewStore() {
-  return (
-    <div>UserViewStore</div>
-  )
+	return <div>UserViewStore</div>;
 }
 
-export default UserViewStore
+export default UserViewStore;

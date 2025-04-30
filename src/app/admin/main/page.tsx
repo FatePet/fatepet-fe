@@ -1,9 +1,8 @@
-import React from 'react'
+'use client';
+import React from 'react';
 
 function AdminMain() {
-  return (
-    <div>AdminMain</div>
-  )
+	return <div>AdminMain</div>;
 }
 
-export default AdminMain
+export default AdminMain;

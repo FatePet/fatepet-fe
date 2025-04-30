@@ -1,9 +1,8 @@
-import React from 'react'
+'use client';
+import React from 'react';
 
 function RegisterLocation() {
-  return (
-    <div>RegisterLocation</div>
-  )
+	return <div>RegisterLocation</div>;
 }
 
-export default RegisterLocation
+export default RegisterLocation;

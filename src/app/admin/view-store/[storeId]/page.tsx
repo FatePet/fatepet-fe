@@ -1,9 +1,8 @@
-import React from 'react'
+'use client';
+import React from 'react';
 
 function AdminViewStore() {
-  return (
-    <div>AdminViewStore</div>
-  )
+	return <div>AdminViewStore</div>;
 }
 
-export default AdminViewStore
+export default AdminViewStore;

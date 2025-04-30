@@ -1,7 +1,7 @@
-// ES 모듈 방식
-export default {
+// postcss.config.js
+module.exports = {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
   },
-};
+}

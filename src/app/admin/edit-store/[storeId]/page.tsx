@@ -1,9 +1,8 @@
-import React from 'react'
+'use client';
+import React from 'react';
 
 function EditStore() {
-  return (
-    <div>EditStore</div>
-  )
+	return <div>EditStore</div>;
 }
 
-export default EditStore
+export default EditStore;

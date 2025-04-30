@@ -1,9 +1,8 @@
-import React from 'react'
+'use client';
+import React from 'react';
 
 function UserMain() {
-  return (
-    <div>UserMain</div>
-  )
+	return <div>UserMain</div>;
 }
 
-export default UserMain
+export default UserMain;
