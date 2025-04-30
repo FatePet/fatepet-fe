@@ -1,4 +1,10 @@
 /* 색상 변수 */
 :root{
-    
+    --p-black: #222;
+    --gray-middle: #838383;
+    --p-blue: #3B48FF;
+    --gray-lite: #D9D9D9;
+    --p-blue-lite: #E7E9FF;
+    --p-red: #FF5454;
+
 }
