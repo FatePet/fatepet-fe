@@ -6,10 +6,9 @@ interface Props {
 }
 
 function BigButton({ buttonText, handleClick }: Props) {
-	const bgColor = buttonText === '로그인' ? 'bg-p-black' : 'bg-black';
 	return (
 		<button
-			className={`w-full h-[50px] rounded-[4px] text-white font-bold text-[20px] ${bgColor}`}
+			className='w-full h-[50px] rounded-[4px] text-white font-bold text-[20px] cursor-pointer bg-p-black'
 			onClick={handleClick}
 		>
 			{buttonText}

@@ -6,6 +6,16 @@ import UserMain from './user/main/page';
 import LongInput from '@/components/inputs/LongInput';
 import { useState } from 'react';
 import BigButton from '@/components/buttons/BigButton';
+import Image from 'next/image';
+import ModalButton from '@/components/buttons/ModalButton';
+import RegisterCostButton from '@/components/buttons/RegisterCostButton';
+import DeleteButton from '@/components/buttons/DeleteButton';
+import RoundedButton from '@/components/buttons/RoundedButton';
+import CompleteButton from '@/components/buttons/CompleteButton';
+import { MiniButton } from '@/components/buttons/MiniButton';
+import TextArea from '@/components/inputs/TextArea';
+import Tag from '@/components/tag/Tag';
+import StartConsultButton from '@/components/buttons/StartConsultButton';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -15,6 +25,11 @@ export default function Main() {
 		const trimmedKeyword = e.target.value.trim();
 		setInputData(trimmedKeyword);
 	};
+	const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const trimmedKeyword = e.target.value.trim();
+		setInputData(trimmedKeyword);
+	};
+
 	// 끝
 	const pathname = usePathname();
 	if (pathname.startsWith('/admin')) {
@@ -25,13 +40,14 @@ export default function Main() {
 	}
 
 	return (
-		<div className='w-full h-full flex flex-col justify-center items-center gap-[20px]'>
+		<div className='w-full h-full flex flex-col justify-center items-center gap-[20px] overflow-scroll py-[20px]'>
 			<div>활성화</div>
 			<LongInput
 				inputData={inputData}
 				onChange={handleInputChange}
 				placeHolder={placeHolder}
 				disabled={false}
+				errorMsg='형식이 올바르지 않습니다.'
 			/>
 			<div>비활성화</div>
 			<LongInput
@@ -39,8 +55,9 @@ export default function Main() {
 				onChange={handleInputChange}
 				placeHolder={placeHolder}
 				disabled={true}
+				errorMsg=''
 			/>
-			<div>큰 버튼</div>
+			<div>BigButton</div>
 			<BigButton
 				buttonText='로그인'
 				handleClick={() => {
@@ -52,6 +69,183 @@ export default function Main() {
 				handleClick={() => {
 					return;
 				}}
+			/>
+			<div>등록 버튼</div>
+			<Image
+				src='/icons/registerIcon.svg'
+				width={80}
+				height={80}
+				alt='등록 버튼'
+				className='cursor-pointer'
+				onClick={() => {
+					return;
+				}}
+			/>
+			<div>공통 모달 버튼</div>
+			<div className='flex gap-[20px]'>
+				<ModalButton
+					buttonText='확인'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<ModalButton
+					buttonText='취소'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<ModalButton
+					buttonText='계속 입력'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>RegisterCostButton</div>
+			<div className='flex gap-[20px]'>
+				<RegisterCostButton
+					buttonText='직접 입력'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={true}
+				/>
+				<RegisterCostButton
+					buttonText='무료'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+				<RegisterCostButton
+					buttonText='직접 문의'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+			</div>
+			<div>DeleteButton</div>
+			<div className='flex gap-[20px]'>
+				<DeleteButton
+					color='red'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<DeleteButton
+					color='black'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>RoundedButton</div>
+			<div className='flex gap-[20px]'>
+				<RoundedButton
+					buttonText='내 위치 설정'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<RoundedButton
+					buttonText='거리순'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>CompleteButton</div>
+			<div className='flex gap-[20px]'>
+				<CompleteButton
+					size='slim'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<CompleteButton
+					size='tall'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>MiniButton</div>
+			<div className='flex gap-[20px]'>
+				<MiniButton
+					buttonText='장묘'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={true}
+				/>
+				<MiniButton
+					buttonText='브리더'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+				<MiniButton
+					buttonText='악세사리'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+				<MiniButton
+					buttonText='행동상담'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+			</div>
+			<div className='flex gap-[20px]'>
+				<MiniButton
+					buttonText='기본항목'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={true}
+				/>
+				<MiniButton
+					buttonText='옵션항목'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+				<MiniButton
+					buttonText='패키지'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+
+				<MiniButton
+					buttonText='로그아웃'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>TextArea</div>
+			<TextArea inputData={inputData} onChange={handleTextAreaChange} />
+			<div>Tag</div>
+			<div className='flex gap-[20px]'>
+				<Tag tagText='장묘' />
+				<Tag tagText='브리더' />
+				<Tag tagText='악세사리' />
+			</div>
+			<div>StartConsultButton</div>
+			<StartConsultButton
+				handleClick={() => {
+					return;
+				}}
+				salePercentageNum={5}
 			/>
 		</div>
 	);
