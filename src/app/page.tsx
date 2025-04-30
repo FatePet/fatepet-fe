@@ -5,6 +5,7 @@ import AdminLogin from './admin/login/page';
 import UserMain from './user/main/page';
 import LongInput from '@/components/inputs/LongInput';
 import { useState } from 'react';
+import BigButton from '@/components/buttons/BigButton';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -38,6 +39,19 @@ export default function Main() {
 				onChange={handleInputChange}
 				placeHolder={placeHolder}
 				disabled={true}
+			/>
+			<div>큰 버튼</div>
+			<BigButton
+				buttonText='로그인'
+				handleClick={() => {
+					return;
+				}}
+			/>
+			<BigButton
+				buttonText='사진 업로드'
+				handleClick={() => {
+					return;
+				}}
 			/>
 		</div>
 	);

@@ -5,16 +5,17 @@ module.exports = {
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				'p-black': 'var(--p-black)',
+				'p-blue': 'var(--p-blue)',
+				'gray-lite': 'var(--gray-lite)',
+				'gray-middle': 'var(--gray-middle)',
+				'p-blue-lite': 'var(--p-blue-lite)',
+				'p-red': 'var(--p-red)',
+			},
+		},
 	},
-	colors: {
-		'p-black': 'var(--p-black)',
-		'p-white': 'var(--p-white)',
-		'p-blue': 'var(--p-blue)',
-		'gray-lite': 'var(--gray-lite)',
-		'gray-middle': 'var(--gray-middle)',
-		'p-blue-lite': 'var(--p-blue-lite)',
-		'p-red': 'var(--p-red)',
-	},
+
 	plugins: [],
 };

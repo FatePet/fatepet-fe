@@ -12,7 +12,7 @@ function LongInput({ inputData, disabled, placeHolder, onChange }: Props) {
 	return (
 		<input
 			className={`w-full px-[14px] font-medium text-[13px] h-[38px] rounded-[4px] focus:outline-none border ${
-				disabled ? 'border-[#AEAEAE] bg-[#D9D9D9]' : 'border-p-black bg-p-white'
+				disabled ? 'border-[#AEAEAE] bg-[#D9D9D9]' : 'border-black bg-white'
 			}`}
 			value={inputData}
 			placeholder={placeHolder}
