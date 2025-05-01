@@ -16,10 +16,17 @@ import { MiniButton } from '@/components/buttons/MiniButton';
 import TextArea from '@/components/inputs/TextArea';
 import Tag from '@/components/tag/Tag';
 import StartConsultButton from '@/components/buttons/StartConsultButton';
+import ModalLayout from '@/components/modals/ModalLayout';
+import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
+import AlertModal from '@/components/modals/AlertModal';
 
 export default function Main() {
 	// 공통 컴포넌트
 	const [inputData, setInputData] = useState<string>('');
+	const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
+		useState<boolean>(false);
+	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
+
 	const placeHolder = 'Place Holder';
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const trimmedKeyword = e.target.value.trim();
@@ -90,7 +97,7 @@ export default function Main() {
 					}}
 				/>
 				<ModalButton
-					buttonText='취소'
+					buttonText='등록 취소'
 					handleClick={() => {
 						return;
 					}}
@@ -247,6 +254,34 @@ export default function Main() {
 				}}
 				salePercentageNum={5}
 			/>
+			<div>CancelConfirmModal</div>
+			<button
+				className='bg-p-black p-[20px] text-white rounded-[15px]'
+				onClick={() => setIsCancelConfirmModalOpen(true)}
+			>
+				CancelConfirmModal
+			</button>
+			{isCancelConfirmModalOpen && (
+				<ModalLayout setIsModalOpen={setIsCancelConfirmModalOpen}>
+					<CancelConfirmModal
+						modalConfirmText={`입력하신 정보가 저장되지 않았어요.\n업체 등록을 취소할까요?`}
+						handleLeftButtonClick={() => setIsCancelConfirmModalOpen(false)}
+						handleRightButtonClick={() => setIsCancelConfirmModalOpen(false)}
+					/>
+				</ModalLayout>
+			)}
+			<div>AlertModal</div>
+			<button
+				className='bg-p-black p-[20px] text-white rounded-[15px]'
+				onClick={() => setIsAlertModalOpen(true)}
+			>
+				AlertModal
+			</button>
+			{isAlertModalOpen && (
+				<ModalLayout setIsModalOpen={setIsAlertModalOpen}>
+					<AlertModal modalConfirmText='필수 항목을 모두 입력해 주세요.' setIsModalOpen={setIsAlertModalOpen}/>
+				</ModalLayout>
+			)}
 		</div>
 	);
 }
