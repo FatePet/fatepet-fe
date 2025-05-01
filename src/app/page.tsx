@@ -19,6 +19,9 @@ import StartConsultButton from '@/components/buttons/StartConsultButton';
 import ModalLayout from '@/components/modals/ModalLayout';
 import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
 import AlertModal from '@/components/modals/AlertModal';
+import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
+import HeaderWithRightbutton from '@/components/headers/HeaderWithRightbutton';
+import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -166,13 +169,13 @@ export default function Main() {
 			<div>CompleteButton</div>
 			<div className='flex gap-[20px]'>
 				<CompleteButton
-					size='slim'
+					size='small'
 					handleClick={() => {
 						return;
 					}}
 				/>
 				<CompleteButton
-					size='tall'
+					size='big'
 					handleClick={() => {
 						return;
 					}}
@@ -279,9 +282,43 @@ export default function Main() {
 			</button>
 			{isAlertModalOpen && (
 				<ModalLayout setIsModalOpen={setIsAlertModalOpen}>
-					<AlertModal modalConfirmText='필수 항목을 모두 입력해 주세요.' setIsModalOpen={setIsAlertModalOpen}/>
+					<AlertModal
+						modalConfirmText='필수 항목을 모두 입력해 주세요.'
+						setIsModalOpen={setIsAlertModalOpen}
+					/>
 				</ModalLayout>
 			)}
+			<div>HeaderWithBackArrow</div>
+			<HeaderWithBackArrow
+				headerTitle='장묘'
+				handleBackArrowClick={() => {
+					return;
+				}}
+				hasRightConfirmButton={false}
+			/>
+			<HeaderWithBackArrow
+				headerTitle='업체 등록'
+				handleBackArrowClick={() => {
+					return;
+				}}
+				hasRightConfirmButton={true}
+				handleConfirmButtonClick={() => {
+					return;
+				}}
+			/>
+			<div>HeaderWithRightButton</div>
+			<div>Admin Main</div>
+			<HeaderWithRightbutton
+				type='admin'
+				headerTitle='내 업체'
+				handleButtonClick={() => {
+					return;
+				}}
+			/>
+			<div>User Main</div>
+			<HeaderWithRightbutton type="user" headerTitle="내 위치" handleButtonClick={() => { return }} />
+			<div>HeaderWithOnlyText</div>
+			<HeaderWithOnlyText headerTitle='내 업체'/>
 		</div>
 	);
 }
