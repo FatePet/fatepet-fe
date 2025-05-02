@@ -1,103 +1,324 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { usePathname } from 'next/navigation';
+import AdminLogin from './admin/login/page';
+import UserMain from './user/main/page';
+import LongInput from '@/components/inputs/LongInput';
+import { useState } from 'react';
+import BigButton from '@/components/buttons/BigButton';
+import Image from 'next/image';
+import ModalButton from '@/components/buttons/ModalButton';
+import RegisterCostButton from '@/components/buttons/RegisterCostButton';
+import DeleteButton from '@/components/buttons/DeleteButton';
+import RoundedButton from '@/components/buttons/RoundedButton';
+import CompleteButton from '@/components/buttons/CompleteButton';
+import { MiniButton } from '@/components/buttons/MiniButton';
+import TextArea from '@/components/inputs/TextArea';
+import Tag from '@/components/tag/Tag';
+import StartConsultButton from '@/components/buttons/StartConsultButton';
+import ModalLayout from '@/components/modals/ModalLayout';
+import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
+import AlertModal from '@/components/modals/AlertModal';
+import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
+import HeaderWithRightbutton from '@/components/headers/HeaderWithRightbutton';
+import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+export default function Main() {
+	// 공통 컴포넌트
+	const [inputData, setInputData] = useState<string>('');
+	const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
+		useState<boolean>(false);
+	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
+
+	const placeHolder = 'Place Holder';
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const trimmedKeyword = e.target.value.trim();
+		setInputData(trimmedKeyword);
+	};
+	const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const trimmedKeyword = e.target.value.trim();
+		setInputData(trimmedKeyword);
+	};
+
+	// 끝
+	const pathname = usePathname();
+	if (pathname.startsWith('/admin')) {
+		return <AdminLogin />;
+	}
+	if (pathname.startsWith('/user')) {
+		return <UserMain />;
+	}
+
+	return (
+		<div className='w-full h-full flex flex-col justify-center items-center gap-[20px] overflow-scroll py-[20px]'>
+			<div>활성화</div>
+			<LongInput
+				inputData={inputData}
+				onChange={handleInputChange}
+				placeHolder={placeHolder}
+				disabled={false}
+				errorMsg='형식이 올바르지 않습니다.'
+			/>
+			<div>비활성화</div>
+			<LongInput
+				inputData={inputData}
+				onChange={handleInputChange}
+				placeHolder={placeHolder}
+				disabled={true}
+				errorMsg=''
+			/>
+			<div>BigButton</div>
+			<BigButton
+				buttonText='로그인'
+				handleClick={() => {
+					return;
+				}}
+			/>
+			<BigButton
+				buttonText='사진 업로드'
+				handleClick={() => {
+					return;
+				}}
+			/>
+			<div>등록 버튼</div>
+			<Image
+				src='/icons/registerIcon.svg'
+				width={80}
+				height={80}
+				alt='등록 버튼'
+				className='cursor-pointer'
+				onClick={() => {
+					return;
+				}}
+			/>
+			<div>공통 모달 버튼</div>
+			<div className='flex gap-[20px]'>
+				<ModalButton
+					buttonText='확인'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<ModalButton
+					buttonText='등록 취소'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<ModalButton
+					buttonText='계속 입력'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>RegisterCostButton</div>
+			<div className='flex gap-[20px]'>
+				<RegisterCostButton
+					buttonText='직접 입력'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={true}
+				/>
+				<RegisterCostButton
+					buttonText='무료'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+				<RegisterCostButton
+					buttonText='직접 문의'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+			</div>
+			<div>DeleteButton</div>
+			<div className='flex gap-[20px]'>
+				<DeleteButton
+					color='red'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<DeleteButton
+					color='black'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>RoundedButton</div>
+			<div className='flex gap-[20px]'>
+				<RoundedButton
+					buttonText='내 위치 설정'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<RoundedButton
+					buttonText='거리순'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>CompleteButton</div>
+			<div className='flex gap-[20px]'>
+				<CompleteButton
+					size='small'
+					handleClick={() => {
+						return;
+					}}
+				/>
+				<CompleteButton
+					size='big'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>MiniButton</div>
+			<div className='flex gap-[20px]'>
+				<MiniButton
+					buttonText='장묘'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={true}
+				/>
+				<MiniButton
+					buttonText='브리더'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+				<MiniButton
+					buttonText='악세사리'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+				<MiniButton
+					buttonText='행동상담'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+			</div>
+			<div className='flex gap-[20px]'>
+				<MiniButton
+					buttonText='기본항목'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={true}
+				/>
+				<MiniButton
+					buttonText='옵션항목'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+				<MiniButton
+					buttonText='패키지'
+					handleClick={() => {
+						return;
+					}}
+					isClicked={false}
+				/>
+
+				<MiniButton
+					buttonText='로그아웃'
+					handleClick={() => {
+						return;
+					}}
+				/>
+			</div>
+			<div>TextArea</div>
+			<TextArea inputData={inputData} onChange={handleTextAreaChange} />
+			<div>Tag</div>
+			<div className='flex gap-[20px]'>
+				<Tag tagText='장묘' />
+				<Tag tagText='브리더' />
+				<Tag tagText='악세사리' />
+			</div>
+			<div>StartConsultButton</div>
+			<StartConsultButton
+				handleClick={() => {
+					return;
+				}}
+				salePercentageNum={5}
+			/>
+			<div>CancelConfirmModal</div>
+			<button
+				className='bg-p-black p-[20px] text-white rounded-[15px]'
+				onClick={() => setIsCancelConfirmModalOpen(true)}
+			>
+				CancelConfirmModal
+			</button>
+			{isCancelConfirmModalOpen && (
+				<ModalLayout setIsModalOpen={setIsCancelConfirmModalOpen}>
+					<CancelConfirmModal
+						modalConfirmText={`입력하신 정보가 저장되지 않았어요.\n업체 등록을 취소할까요?`}
+						handleLeftButtonClick={() => setIsCancelConfirmModalOpen(false)}
+						handleRightButtonClick={() => setIsCancelConfirmModalOpen(false)}
+					/>
+				</ModalLayout>
+			)}
+			<div>AlertModal</div>
+			<button
+				className='bg-p-black p-[20px] text-white rounded-[15px]'
+				onClick={() => setIsAlertModalOpen(true)}
+			>
+				AlertModal
+			</button>
+			{isAlertModalOpen && (
+				<ModalLayout setIsModalOpen={setIsAlertModalOpen}>
+					<AlertModal
+						modalConfirmText='필수 항목을 모두 입력해 주세요.'
+						setIsModalOpen={setIsAlertModalOpen}
+					/>
+				</ModalLayout>
+			)}
+			<div>HeaderWithBackArrow</div>
+			<HeaderWithBackArrow
+				headerTitle='장묘'
+				handleBackArrowClick={() => {
+					return;
+				}}
+				hasRightConfirmButton={false}
+			/>
+			<HeaderWithBackArrow
+				headerTitle='업체 등록'
+				handleBackArrowClick={() => {
+					return;
+				}}
+				hasRightConfirmButton={true}
+				handleConfirmButtonClick={() => {
+					return;
+				}}
+			/>
+			<div>HeaderWithRightButton</div>
+			<div>Admin Main</div>
+			<HeaderWithRightbutton
+				type='admin'
+				headerTitle='내 업체'
+				handleButtonClick={() => {
+					return;
+				}}
+			/>
+			<div>User Main</div>
+			<HeaderWithRightbutton type="user" headerTitle="내 위치" handleButtonClick={() => { return }} />
+			<div>HeaderWithOnlyText</div>
+			<HeaderWithOnlyText headerTitle='내 업체'/>
+		</div>
+	);
 }
