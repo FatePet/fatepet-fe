@@ -1,10 +1,9 @@
 'use client';
 import LongInput from '@/components/inputs/LongInput';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import BigButton from '@/components/buttons/BigButton';
 import { useRouter } from 'next/navigation';
-import { useUserInfoStore } from '@/store/useLoginStore';
 
 function AdminLogin() {
 	// 아이디 입력폼 컴포넌트
@@ -25,7 +24,6 @@ function AdminLogin() {
 	const router = useRouter();
 	const [loginErr, setLoginErr] = useState<string>('');
 	const [body, setBody] = useState<IPostLoginResquestType>({ username: '', password: '' });
-	const setUser = useUserInfoStore((state) => state.setUser);
 
 	// 테스트 로그인용 유저 => id: admin pw: 1234
 	const [isMount, setIsMount] = useState(false);
@@ -39,12 +37,6 @@ function AdminLogin() {
 		}
 
 		if (body.username === "admin" && body.password === "1234") {
-			setUser({
-				userId: idInputData,
-				// 로그인 시 서버에서 username에 대응되는 name을 받아와 대입
-				name: 'admin',
-				userRole: { userRole: "ADMIN" },
-			});
 			setLoginErr('');
 			router.push("/admin/main");
 		} else {
