@@ -1,11 +1,8 @@
 'use client';
 import LongInput from '@/components/inputs/LongInput';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import BigButton from '@/components/buttons/BigButton';
-import { useMutation } from '@tanstack/react-query';
-import api from '@/_lib/fetcher';
-import { IPostLoginResquestType, IPostLoginResponseType } from '@/types/LoginTypes';
 import { useRouter } from 'next/navigation';
 import { useUserInfoStore } from '@/store/useLoginStore';
 
@@ -29,30 +26,19 @@ function AdminLogin() {
 	const [loginErr, setLoginErr] = useState<string>('');
 	const [body, setBody] = useState<IPostLoginResquestType>({ username: '', password: '' });
 	const setUser = useUserInfoStore((state) => state.setUser);
-	const handleLogin = useMutation({
-		mutationFn: () => api.post<IPostLoginResquestType, IPostLoginResponseType>({
-			// 로그인 api로 변경
-			endpoint: '',
-			body: body,
-		}),
-		onSuccess: (data) => {
-			// api 요청 성공 시 로그인 로직
-			console.log(data);
-		},
-		onError: (err: unknown) => {
-			// api 요청 실패 시 처리
-			console.log(err);
-		}
-	});
-	const handleSubmit = () => {
-		setBody({ username: idInputData, password: pwInputData });
-		handleLogin.mutate();
-	};
 
-	// 테스트 로그인용 유저, handleTestSubmit 함수도 테스트용이므로 백엔드 연결시 handleLogin 함수에 새로 작성
-	const testUser = { username: "admin", password: "1234" };
+	// 테스트 로그인용 유저 => id: admin pw: 1234
+	const [isMount, setIsMount] = useState(false);
 	const handleTestSubmit = () => {
-		if (idInputData === "admin" && pwInputData === "1234") {
+		setBody({ username: idInputData, password: pwInputData })
+	};
+	useEffect(() => {
+		if(!isMount) {
+			setIsMount(true)
+			return;
+		}
+
+		if (body.username === "admin" && body.password === "1234") {
 			setUser({
 				userId: idInputData,
 				// 로그인 시 서버에서 username에 대응되는 name을 받아와 대입
@@ -64,7 +50,7 @@ function AdminLogin() {
 		} else {
 			setLoginErr('아이디 또는 비밀번호가 잘못되었습니다.');
 		};
-	};
+	}, [body])
 
 	return <div>
 		<div className='flex flex-col justify-center items-center h-[50vh]'>
@@ -101,7 +87,6 @@ function AdminLogin() {
 			<div>
 				<BigButton
 					buttonText='로그인'
-					// 로그인 로직 구현 시 handleSubmit 함수로 작성
 					handleClick={handleTestSubmit}
 				/>
 			</div>

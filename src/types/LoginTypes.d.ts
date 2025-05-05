@@ -5,5 +5,3 @@ interface IPostLoginResquestType {
 interface IPostLoginResponseType {
     success: boolean;
 };
-
-export type { IPostLoginResquestType, IPostLoginResponseType };
