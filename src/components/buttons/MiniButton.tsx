@@ -6,12 +6,8 @@ interface Props {
 	isClicked?: boolean;
 }
 
-export const MiniButton = ({
-	buttonText,
-	handleClick,
-	isClicked,
-}: Props) => {
-	let className = `font-bold text-[14px] rounded-[4px] min-w-[65px] h-[30px] border border-black`;
+export const MiniButton = ({ buttonText, handleClick, isClicked }: Props) => {
+	let className = `font-bold text-[14px] rounded-[4px] px-[20px] min-w-[65px] h-[30px] border border-black `;
 	if (buttonText === '로그아웃') {
 		className += ' text-white bg-p-black';
 	} else {
