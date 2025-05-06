@@ -20,7 +20,11 @@ function MoreInfoArea() {
 				/>
 			</div>
 			<div>
-				<TextArea inputData={moreInfo} onChange={onTextAreaChange} />
+				<TextArea
+					type='more'
+					inputData={moreInfo}
+					onChange={onTextAreaChange}
+				/>
 			</div>
 		</div>
 	);

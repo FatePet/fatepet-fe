@@ -88,6 +88,7 @@ function ServiceCard() {
 				<div className={divClass}>
 					<p>서비스 설명</p>
 					<TextArea
+						type='service'
 						inputData={serviceInfo}
 						onChange={(e) => onTextAreaChange(e, 'info')}
 					/>
@@ -116,6 +117,7 @@ function ServiceCard() {
 						))}
 					</div>
 					<TextArea
+						type='price'
 						inputData={servicePriceInfo}
 						onChange={(e) => onTextAreaChange(e, 'price')}
 					/>
