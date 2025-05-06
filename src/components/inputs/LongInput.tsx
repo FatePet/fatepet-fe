@@ -7,6 +7,7 @@ interface Props {
 	placeHolder?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	errorMsg: string;
+	inputType?: string;
 }
 
 function LongInput({
@@ -15,6 +16,7 @@ function LongInput({
 	placeHolder,
 	onChange,
 	errorMsg,
+	inputType,
 }: Props) {
 	return (
 		<div className='w-full flex flex-col gap-[2px]'>
@@ -26,6 +28,7 @@ function LongInput({
 				placeholder={placeHolder}
 				onChange={onChange}
 				disabled={disabled}
+				type={inputType}
 			/>
 			<div className='text-[#FF0000] font-bold text-[12px]'>{errorMsg}</div>
 		</div>
