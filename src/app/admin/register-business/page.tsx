@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import ServiceInfoArea from './_components/ServiceInfoArea';
 import MoreInfoArea from './_components/MoreInfoArea';
-import CompanyInfoArea from './_components/CompanyInfoArea';
+import CompanyInfoArea from './_components/BusinessInfoArea';
 
-function RegisterStore() {
+function RegisterBusiness() {
 	const router = useRouter();
 
 	const areaNameClass = 'font-bold text-[14px] text-gray-middle mt-[10px]';
@@ -23,7 +23,7 @@ function RegisterStore() {
 				}}
 			/>
 			<div className='flex flex-col gap-[10px]'>
-				<div className='STORE-INFO'>
+				<div className='BUSINESS-INFO'>
 					<p className={areaNameClass}>업체 정보</p>
 					<div className={borderClass} />
 					<CompanyInfoArea />
@@ -44,4 +44,4 @@ function RegisterStore() {
 	);
 }
 
-export default RegisterStore;
+export default RegisterBusiness;
