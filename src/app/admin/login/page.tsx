@@ -21,14 +21,12 @@ function AdminLogin() {
 	};
 
 	// 로그인 버튼 컴포넌트
-	interface Props extends IPostLoginResquestType {};
-	
 	const router = useRouter();
 	const [loginErr, setLoginErr] = useState<string>('');
-	const [body, setBody] = useState<Props>({ username: '', password: '' });
+	const [body, setBody] = useState<IPostLoginResquestType>({ username: '', password: '' });
 
 	// 테스트 로그인용 유저 => id: admin pw: 1234
-	const [isMount, setIsMount] = useState(false);
+	const [isMount, setIsMount] = useState<boolean>(false);
 	const handleTestSubmit = () => {
 		setBody({ username: idInputData, password: pwInputData })
 	};
