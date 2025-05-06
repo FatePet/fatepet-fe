@@ -108,6 +108,7 @@ function ServiceCard() {
 					<div className='flex gap-[10px]'>
 						{servicePriceTypes.map((price) => (
 							<MiniButton
+								key={price.priceType}
 								buttonText={price.priceType}
 								handleClick={() => handlePriceTypeClick(price.priceType)}
 								isClicked={servicePrice === price.priceType}
