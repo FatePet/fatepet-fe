@@ -11,7 +11,10 @@ function ServiceInfoArea() {
 				*최소 1개 이상의 서비스를 등록해 주세요
 			</p>
 			<ServiceCard />
-			<div>
+			<div className='relative'>
+				<div className='absolute w-[22px] h-[18px] bg-p-blue text-white flex justify-center items-center rounded-[4px] top-[15px] right-[170px]'>
+					{serviceCount}
+				</div>
 				<BigButton
 					buttonText='서비스 추가'
 					handleClick={() => {
