@@ -15,7 +15,7 @@ function HeaderWithBackArrow({
 	handleConfirmButtonClick,
 }: Props) {
 	return (
-		<div className='w-full h-[51px] flex justify-between items-center relative text-black bg-white'>
+		<div className='w-full h-[51px] flex items-center relative text-black bg-white'>
 			<img
 				src='/images/backArrow.png'
 				width={22}
@@ -23,11 +23,14 @@ function HeaderWithBackArrow({
 				alt='뒤로가기버튼'
 				onClick={handleBackArrowClick}
 			/>
-			<div className='absolute left-1/2 transform -translate-x-1/2 text-[20px] font-black'>
-				{headerTitle}
-			</div>
+			<div className='text-[20px] font-black ml-[15px]'>{headerTitle}</div>
 			{hasRightConfirmButton && (
-				<CompleteButton size='small' handleClick={handleConfirmButtonClick!} />
+				<div className='ml-auto'>
+					<CompleteButton
+						size='small'
+						handleClick={handleConfirmButtonClick!}
+					/>
+				</div>
 			)}
 		</div>
 	);
