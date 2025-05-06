@@ -23,18 +23,18 @@ function RegisterBusiness() {
 				}}
 			/>
 			<div className='flex flex-col gap-[10px]'>
-				<div className='BUSINESS-INFO'>
+				<div>
 					<p className={areaNameClass}>업체 정보</p>
 					<div className={borderClass} />
 					<CompanyInfoArea />
 				</div>
-				<div className='SERVICE-INFO'>
+				<div>
 					<p className={`${areaNameClass} mt-[50px]`}>서비스 정보</p>
 					<div className={borderClass} />
 
 					<ServiceInfoArea />
 				</div>
-				<div className='MORE-INFO'>
+				<div>
 					<p className={`${areaNameClass} mt-[50px]`}>기타 정보</p>
 					<div className={borderClass} />
 					<MoreInfoArea />
