@@ -2,9 +2,9 @@
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import StoreInfoArea from './_components/CompanyInfoArea';
 import ServiceInfoArea from './_components/ServiceInfoArea';
 import MoreInfoArea from './_components/MoreInfoArea';
+import CompanyInfoArea from './_components/CompanyInfoArea';
 
 function RegisterStore() {
 	const router = useRouter();
@@ -26,7 +26,7 @@ function RegisterStore() {
 				<div className='STORE-INFO'>
 					<p className={areaNameClass}>업체 정보</p>
 					<div className={borderClass} />
-					<StoreInfoArea />
+					<CompanyInfoArea />
 				</div>
 				<div className='SERVICE-INFO'>
 					<p className={`${areaNameClass} mt-[50px]`}>서비스 정보</p>

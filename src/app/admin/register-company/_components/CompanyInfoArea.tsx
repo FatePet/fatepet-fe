@@ -6,14 +6,14 @@ import React, { useState } from 'react';
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
-function StoreInfoArea() {
-	const [storeName, setStoreName] = useState<string>('');
+function CompanyInfoArea() {
+	const [companyName, setCompanyName] = useState<string>('');
 	const [category, setCategory] = useState<string>('장묘');
 	const [businessHours, setBusinessHours] = useState<string>('');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 
-	const storeCategory = [
+	const companyCategory = [
 		{
 			category: '장묘',
 		},
@@ -38,7 +38,7 @@ function StoreInfoArea() {
 	) => {
 		switch (type) {
 			case '업체명':
-				setStoreName(e.target.value);
+				setCompanyName(e.target.value);
 				break;
 			case '운영시간':
 				setBusinessHours(e.target.value);
@@ -59,7 +59,7 @@ function StoreInfoArea() {
 					업체명 <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={storeName}
+					inputData={companyName}
 					disabled={false}
 					errorMsg=''
 					placeHolder='예시) (주)페이트펫'
@@ -71,12 +71,12 @@ function StoreInfoArea() {
 					업체 구분 <span className={requiredClass}>*</span>
 				</p>
 				<div className='flex items-center gap-[10px]'>
-					{storeCategory.map((store) => (
+					{companyCategory.map((company) => (
 						<MiniButton
-							key={store.category}
-							buttonText={store.category}
-							handleClick={() => handleCategoryClick(store.category)}
-							isClicked={category === store.category}
+							key={company.category}
+							buttonText={company.category}
+							handleClick={() => handleCategoryClick(company.category)}
+							isClicked={category === company.category}
 						/>
 					))}
 				</div>
@@ -143,4 +143,4 @@ function StoreInfoArea() {
 	);
 }
 
-export default StoreInfoArea;
+export default CompanyInfoArea;
