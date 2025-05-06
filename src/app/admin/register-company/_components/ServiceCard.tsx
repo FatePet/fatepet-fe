@@ -53,7 +53,7 @@ function ServiceCard() {
 	};
 
 	return (
-		<div className='w-[100%] rounded-[12px] border-1 border-p-blue-lite'>
+		<div className='w-[100%] rounded-[12px] border border-p-blue-lite'>
 			<div className='bg-p-black rounded-t-[12px] h-[50px] min-w-[343px] flex items-center pl-[10px]'>
 				<p className='text-white text-[20px] font-bold'>서비스 1</p>
 			</div>
