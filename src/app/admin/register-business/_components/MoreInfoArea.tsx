@@ -30,6 +30,7 @@ function MoreInfoArea() {
 					</div>
 				)}
 				<ImageUploadButton
+					type="more"
 					imageFile={imageFile}
 					setImageFile={setImageFile}
 					setImgPreview={setImgPreview}
