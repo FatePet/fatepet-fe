@@ -15,10 +15,10 @@ function ServiceCard() {
 	const [serviceInfo, setServiceInfo] = useState<string>('');
 	const [servicePrice, setServicePrice] = useState<string>('직접입력');
 	const [servicePriceInfo, setServicePriceInfo] = useState<string>('');
-	const [serviceImgFile, setServiceImgFile] = useState<
-		string[] | File[] | null
-	>(null);
-	const [serviceImgPreview, setServiceImgPreview] = useState<string[] | null>(
+	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
+		null,
+	);
+	const [serviceImgPreview, setServiceImgPreview] = useState<string | null>(
 		null,
 	);
 
