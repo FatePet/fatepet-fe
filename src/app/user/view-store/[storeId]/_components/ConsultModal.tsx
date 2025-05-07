@@ -101,7 +101,7 @@ function ConsultModal({ setIsModalOpen,setIsRequestCompleteModalOpen }: Props) {
 					inputData={otherInquiries}
 					onChange={handleTextAreaChange}
 					maxLength={200}
-					placeholder='기타 문의사항'
+					type="etc"
 				/>
 				<div className='text-[14px] flex gap-[3px] justify-end'>
 					<div>

@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Props {
 	inputData: string;
 	onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 	maxLength: 200 | 500 | 2000;
-	placeholder: string;
+	type: "service" | "price" | "more" | "etc";
 }
 
-function TextArea({ inputData, onChange, maxLength, placeholder }: Props) {
-	const height = maxLength === 200 ? 'h-[101px]' : 'h-[192px]'
+function TextArea({ inputData, onChange, maxLength, type }: Props) {
+	const height = maxLength === 200 ? 'h-[101px]' : 'h-[192px]';
+	const [placeholder, setPlaceholer] = useState<string>('');
+
+	useEffect(() => {
+		switch (type) {
+			case 'service':
+				setPlaceholer('서비스에 대해서 자세하게 적어주세요.');
+				break;
+			case 'price':
+				setPlaceholer('가격에 대해서 자세하게 적어주세요.');
+				break;
+			case 'more':
+				setPlaceholer('기타 정보에 대해서 자세하게 적어주세요.');
+				break;
+			case 'etc':
+				setPlaceholer('기타 문의사항')
+			default:
+				break;
+		}
+	}, []);
+
 	return (
 		<div className='w-full flex flex-col gap-[2px] items-end'>
 			<textarea
