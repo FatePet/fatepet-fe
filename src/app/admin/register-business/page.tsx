@@ -5,6 +5,7 @@ import React from 'react';
 import ServiceInfoArea from './_components/ServiceInfoArea';
 import MoreInfoArea from './_components/MoreInfoArea';
 import CompanyInfoArea from './_components/BusinessInfoArea';
+import BusinessInfoArea from './_components/BusinessInfoArea';
 
 function RegisterBusiness() {
 	const router = useRouter();
@@ -26,7 +27,7 @@ function RegisterBusiness() {
 				<div>
 					<p className={areaNameClass}>업체 정보</p>
 					<div className={borderClass} />
-					<CompanyInfoArea />
+					<BusinessInfoArea />
 				</div>
 				<div>
 					<p className={`${areaNameClass} mt-[50px]`}>서비스 정보</p>

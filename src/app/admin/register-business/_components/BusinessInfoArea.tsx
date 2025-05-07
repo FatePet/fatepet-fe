@@ -2,6 +2,8 @@ import BigButton from '@/components/buttons/BigButton';
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import React, { useState } from 'react';
+import ImageUploadButton from './ImageUploadButton';
+import DeleteButton from '@/components/buttons/DeleteButton';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -12,6 +14,8 @@ function BusinessInfoArea() {
 	const [businessHours, setBusinessHours] = useState<string>('');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
+	const [imageFile, setImageFile] = useState<string | File | null>(null);
+	const [imgPreview, setImgPreview] = useState<string | null>(null);
 
 	const businessCategory = [
 		{
@@ -52,6 +56,11 @@ function BusinessInfoArea() {
 		}
 	};
 
+	const handleDeleteImage = () => {
+		setImageFile(null);
+		setImgPreview(null);
+	};
+
 	return (
 		<div className='flex flex-col gap-[20px]'>
 			<div className={divClass}>
@@ -85,11 +94,18 @@ function BusinessInfoArea() {
 				<p>
 					대표 사진 (1장) <span className={requiredClass}>*</span>
 				</p>
-				<BigButton
-					buttonText='사진 업로드'
-					handleClick={() => {
-						return;
-					}}
+				{imgPreview && (
+					<div className='relative'>
+						<img className='w-full h-full' src={imgPreview} />
+						<div className='absolute top-[10px] right-[10px]'>
+							<DeleteButton color='red' handleClick={handleDeleteImage} />
+						</div>
+					</div>
+				)}
+				<ImageUploadButton
+					imageFile={imageFile}
+					setImageFile={setImageFile}
+					setImgPreview={setImgPreview}
 				/>
 			</div>
 			<div className={divClass}>
