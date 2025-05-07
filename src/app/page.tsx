@@ -251,7 +251,7 @@ export default function Main() {
 				inputData={inputData}
 				onChange={handleTextAreaChange}
 				maxLength={500}
-				placeholder='서비스에 대해서 자세하게 적어주세요.'
+				type="service"
 			/>
 			<div>Tag</div>
 			<div className='flex gap-[20px]'>

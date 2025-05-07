@@ -41,7 +41,9 @@ function ConsultModal({ setIsModalOpen,setIsRequestCompleteModalOpen }: Props) {
 		setIsPrivacyPolicyAgreed((prev) => !prev);
 	};
 
-	const handlePrivacyPolicyClick = () => {};
+    const handlePrivacyPolicyClick = () => {
+        // 노션 페이지로 이동해야함
+    };
 
 	const handlePhoneNumberInputChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
