@@ -9,7 +9,11 @@ import DeleteButton from '@/components/buttons/DeleteButton';
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
-function ServiceCard() {
+interface Props {
+	serviceCount: number;
+}
+
+function ServiceCard({ serviceCount }: Props) {
 	const [serviceType, setServiceType] = useState<string>('기본항목');
 	const [serviceName, setServiceName] = useState<string>('');
 	const [serviceInfo, setServiceInfo] = useState<string>('');
@@ -68,7 +72,9 @@ function ServiceCard() {
 	return (
 		<div className='w-[100%] rounded-[12px] border border-p-blue-lite'>
 			<div className='bg-p-black rounded-t-[12px] h-[50px] min-w-[343px] flex items-center pl-[10px]'>
-				<p className='text-white text-[20px] font-bold'>서비스 1</p>
+				<p className='text-white text-[20px] font-bold'>
+					서비스 {serviceCount}
+				</p>
 			</div>
 			<div className='bg-[#F3F4FF] w-[100%] rounded-b-[12px] flex flex-col gap-[20px] p-[20px]'>
 				<div className={divClass}>
