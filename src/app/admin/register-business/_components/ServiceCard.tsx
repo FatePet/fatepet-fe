@@ -5,6 +5,8 @@ import TextArea from '@/components/inputs/TextArea';
 import React, { useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
+import ModalLayout from '@/components/modals/ModalLayout';
+import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -26,6 +28,8 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 	const [serviceImgPreview, setServiceImgPreview] = useState<string | null>(
 		null,
 	);
+	const [isOpenServiceDeleteModal, setIsOpenServiceDeleteModal] =
+		useState<boolean>(false);
 
 	const serviceTypes = [
 		{ type: '기본항목' },
@@ -70,10 +74,15 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 		setServiceImgPreview(null);
 	};
 
-	const handleDeleteService = () => {
+	const handleLeftButtonClick = () => {
+		setIsOpenServiceDeleteModal(false);
 		setServiceList((prevList) =>
 			prevList.filter((_, index) => index !== serviceCount - 1),
 		);
+	};
+
+	const handleRightButtonClick = () => {
+		setIsOpenServiceDeleteModal(false);
 	};
 
 	return (
@@ -83,7 +92,12 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 					서비스 {serviceCount}
 				</p>
 				{serviceCount > 1 && (
-					<DeleteButton color='red' handleClick={handleDeleteService} />
+					<DeleteButton
+						color='red'
+						handleClick={() => {
+							setIsOpenServiceDeleteModal(true);
+						}}
+					/>
 				)}
 			</div>
 			<div className='bg-[#FBFFF2] flex flex-col gap-[20px] p-[20px]'>
@@ -160,6 +174,15 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 					/>
 				</div>
 			</div>
+			{isOpenServiceDeleteModal && (
+				<ModalLayout setIsModalOpen={setIsOpenServiceDeleteModal}>
+					<CancelConfirmModal
+						modalConfirmText={`입력하신 정보가 저장되지 않았어요.\n 해당 서비스를 정말 삭제하실 건가요?`}
+						handleLeftButtonClick={handleLeftButtonClick}
+						handleRightButtonClick={handleRightButtonClick}
+					/>
+				</ModalLayout>
+			)}
 		</div>
 	);
 }

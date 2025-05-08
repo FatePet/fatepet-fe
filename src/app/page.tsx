@@ -243,7 +243,11 @@ export default function Main() {
 				/>
 			</div>
 			<div>TextArea</div>
-			<TextArea inputData={inputData} onChange={handleTextAreaChange} />
+			<TextArea
+				type='more'
+				inputData={inputData}
+				onChange={handleTextAreaChange}
+			/>
 			<div>Tag</div>
 			<div className='flex gap-[20px]'>
 				<Tag tagText='장묘' />
@@ -316,9 +320,15 @@ export default function Main() {
 				}}
 			/>
 			<div>User Main</div>
-			<HeaderWithRightbutton type="user" headerTitle="내 위치" handleButtonClick={() => { return }} />
+			<HeaderWithRightbutton
+				type='user'
+				headerTitle='내 위치'
+				handleButtonClick={() => {
+					return;
+				}}
+			/>
 			<div>HeaderWithOnlyText</div>
-			<HeaderWithOnlyText headerTitle='내 업체'/>
+			<HeaderWithOnlyText headerTitle='내 업체' />
 		</div>
 	);
 }

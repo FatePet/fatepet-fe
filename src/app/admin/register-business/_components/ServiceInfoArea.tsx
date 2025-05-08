@@ -31,6 +31,7 @@ function ServiceInfoArea() {
 
 		setServiceList((prev) => [...prev, newServiceItem]);
 	};
+
 	return (
 		<div className='flex flex-col gap-[10px]'>
 			<p className='text-p-red text-[12px] mb-[10px] text-right font-bold'>
