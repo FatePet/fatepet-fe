@@ -107,6 +107,7 @@ function BusinessInfoArea() {
 					imageFile={imageFile}
 					setImageFile={setImageFile}
 					setImgPreview={setImgPreview}
+					type="business"
 				/>
 			</div>
 			<div className={divClass}>

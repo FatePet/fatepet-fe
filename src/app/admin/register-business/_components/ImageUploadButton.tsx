@@ -28,23 +28,20 @@ function ImageUploadButton({
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
 		if (file) {
-			if (file) {
-				const validExtensions = ['jpg', 'jpeg', 'png'];
-				const fileExtension = file.name.split('.').pop()?.toLowerCase();
+			const validExtensions = ['jpg', 'jpeg', 'png'];
+			const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
-				if (!fileExtension || !validExtensions.includes(fileExtension)) {
-					alert('이미지 형식에 맞지 않습니다. (허용: jpg, jpeg, png)');
-					return;
-				}
-
-				const maxFileSize = 5 * 1024 * 1024;
-				if (file.size > maxFileSize) {
-					alert('파일이 너무 큽니다. (최대: 5MB)');
-					return;
-				}
-
-				setImageFile(file);
+			if (!fileExtension || !validExtensions.includes(fileExtension)) {
+				alert('이미지 형식에 맞지 않습니다. (허용: jpg, jpeg, png)');
+				return;
 			}
+
+			const maxFileSize = 5 * 1024 * 1024;
+			if (file.size > maxFileSize) {
+				alert('파일이 너무 큽니다. (최대: 5MB)');
+				return;
+			}
+			setImageFile(file);
 		}
 	};
 	return (

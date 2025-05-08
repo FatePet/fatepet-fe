@@ -2,7 +2,7 @@ import BigButton from '@/components/buttons/BigButton';
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import TextArea from '@/components/inputs/TextArea';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 
