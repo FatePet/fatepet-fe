@@ -12,9 +12,9 @@ function StartConsultButton({ handleClick, salePercentageNum }: Props) {
 			onClick={handleClick}
 		>
 			<div className='text-[20px] font-black text-white'>상담 진행</div>
-			<div className='text-[12px] font-medium text-p-blue-lite '>
+			<div className='text-[12px] font-medium text-p-green-lite '>
 				페이트펫을 통한 상담 진행시{' '}
-				<span className='text-[#858DFF]'>{salePercentageNum}%할인</span>이 적용
+				<span className='text-p-green'>{salePercentageNum}%할인</span>이 적용
 				됩니다.
 			</div>
 		</div>
