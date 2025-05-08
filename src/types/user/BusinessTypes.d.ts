@@ -27,4 +27,4 @@ type IAdditionalInfoType = {
     description: string;
 }
 
-//
+// 업체 목록 조회
