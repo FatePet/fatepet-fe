@@ -15,6 +15,11 @@ function ServiceInfoArea() {
 	]);
 
 	const handleAddService = () => {
+		if (serviceList.length === 100) {
+			alert('서비스는 최대 100개까지 추가 가능합니다.');
+			return;
+		}
+
 		const newServiceItem: IServiceItemType = {
 			type: '',
 			name: '',
@@ -32,11 +37,15 @@ function ServiceInfoArea() {
 				*최소 1개 이상의 서비스를 등록해 주세요
 			</p>
 			{serviceList.map((service, idx) => (
-				<ServiceCard key={idx} serviceCount={idx + 1} />
+				<ServiceCard
+					key={idx}
+					serviceCount={idx + 1}
+					setServiceList={setServiceList}
+				/>
 			))}
 
 			<div className='relative'>
-				<div className='absolute w-[22px] h-[18px] bg-p-blue text-white flex justify-center items-center rounded-[4px] top-[15px] right-[170px]'>
+				<div className='absolute w-[22px] h-[18px] bg-p-green text-white flex justify-center items-center rounded-[4px] top-[15px] right-[170px]'>
 					{serviceList.length}
 				</div>
 				<BigButton buttonText='서비스 추가' handleClick={handleAddService} />
