@@ -123,7 +123,7 @@ function ServiceCard({ serviceCount }: Props) {
 						</div>
 					)}
 					<ImageUploadButton
-						type='service'
+						type={`service${serviceCount}`}
 						imageFile={serviceImgFile}
 						setImageFile={setServiceImgFile}
 						setImgPreview={setServiceImgPreview}
