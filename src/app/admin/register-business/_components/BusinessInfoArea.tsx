@@ -103,6 +103,7 @@ function BusinessInfoArea() {
 					</div>
 				)}
 				<ImageUploadButton
+					type='business'
 					imageFile={imageFile}
 					setImageFile={setImageFile}
 					setImgPreview={setImgPreview}

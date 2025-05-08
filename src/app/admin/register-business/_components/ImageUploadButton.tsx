@@ -4,9 +4,15 @@ interface Props {
 	setImgPreview: React.Dispatch<React.SetStateAction<string | null>>;
 	imageFile: string | File | null;
 	setImageFile: React.Dispatch<React.SetStateAction<string | File | null>>;
+	type: string;
 }
 
-function ImageUploadButton({ setImgPreview, imageFile, setImageFile }: Props) {
+function ImageUploadButton({
+	setImgPreview,
+	imageFile,
+	setImageFile,
+	type,
+}: Props) {
 	useEffect(() => {
 		if (imageFile instanceof File) {
 			const objectUrl = URL.createObjectURL(imageFile);
@@ -43,12 +49,12 @@ function ImageUploadButton({ setImgPreview, imageFile, setImageFile }: Props) {
 	};
 	return (
 		<label
-			htmlFor='image-upload'
+			htmlFor={`image-upload${type}`}
 			className='w-full h-[50px] rounded-[4px] text-white font-bold text-[20px] bg-p-black flex justify-center items-center cursor-pointer'
 		>
 			<input
 				type='file'
-				id='image-upload'
+				id={`image-upload${type}`}
 				accept='image/*'
 				style={{ display: 'none' }}
 				onChange={handleFileChange}

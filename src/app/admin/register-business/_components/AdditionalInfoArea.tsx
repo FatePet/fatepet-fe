@@ -4,7 +4,7 @@ import TextArea from '@/components/inputs/TextArea';
 import React, { useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 
-function MoreInfoArea() {
+function AdditionalInfoArea() {
 	const [moreInfo, setMoreInfo] = useState<string>('');
 	const [imageFile, setImageFile] = useState<string | File | null>(null);
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
@@ -30,6 +30,7 @@ function MoreInfoArea() {
 					</div>
 				)}
 				<ImageUploadButton
+					type='more'
 					imageFile={imageFile}
 					setImageFile={setImageFile}
 					setImgPreview={setImgPreview}
@@ -46,4 +47,4 @@ function MoreInfoArea() {
 	);
 }
 
-export default MoreInfoArea;
+export default AdditionalInfoArea;

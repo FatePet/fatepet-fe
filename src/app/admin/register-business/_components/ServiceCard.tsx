@@ -117,6 +117,7 @@ function ServiceCard() {
 						</div>
 					)}
 					<ImageUploadButton
+						type='service'
 						imageFile={serviceImgFile}
 						setImageFile={setServiceImgFile}
 						setImgPreview={setServiceImgPreview}
