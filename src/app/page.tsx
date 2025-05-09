@@ -341,16 +341,8 @@ export default function Main() {
 			<div>HeaderWithRightButton</div>
 			<div>Admin Main</div>
 			<HeaderWithRightbutton
-				type='admin'
+				buttonTitle='로그아웃'
 				headerTitle='내 업체'
-				handleButtonClick={() => {
-					return;
-				}}
-			/>
-			<div>User Main</div>
-			<HeaderWithRightbutton
-				type='user'
-				headerTitle='내 위치'
 				handleButtonClick={() => {
 					return;
 				}}
