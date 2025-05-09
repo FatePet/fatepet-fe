@@ -329,9 +329,20 @@ export default function Main() {
 					return;
 				}}
 				hasRightConfirmButton={true}
-				handleConfirmButtonClick={() => {
+				handleRightButtonClick={() => {
 					return;
 				}}
+			/>
+			<HeaderWithBackArrow
+				headerTitle=''
+				handleBackArrowClick={() => {
+					return;
+				}}
+				hasRightConfirmButton={true}
+				handleRightButtonClick={() => {
+					return;
+				}}
+				type='수정'
 			/>
 			<div>HeaderWithRightButton</div>
 			<div>Admin Main</div>
