@@ -31,7 +31,6 @@ function RegisterBusiness() {
 				<div>
 					<p className={`${areaNameClass} mt-[50px]`}>서비스 정보</p>
 					<div className={borderClass} />
-
 					<ServiceInfoArea />
 				</div>
 				<div>

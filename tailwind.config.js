@@ -8,7 +8,10 @@ module.exports = {
 		extend: {
 			colors: {
 				'p-black': 'var(--p-black)',
-				'p-blue': 'var(--p-blue)',
+				'p-brown': 'var(--p-brown)',
+				'p-brown-lite': 'var(--p-brown-lite)',
+				'p-green': 'var(--p-green)',
+				'p-green-lite': 'var(--p-green-lite)',
 				'gray-lite': 'var(--gray-lite)',
 				'gray-middle': 'var(--gray-middle)',
 				'p-blue-lite': 'var(--p-blue-lite)',

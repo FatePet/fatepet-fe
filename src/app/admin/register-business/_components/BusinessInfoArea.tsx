@@ -4,6 +4,7 @@ import LongInput from '@/components/inputs/LongInput';
 import React, { useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
+import RightButtonInput from '@/components/inputs/RightButtonInput';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -61,18 +62,21 @@ function BusinessInfoArea() {
 		setImgPreview(null);
 	};
 
+	const handleCheckDuplicateName = () => {};
+
 	return (
 		<div className='flex flex-col gap-[20px]'>
 			<div className={divClass}>
 				<p>
 					업체명 <span className={requiredClass}>*</span>
 				</p>
-				<LongInput
+				<RightButtonInput
 					inputData={businessName}
-					disabled={false}
 					errorMsg=''
 					placeHolder='예시) (주)페이트펫'
 					onChange={(e) => onInputChange('업체명', e)}
+					buttonText='중복확인'
+					handleButtonClick={handleCheckDuplicateName}
 				/>
 			</div>
 			<div className={divClass}>
