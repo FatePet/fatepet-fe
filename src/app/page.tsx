@@ -251,7 +251,7 @@ export default function Main() {
 				inputData={inputData}
 				onChange={handleTextAreaChange}
 				maxLength={500}
-				type="service"
+				type='service'
 			/>
 			<div>Tag</div>
 			<div className='flex gap-[20px]'>
