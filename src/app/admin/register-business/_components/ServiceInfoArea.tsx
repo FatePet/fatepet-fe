@@ -3,24 +3,43 @@ import ServiceCard from './ServiceCard';
 import BigButton from '@/components/buttons/BigButton';
 
 function ServiceInfoArea() {
-	const [serviceCount, setServiceCount] = useState<number>(1);
+	const [serviceList, setServiceList] = useState<IServiceItemType[]>([
+		{
+			type: '',
+			name: '',
+			desc: '',
+			priceType: '',
+			price: '',
+			image: false,
+		},
+	]);
 
+	const handleAddService = () => {
+		const newServiceItem: IServiceItemType = {
+			type: '',
+			name: '',
+			desc: '',
+			priceType: '',
+			price: '',
+			image: false,
+		};
+
+		setServiceList((prev) => [...prev, newServiceItem]);
+	};
 	return (
 		<div className='flex flex-col gap-[10px]'>
 			<p className='text-p-red text-[12px] mb-[10px] text-right font-bold'>
 				*최소 1개 이상의 서비스를 등록해 주세요
 			</p>
-			<ServiceCard />
+			{serviceList.map((service, idx) => (
+				<ServiceCard key={idx} serviceCount={idx + 1} />
+			))}
+
 			<div className='relative'>
 				<div className='absolute w-[22px] h-[18px] bg-p-blue text-white flex justify-center items-center rounded-[4px] top-[15px] right-[170px]'>
-					{serviceCount}
+					{serviceList.length}
 				</div>
-				<BigButton
-					buttonText='서비스 추가'
-					handleClick={() => {
-						return;
-					}}
-				/>
+				<BigButton buttonText='서비스 추가' handleClick={handleAddService} />
 			</div>
 		</div>
 	);
