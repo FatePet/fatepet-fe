@@ -3,8 +3,8 @@ import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import ServiceInfoArea from './_components/ServiceInfoArea';
-import MoreInfoArea from './_components/MoreInfoArea';
-import CompanyInfoArea from './_components/BusinessInfoArea';
+import BusinessInfoArea from './_components/BusinessInfoArea';
+import AdditionalInfoArea from './_components/AdditionalInfoArea';
 
 function RegisterBusiness() {
 	const router = useRouter();
@@ -26,7 +26,7 @@ function RegisterBusiness() {
 				<div>
 					<p className={areaNameClass}>업체 정보</p>
 					<div className={borderClass} />
-					<CompanyInfoArea />
+					<BusinessInfoArea />
 				</div>
 				<div>
 					<p className={`${areaNameClass} mt-[50px]`}>서비스 정보</p>
@@ -37,7 +37,7 @@ function RegisterBusiness() {
 				<div>
 					<p className={`${areaNameClass} mt-[50px]`}>기타 정보</p>
 					<div className={borderClass} />
-					<MoreInfoArea />
+					<AdditionalInfoArea />
 				</div>
 			</div>
 		</div>

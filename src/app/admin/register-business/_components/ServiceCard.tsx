@@ -2,17 +2,29 @@ import BigButton from '@/components/buttons/BigButton';
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import TextArea from '@/components/inputs/TextArea';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ImageUploadButton from './ImageUploadButton';
+import DeleteButton from '@/components/buttons/DeleteButton';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
-function ServiceCard() {
+interface Props {
+	serviceCount: number;
+}
+
+function ServiceCard({ serviceCount }: Props) {
 	const [serviceType, setServiceType] = useState<string>('기본항목');
 	const [serviceName, setServiceName] = useState<string>('');
 	const [serviceInfo, setServiceInfo] = useState<string>('');
 	const [servicePrice, setServicePrice] = useState<string>('직접입력');
 	const [servicePriceInfo, setServicePriceInfo] = useState<string>('');
+	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
+		null,
+	);
+	const [serviceImgPreview, setServiceImgPreview] = useState<string | null>(
+		null,
+	);
 
 	const serviceTypes = [
 		{ type: '기본항목' },
@@ -52,10 +64,17 @@ function ServiceCard() {
 		}
 	};
 
+	const handleDeleteImage = () => {
+		setServiceImgFile(null);
+		setServiceImgPreview(null);
+	};
+
 	return (
 		<div className='w-[100%] rounded-[12px] border border-p-blue-lite'>
 			<div className='bg-p-black rounded-t-[12px] h-[50px] min-w-[343px] flex items-center pl-[10px]'>
-				<p className='text-white text-[20px] font-bold'>서비스 1</p>
+				<p className='text-white text-[20px] font-bold'>
+					서비스 {serviceCount}
+				</p>
 			</div>
 			<div className='bg-[#F3F4FF] w-[100%] rounded-b-[12px] flex flex-col gap-[20px] p-[20px]'>
 				<div className={divClass}>
@@ -95,11 +114,19 @@ function ServiceCard() {
 				</div>
 				<div className={divClass}>
 					<p>서비스 사진 (1장)</p>
-					<BigButton
-						buttonText='사진 업로드'
-						handleClick={() => {
-							return;
-						}}
+					{serviceImgPreview && (
+						<div className='relative'>
+							<img className='w-full h-full' src={serviceImgPreview} />
+							<div className='absolute top-[10px] right-[10px]'>
+								<DeleteButton color='red' handleClick={handleDeleteImage} />
+							</div>
+						</div>
+					)}
+					<ImageUploadButton
+						type={`service${serviceCount}`}
+						imageFile={serviceImgFile}
+						setImageFile={setServiceImgFile}
+						setImgPreview={setServiceImgPreview}
 					/>
 				</div>
 				<div className={divClass}>
