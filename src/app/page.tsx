@@ -160,12 +160,6 @@ export default function Main() {
 			<div>RoundedButton</div>
 			<div className='flex gap-[20px]'>
 				<RoundedButton
-					buttonText='내 위치 설정'
-					handleClick={() => {
-						return;
-					}}
-				/>
-				<RoundedButton
 					buttonText='거리순'
 					handleClick={() => {
 						return;
