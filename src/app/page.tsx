@@ -22,7 +22,7 @@ import AlertModal from '@/components/modals/AlertModal';
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import HeaderWithRightbutton from '@/components/headers/HeaderWithRightbutton';
 import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
-import ConsultModal from './user/view-store/[storeId]/_components/ConsultModal';
+import ConsultModal from './user/view-business/[category]/[businessId]/_components/ConsultModal';
 
 export default function Main() {
 	// 공통 컴포넌트
