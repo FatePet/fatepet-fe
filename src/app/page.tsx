@@ -23,6 +23,8 @@ import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import HeaderWithRightbutton from '@/components/headers/HeaderWithRightbutton';
 import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
 import ConsultModal from './user/view-business/[category]/[businessId]/_components/ConsultModal';
+import BusinessCard from '@/components/user/BusinessCard';
+import { getBusinessDetailData } from './user/view-business/[category]/[businessId]/_components/mockupData';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -251,7 +253,7 @@ export default function Main() {
 				inputData={inputData}
 				onChange={handleTextAreaChange}
 				maxLength={500}
-				type="service"
+				type='service'
 			/>
 			<div>Tag</div>
 			<div className='flex gap-[20px]'>
@@ -350,6 +352,17 @@ export default function Main() {
 			/>
 			<div>HeaderWithOnlyText</div>
 			<HeaderWithOnlyText headerTitle='내 업체' />
+			<div>BusinessCard</div>
+			<BusinessCard
+				businessItem={{
+					name: getBusinessDetailData.data.name,
+					thumbnailUrl: getBusinessDetailData.data.thumbnailUrl,
+					businessHours: getBusinessDetailData.data.businessHours,
+					phoneNumber: getBusinessDetailData.data.phoneNumber,
+					category: getBusinessDetailData.data.category,
+					address: getBusinessDetailData.data.address,
+				}}
+			/>
 		</div>
 	);
 }
