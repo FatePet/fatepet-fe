@@ -22,6 +22,7 @@ import AlertModal from '@/components/modals/AlertModal';
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import HeaderWithRightbutton from '@/components/headers/HeaderWithRightbutton';
 import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
+import ConsultModal from './user/view-store/[storeId]/_components/ConsultModal';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -29,7 +30,10 @@ export default function Main() {
 	const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
 		useState<boolean>(false);
 	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
-
+	const [isRequestCompleteModalOpen, setIsRequestCompleteModalOpen] =
+		useState<boolean>(false);
+	const [isConsultingModalOpen, setIsConsultingModalOpen] =
+		useState<boolean>(false);
 	const placeHolder = 'Place Holder';
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const trimmedKeyword = e.target.value.trim();
@@ -244,9 +248,10 @@ export default function Main() {
 			</div>
 			<div>TextArea</div>
 			<TextArea
-				type='more'
 				inputData={inputData}
 				onChange={handleTextAreaChange}
+				maxLength={500}
+				type='service'
 			/>
 			<div>Tag</div>
 			<div className='flex gap-[20px]'>
@@ -257,10 +262,26 @@ export default function Main() {
 			<div>StartConsultButton</div>
 			<StartConsultButton
 				handleClick={() => {
-					return;
+					setIsConsultingModalOpen(true);
 				}}
 				salePercentageNum={5}
 			/>
+			{isConsultingModalOpen && (
+				<ModalLayout setIsModalOpen={setIsConsultingModalOpen}>
+					<ConsultModal
+						setIsModalOpen={setIsConsultingModalOpen}
+						setIsRequestCompleteModalOpen={setIsRequestCompleteModalOpen}
+					/>
+				</ModalLayout>
+			)}
+			{isRequestCompleteModalOpen && (
+				<ModalLayout setIsModalOpen={setIsRequestCompleteModalOpen}>
+					<AlertModal
+						modalConfirmText='상담 요청이 완료되었습니다.'
+						setIsModalOpen={setIsRequestCompleteModalOpen}
+					/>
+				</ModalLayout>
+			)}
 			<div>CancelConfirmModal</div>
 			<button
 				className='bg-p-black p-[20px] text-white rounded-[15px]'

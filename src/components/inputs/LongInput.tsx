@@ -22,7 +22,7 @@ function LongInput({
 		<div className='w-full flex flex-col gap-[2px]'>
 			<input
 				className={`w-full px-[14px] font-medium text-[13px] h-[38px] rounded-[4px] focus:outline-none border ${
-					disabled ? 'border-[#AEAEAE] bg-[#D9D9D9]' : 'border-black bg-white'
+					disabled ? 'border-[#AEAEAE] bg-gray-lite' : 'border-black bg-white'
 				}`}
 				value={inputData}
 				placeholder={placeHolder}
