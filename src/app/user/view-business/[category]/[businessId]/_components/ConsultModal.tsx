@@ -2,7 +2,6 @@
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import TextArea from '@/components/inputs/TextArea';
-import AlertModal from '@/components/modals/AlertModal';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
@@ -11,7 +10,10 @@ interface Props {
 	setIsRequestCompleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function ConsultModal({ setIsModalOpen,setIsRequestCompleteModalOpen }: Props) {
+function ConsultModal({
+	setIsModalOpen,
+	setIsRequestCompleteModalOpen,
+}: Props) {
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
 	const [phoneNumberInputError, setPhoneNumberInputError] =
 		useState<string>('');
@@ -19,14 +21,25 @@ function ConsultModal({ setIsModalOpen,setIsRequestCompleteModalOpen }: Props) {
 		useState<boolean>(false);
 	const [otherInquiries, setOtherInquiries] = useState<string>('');
 	const [consultType, setConsultType] = useState<'문자' | '전화'>('문자');
-	
+	const [isPhoneNumberValid, setIsPhoneNumberValid] = useState<boolean>(false);
 
 	const handleCancelBtnClick = () => {
 		setIsModalOpen(false);
 	};
 
-    const handleConsultingBtnClick = () => {
-        setIsRequestCompleteModalOpen(true);
+	const handleConsultingBtnClick = () => {
+		if (!phoneNumber || !isPhoneNumberValid) {
+			setPhoneNumberInputError('전화번호를 입력해주세요.');
+			return;
+		}
+		if (!isPrivacyPolicyAgreed) {
+			alert('개인정보 활용에 동의해주세요.');
+			return;
+		}
+		// 상담 요청 api 호출
+		// 성공 시
+
+		setIsRequestCompleteModalOpen(true);
 		setIsModalOpen(false);
 	};
 
@@ -41,9 +54,9 @@ function ConsultModal({ setIsModalOpen,setIsRequestCompleteModalOpen }: Props) {
 		setIsPrivacyPolicyAgreed((prev) => !prev);
 	};
 
-    const handlePrivacyPolicyClick = () => {
-        // 노션 페이지로 이동해야함
-    };
+	const handlePrivacyPolicyClick = () => {
+		// 노션 페이지로 이동해야함
+	};
 
 	const handlePhoneNumberInputChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -53,8 +66,10 @@ function ConsultModal({ setIsModalOpen,setIsRequestCompleteModalOpen }: Props) {
 		const isValid = /^\d*$/.test(trimmedPhoneNumber);
 
 		if (!isValid || trimmedPhoneNumber.length > 11) {
+			setIsPhoneNumberValid(false);
 			setPhoneNumberInputError('형식이 올바르지 않습니다.');
 		} else {
+			setIsPhoneNumberValid(true);
 			setPhoneNumberInputError('');
 		}
 	};
@@ -103,7 +118,7 @@ function ConsultModal({ setIsModalOpen,setIsRequestCompleteModalOpen }: Props) {
 					inputData={otherInquiries}
 					onChange={handleTextAreaChange}
 					maxLength={200}
-					type="etc"
+					type='etc'
 				/>
 				<div className='text-[14px] flex gap-[3px] justify-end'>
 					<div>
@@ -149,14 +164,13 @@ function ConsultModal({ setIsModalOpen,setIsRequestCompleteModalOpen }: Props) {
 						취소
 					</button>
 					<button
-						className='flex-[2] h-[52] rounded-[4px] border border-p-blue bg-p-blue'
+						className='flex-[2] h-[52] rounded-[4px] border border-p-brown bg-p-black'
 						onClick={handleConsultingBtnClick}
 					>
 						상담요청
 					</button>
 				</div>
 			</div>
-			
 		</div>
 	);
 }
