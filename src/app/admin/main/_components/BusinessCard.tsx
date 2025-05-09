@@ -17,7 +17,6 @@ function BusinessCard({ businessName, businessAddress, businessImage, handleClic
                     src={businessImage}
                     alt={businessName}
                     fill
-                    // priority
                     className="object-cover rounded-xl"
                 />
             </div>

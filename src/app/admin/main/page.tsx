@@ -52,7 +52,7 @@ function AdminMain() {
 								businessName={item.businessName}
 								businessAddress={item.businessAddress}
 								businessImage={item.businessImage}
-								handleClick={() => route.push(`/admin/view-store/${item.storeId}`)}
+								handleClick={() => route.push(`/admin/view-business/${item.storeId}`)}
 							/>
 						))}
 					</div>
@@ -66,7 +66,7 @@ function AdminMain() {
 					alt='등록 버튼'
 					className='cursor-pointer'
 					onClick={() => {
-						route.push('/admin/register-store')
+						route.push('/admin/register-business')
 					}}
 				/>
 			</div>
