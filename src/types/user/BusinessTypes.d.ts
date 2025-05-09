@@ -28,7 +28,7 @@ type IServiceDetailType = {
 };
 
 type IAdditionalInfoType = {
-	imageUrl: string;
+	imageUrl: string[];
 	description: string;
 };
 
