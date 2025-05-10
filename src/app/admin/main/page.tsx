@@ -29,6 +29,9 @@ function AdminMain() {
 	]
 
 	const route = useRouter()
+	const handleCardClick = (index: number) => {
+		route.push(`/admin/view-business/${testBusiness[index].storeId}`)
+	}
 
 	return (
 		<div>
@@ -53,7 +56,8 @@ function AdminMain() {
 								businessName={item.businessName}
 								businessAddress={item.businessAddress}
 								businessImage={item.businessImage}
-								handleClick={() => route.push(`/admin/view-business/${item.storeId}`)}
+								index={index}
+								handleClick={handleCardClick}
 							/>
 						))}
 					</div>

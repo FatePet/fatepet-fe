@@ -5,13 +5,17 @@ interface Props {
     businessName: string;
     businessAddress: string;
     businessImage: string;
-    handleClick: () => void;
+    handleClick: (index: number) => void;
+    index: number;
 }
 
-function AdminBusinessCard({ businessName, businessAddress, businessImage, handleClick }: Props) {
+function AdminBusinessCard({ businessName, businessAddress, businessImage, handleClick, index }: Props) {
+    const handleClickFn = () => {
+        handleClick(index)
+    }
 
     return (
-        <div className="flex shadow-lg rounded-xl p-3" onClick={handleClick}>
+        <div className="flex shadow-lg rounded-xl p-3" onClick={handleClickFn}>
             <div className="relative flex flex-shrink-0 w-32 h-32">
                 <Image
                     src={businessImage}
