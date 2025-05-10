@@ -1,7 +1,7 @@
 'use client';
 import HeaderWithRightbutton from '@/components/headers/HeaderWithRightbutton';
 import React, { useState } from 'react';
-import BusinessCard from './_components/BusinessCard';
+import AdminBusinessCard from './_components/AdminBusinessCard';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -40,14 +40,14 @@ function AdminMain() {
 				/>
 			</div>
 			<div>
-				{testBusiness === null ? (
+				{testBusiness.length === 0 ? (
 					<div className='flex flex-col justify-center items-center h-[70vh] font-bold text-gray-500'>
 						<div>등록된 업체가 없어요.<br></br>업체를 추가해 주세요</div>
 					</div>
 				) : (
 					<div>
 						{testBusiness.map((item, index) => (
-							<BusinessCard
+							<AdminBusinessCard
 								key={index}
 								businessName={item.businessName}
 								businessAddress={item.businessAddress}

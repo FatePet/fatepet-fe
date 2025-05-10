@@ -8,7 +8,7 @@ interface Props {
     handleClick: () => void;
 }
 
-function BusinessCard({ businessName, businessAddress, businessImage, handleClick }: Props) {
+function AdminBusinessCard({ businessName, businessAddress, businessImage, handleClick }: Props) {
 
     return (
         <div className="flex shadow-lg rounded-xl p-3" onClick={handleClick}>
@@ -33,4 +33,4 @@ function BusinessCard({ businessName, businessAddress, businessImage, handleClic
     )
 }
 
-export default BusinessCard
+export default AdminBusinessCard
