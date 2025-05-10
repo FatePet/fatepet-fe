@@ -37,8 +37,8 @@ function AdminMain() {
 		<div>
 			<div>
 				<HeaderWithRightbutton
-					type='admin'
 					headerTitle='내 업체'
+					buttonTitle='로그아웃'
 					handleButtonClick={handleLogout}
 				/>
 			</div>
