@@ -23,7 +23,7 @@ function BusinessCard({businessItem}: Props) {
 				</div>
 				<div className='flex gap-[5px]'>
 					<Image
-						src='/icons/businessCard/locationIcon.svg'
+						src='/icons/businessCard/locationIcon-black.svg'
 						alt='위치아이콘'
 						width={11}
 						height={13}
