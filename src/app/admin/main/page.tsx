@@ -24,7 +24,7 @@ function AdminMain() {
 			businessName: '포 포우즈 춘천점',
 			businessAddress: "강원도 춘천시 퇴계로 1223121312",
 			businessImage: "/images/mockupImage1.png",
-			storeId:2
+			storeId: 2
 		}
 	]
 
@@ -32,7 +32,7 @@ function AdminMain() {
 
 	return (
 		<div>
-			<div className='mt-16'>
+			<div>
 				<HeaderWithRightbutton
 					type='admin'
 					headerTitle='내 업체'
@@ -58,7 +58,7 @@ function AdminMain() {
 					</div>
 				)}
 			</div>
-			<div className='fixed bottom-16 right-16'>
+			<div className='absolute bottom-16 right-16'>
 				<Image
 					src='/icons/registerIcon.svg'
 					width={80}
