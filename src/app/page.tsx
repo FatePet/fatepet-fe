@@ -22,6 +22,9 @@ import AlertModal from '@/components/modals/AlertModal';
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import HeaderWithRightbutton from '@/components/headers/HeaderWithRightbutton';
 import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
+import ConsultModal from './user/view-business/[category]/[businessId]/_components/ConsultModal';
+import BusinessCard from '@/components/user/BusinessCard';
+import { getBusinessDetailData } from './user/view-business/[category]/[businessId]/_components/mockupData';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -29,7 +32,10 @@ export default function Main() {
 	const [isCancelConfirmModalOpen, setIsCancelConfirmModalOpen] =
 		useState<boolean>(false);
 	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
-
+	const [isRequestCompleteModalOpen, setIsRequestCompleteModalOpen] =
+		useState<boolean>(false);
+	const [isConsultingModalOpen, setIsConsultingModalOpen] =
+		useState<boolean>(false);
 	const placeHolder = 'Place Holder';
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const trimmedKeyword = e.target.value.trim();
@@ -154,12 +160,6 @@ export default function Main() {
 			<div>RoundedButton</div>
 			<div className='flex gap-[20px]'>
 				<RoundedButton
-					buttonText='내 위치 설정'
-					handleClick={() => {
-						return;
-					}}
-				/>
-				<RoundedButton
 					buttonText='거리순'
 					handleClick={() => {
 						return;
@@ -243,7 +243,12 @@ export default function Main() {
 				/>
 			</div>
 			<div>TextArea</div>
-			<TextArea inputData={inputData} onChange={handleTextAreaChange} />
+			<TextArea
+				inputData={inputData}
+				onChange={handleTextAreaChange}
+				maxLength={500}
+				type='service'
+			/>
 			<div>Tag</div>
 			<div className='flex gap-[20px]'>
 				<Tag tagText='장묘' />
@@ -253,10 +258,26 @@ export default function Main() {
 			<div>StartConsultButton</div>
 			<StartConsultButton
 				handleClick={() => {
-					return;
+					setIsConsultingModalOpen(true);
 				}}
 				salePercentageNum={5}
 			/>
+			{isConsultingModalOpen && (
+				<ModalLayout setIsModalOpen={setIsConsultingModalOpen}>
+					<ConsultModal
+						setIsModalOpen={setIsConsultingModalOpen}
+						setIsRequestCompleteModalOpen={setIsRequestCompleteModalOpen}
+					/>
+				</ModalLayout>
+			)}
+			{isRequestCompleteModalOpen && (
+				<ModalLayout setIsModalOpen={setIsRequestCompleteModalOpen}>
+					<AlertModal
+						modalConfirmText='상담 요청이 완료되었습니다.'
+						setIsModalOpen={setIsRequestCompleteModalOpen}
+					/>
+				</ModalLayout>
+			)}
 			<div>CancelConfirmModal</div>
 			<button
 				className='bg-p-black p-[20px] text-white rounded-[15px]'
@@ -302,23 +323,43 @@ export default function Main() {
 					return;
 				}}
 				hasRightConfirmButton={true}
-				handleConfirmButtonClick={() => {
+				handleRightButtonClick={() => {
 					return;
 				}}
+			/>
+			<HeaderWithBackArrow
+				headerTitle=''
+				handleBackArrowClick={() => {
+					return;
+				}}
+				hasRightConfirmButton={true}
+				handleRightButtonClick={() => {
+					return;
+				}}
+				type='수정'
 			/>
 			<div>HeaderWithRightButton</div>
 			<div>Admin Main</div>
 			<HeaderWithRightbutton
-				type='admin'
+				buttonTitle='로그아웃'
 				headerTitle='내 업체'
 				handleButtonClick={() => {
 					return;
 				}}
 			/>
-			<div>User Main</div>
-			<HeaderWithRightbutton type="user" headerTitle="내 위치" handleButtonClick={() => { return }} />
 			<div>HeaderWithOnlyText</div>
-			<HeaderWithOnlyText headerTitle='내 업체'/>
+			<HeaderWithOnlyText headerTitle='내 업체' />
+			<div>BusinessCard</div>
+			<BusinessCard
+				businessItem={{
+					name: getBusinessDetailData.data.name,
+					thumbnailUrl: getBusinessDetailData.data.thumbnailUrl,
+					businessHours: getBusinessDetailData.data.businessHours,
+					phoneNumber: getBusinessDetailData.data.phoneNumber,
+					category: getBusinessDetailData.data.category,
+					address: getBusinessDetailData.data.address,
+				}}
+			/>
 		</div>
 	);
 }
