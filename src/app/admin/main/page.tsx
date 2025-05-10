@@ -42,7 +42,8 @@ function AdminMain() {
 			<div>
 				{testBusiness.length === 0 ? (
 					<div className='flex flex-col justify-center items-center h-[70vh] font-bold text-gray-500'>
-						<div>등록된 업체가 없어요.<br></br>업체를 추가해 주세요</div>
+						<div>등록된 업체가 없어요.</div>
+						<div>업체를 추가해 주세요</div>
 					</div>
 				) : (
 					<div>
