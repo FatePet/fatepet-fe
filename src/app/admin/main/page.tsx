@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import AdminBusinessCard from './_components/AdminBusinessCard';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { testBusiness } from './_components/adminMockup';
 
 function AdminMain() {
 	const handleLogout = () => {
@@ -12,25 +13,9 @@ function AdminMain() {
 		route.push('/admin/login')
 	}
 
-	// 테스트용 업체 정보
-	const testBusiness = [
-		{
-			businessName: '포 포우즈 춘천점',
-			businessAddress: "강원도 춘천시 퇴계로 1223121312",
-			businessImage: "/images/mockupImage1.png",
-			storeId: 1
-		},
-		{
-			businessName: '포 포우즈 춘천점',
-			businessAddress: "강원도 춘천시 퇴계로 1223121312",
-			businessImage: "/images/mockupImage1.png",
-			storeId: 2
-		}
-	]
-
-	const route = useRouter()
-	const handleCardClick = (index: number) => {
-		route.push(`/admin/view-business/${testBusiness[index].storeId}`)
+	const route = useRouter();
+	const handleRegisterClick = () => {
+		route.push('/admin/register-business')
 	}
 
 	return (
@@ -53,11 +38,14 @@ function AdminMain() {
 						{testBusiness.map((item, index) => (
 							<AdminBusinessCard
 								key={index}
-								businessName={item.businessName}
-								businessAddress={item.businessAddress}
-								businessImage={item.businessImage}
-								index={index}
-								handleClick={handleCardClick}
+								adminBusinessItem={{
+									businessId: item.data.businessId,
+									name: item.data.name,
+									address: item.data.address,
+									category: item.data.category,
+									thumbnailUrl: item.data.thumbnailUrl,
+								}}
+								
 							/>
 						))}
 					</div>
@@ -70,9 +58,7 @@ function AdminMain() {
 					height={80}
 					alt='등록 버튼'
 					className='cursor-pointer'
-					onClick={() => {
-						route.push('/admin/register-business')
-					}}
+					onClick={handleRegisterClick}
 				/>
 			</div>
 		</div>

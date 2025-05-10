@@ -28,8 +28,8 @@ type IAdminBusinessItemType = {
 	address: string;
 	category: string;
 	thumbnailUrl: string;
-}
+};
 
 type IGetAdminBusinessResponseType = IResponseType & {
-	data: IAdminBusinessItemType[]
-}
+	data: IAdminBusinessItemType;
+};
