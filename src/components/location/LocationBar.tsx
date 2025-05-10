@@ -1,22 +1,18 @@
 import Image from 'next/image';
-import React, { useState } from 'react'
+import React from 'react';
 import RegisterLocationButton from './RegisterLocationButton';
 
-interface Props{
-    location: string;
+interface Props {
+	location: string;
+	handleClick: () => void;
 }
 
-function LocationBar({ location }: Props) {
+function LocationBar({ location, handleClick }: Props) {
+	const displayText = !location
+		? '현재 위치에서 가까운 업체를 찾아 보세요.'
+		: location;
 
-    const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] = useState<boolean>(false);
-    
-    const handleRegisterLocationBtnClick = () => {
-        setIsRegisterLocationModalOpen(true);
-    }
-
-    const displayText = !location ? "현재 위치에서 가까운 업체를 찾아 보세요." : location
-
-  return (
+	return (
 		<div className='w-full min-h-[38px] flex justify-between items-center bg-p-brown px-[16px]'>
 			<div className='flex gap-[8px] overflow-hidden'>
 				{location && (
@@ -31,9 +27,9 @@ function LocationBar({ location }: Props) {
 					{displayText}
 				</div>
 			</div>
-			<RegisterLocationButton handleClick={handleRegisterLocationBtnClick} />
+			<RegisterLocationButton handleClick={handleClick} />
 		</div>
 	);
 }
 
-export default LocationBar
+export default LocationBar;
