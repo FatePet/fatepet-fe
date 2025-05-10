@@ -20,3 +20,16 @@ type IServiceItemType = {
 	price: string;
 	image: boolean;
 };
+
+// 업체 조회
+type IAdminBusinessItemType = {
+	businessId: number;
+	name: string;
+	address: string;
+	category: string;
+	thumbnailUrl: string;
+}
+
+type IGetAdminBusinessResponseType = IResponseType & {
+	data: IAdminBusinessItemType[]
+}
