@@ -42,21 +42,21 @@ function RegisterLocationModal({ setIsModalOpen, location }: Props) {
 	return (
 		<div className='w-full max-w-[360px] h-[342px] rounded-[15px] bg-white shadow-md p-[10px] flex flex-col gap-[25px] justify-center'>
 			<div className='text-[20px] font-black text-p-black'>내 위치 설정</div>
-			<div className='w-full flex flex-col gap-[5px]'>
+			<div className='w-full flex flex-col gap-[8px]'>
 				<BigButton
 					buttonText='주소 검색'
 					handleClick={handleSearchAddressBtnClick}
 				/>
-				<LongInput
-					disabled={false}
-					errorMsg={inputAddressErrorMsg}
-					inputData={inputAddress}
-					placeHolder='현재 위치를 입력해주세요.'
-					onChange={handleAddressInputChange}
-				/>
 				<BigButton
 					buttonText='현재 위치로 설정'
 					handleClick={handleSetCurrentLocationBtnClick}
+				/>
+				<LongInput
+					disabled={true}
+					errorMsg={inputAddressErrorMsg}
+					inputData={inputAddress}
+					placeHolder='주소 검색을 진행해 주세요.'
+					onChange={handleAddressInputChange}
 				/>
 			</div>
 			<div className='w-full flex gap-[5px] text-[20px] font-bold text-white'>
