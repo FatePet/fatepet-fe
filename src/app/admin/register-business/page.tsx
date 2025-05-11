@@ -31,13 +31,30 @@ function RegisterBusiness() {
 			additionalImage: [],
 			additionalInfo: '',
 		});
-	const [imageFile, setImageFile] = useState<string | File | null>(null);
+	const [thumbnailFile, setThumbnailFile] = useState<string | File | null>(
+		null,
+	);
+
 	const [errorMsgs, setErrorMsgs] = useState<IerrorMsgType>({
 		nameError: '',
 		hoursError: '',
 		phoneError: '',
 		emailError: '',
 	});
+	const [serviceList, setServiceList] = useState<IServiceItemType[]>([
+		{
+			type: '',
+			name: '',
+			desc: '',
+			priceType: '',
+			price: '',
+			image: false,
+		},
+	]);
+	const [serviceImageList, setServiceImageList] = useState<(File | null)[]>([]);
+	const [additionalImgFile, setAdditionalImgFile] = useState<
+		string | File | null
+	>(null);
 
 	const isValidPhoneNumber = (phoneNumber: string) => {
 		const regex = /^010\d{8}$/;
@@ -70,6 +87,8 @@ function RegisterBusiness() {
 			newErrors.emailError = '';
 		}
 
+		setBusinessItem({ ...businessItem, thumbnail: thumbnailFile as File });
+
 		setErrorMsgs(newErrors);
 	};
 
@@ -90,19 +109,27 @@ function RegisterBusiness() {
 						setBusinessItem={setBusinessItem}
 						errorMsgs={errorMsgs}
 						setErrorMsgs={setErrorMsgs}
-						imageFile={imageFile}
-						setImageFile={setImageFile}
+						imageFile={thumbnailFile}
+						setImageFile={setThumbnailFile}
 					/>
 				</div>
 				<div>
 					<p className={`${areaNameClass} mt-[50px]`}>서비스 정보</p>
 					<div className={borderClass} />
-					<ServiceInfoArea />
+					<ServiceInfoArea
+						serviceList={serviceList}
+						setServiceList={setServiceList}
+						serviceImageList={serviceImageList}
+						setServiceImageList={setServiceImageList}
+					/>
 				</div>
 				<div>
 					<p className={`${areaNameClass} mt-[50px]`}>기타 정보</p>
 					<div className={borderClass} />
-					<AdditionalInfoArea />
+					<AdditionalInfoArea
+						additionalImgFile={additionalImgFile}
+						setAdditionalImgFile={setAdditionalImgFile}
+					/>
 				</div>
 			</div>
 		</div>

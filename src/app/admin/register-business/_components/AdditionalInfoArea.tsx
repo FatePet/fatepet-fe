@@ -4,9 +4,18 @@ import TextArea from '@/components/inputs/TextArea';
 import React, { useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 
-function AdditionalInfoArea() {
+interface Props {
+	additionalImgFile: string | File | null;
+	setAdditionalImgFile: React.Dispatch<
+		React.SetStateAction<string | File | null>
+	>;
+}
+
+function AdditionalInfoArea({
+	additionalImgFile,
+	setAdditionalImgFile,
+}: Props) {
 	const [moreInfo, setMoreInfo] = useState<string>('');
-	const [imageFile, setImageFile] = useState<string | File | null>(null);
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
 
 	const onTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -14,7 +23,7 @@ function AdditionalInfoArea() {
 	};
 
 	const handleDeleteImage = () => {
-		setImageFile(null);
+		setAdditionalImgFile(null);
 		setImgPreview(null);
 	};
 
@@ -31,8 +40,8 @@ function AdditionalInfoArea() {
 				)}
 				<ImageUploadButton
 					type='more'
-					imageFile={imageFile}
-					setImageFile={setImageFile}
+					imageFile={additionalImgFile}
+					setImageFile={setAdditionalImgFile}
 					setImgPreview={setImgPreview}
 				/>
 			</div>
