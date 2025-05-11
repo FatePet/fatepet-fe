@@ -133,6 +133,8 @@ function RegisterBusiness() {
 					<AdditionalInfoArea
 						additionalImgFile={additionalImgFile}
 						setAdditionalImgFile={setAdditionalImgFile}
+						businessItem={businessItem}
+						setBusinessItem={setBusinessItem}
 					/>
 				</div>
 			</div>

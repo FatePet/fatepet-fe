@@ -9,17 +9,22 @@ interface Props {
 	setAdditionalImgFile: React.Dispatch<
 		React.SetStateAction<string | File | null>
 	>;
+	businessItem: IPostCreateBusinessRequestType;
+	setBusinessItem: React.Dispatch<
+		React.SetStateAction<IPostCreateBusinessRequestType>
+	>;
 }
 
 function AdditionalInfoArea({
 	additionalImgFile,
 	setAdditionalImgFile,
+	businessItem,
+	setBusinessItem,
 }: Props) {
-	const [moreInfo, setMoreInfo] = useState<string>('');
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
 
 	const onTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setMoreInfo(e.target.value);
+		setBusinessItem({ ...businessItem, additionalInfo: e.target.value });
 	};
 
 	const handleDeleteImage = () => {
@@ -48,7 +53,7 @@ function AdditionalInfoArea({
 			<div>
 				<TextArea
 					type='more'
-					inputData={moreInfo}
+					inputData={businessItem.additionalInfo}
 					onChange={onTextAreaChange}
 					maxLength={500}
 				/>

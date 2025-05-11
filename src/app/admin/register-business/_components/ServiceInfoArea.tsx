@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ServiceCard from './ServiceCard';
 import BigButton from '@/components/buttons/BigButton';
 

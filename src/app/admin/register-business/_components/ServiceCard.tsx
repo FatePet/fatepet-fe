@@ -220,12 +220,14 @@ function ServiceCard({
 							/>
 						))}
 					</div>
-					<TextArea
-						type='price'
-						inputData={serviceItem.price}
-						onChange={(e) => onTextAreaChange(e, 'price')}
-						maxLength={500}
-					/>
+					{serviceItem.priceType === '직접입력' && (
+						<TextArea
+							type='price'
+							inputData={serviceItem.price}
+							onChange={(e) => onTextAreaChange(e, 'price')}
+							maxLength={500}
+						/>
+					)}
 				</div>
 			</div>
 			{isOpenServiceDeleteModal && (
