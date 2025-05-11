@@ -134,6 +134,7 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 						type='service'
 						inputData={serviceInfo}
 						onChange={(e) => onTextAreaChange(e, 'info')}
+						maxLength={500}
 					/>
 				</div>
 				<div className={divClass}>
@@ -171,6 +172,7 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 						type='price'
 						inputData={servicePriceInfo}
 						onChange={(e) => onTextAreaChange(e, 'price')}
+						maxLength={500}
 					/>
 				</div>
 			</div>

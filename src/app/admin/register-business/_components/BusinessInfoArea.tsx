@@ -9,13 +9,28 @@ import RightButtonInput from '@/components/inputs/RightButtonInput';
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
-function BusinessInfoArea() {
-	const [businessName, setBusinessName] = useState<string>('');
-	const [category, setCategory] = useState<string>('장묘');
-	const [businessHours, setBusinessHours] = useState<string>('');
-	const [phoneNumber, setPhoneNumber] = useState<string>('');
-	const [email, setEmail] = useState<string>('');
-	const [imageFile, setImageFile] = useState<string | File | null>(null);
+interface IerrorMsgType {
+	nameError: string;
+	hoursError: string;
+	phoneError: string;
+	emailError: string;
+}
+
+interface Props {
+	businessItem: IPostCreateBusinessRequestType;
+	setBusinessItem: React.Dispatch<
+		React.SetStateAction<IPostCreateBusinessRequestType>
+	>;
+	errorMsgs: IerrorMsgType;
+	setErrorMsgs: React.Dispatch<React.SetStateAction<IerrorMsgType>>;
+	setImageFile: React.Dispatch<React.SetStateAction<string | File | null>>;
+}
+
+function BusinessInfoArea({
+	businessItem,
+	setBusinessItem,
+	setImageFile,
+}: Props) {
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
 
 	const businessCategory = [
@@ -34,7 +49,7 @@ function BusinessInfoArea() {
 	];
 
 	const handleCategoryClick = (category: string) => {
-		setCategory(category);
+		setBusinessItem({ ...businessItem, type: category });
 	};
 
 	const onInputChange = (
@@ -43,16 +58,16 @@ function BusinessInfoArea() {
 	) => {
 		switch (type) {
 			case '업체명':
-				setBusinessName(e.target.value);
+				setBusinessItem({ ...businessItem, name: e.target.value });
 				break;
 			case '운영시간':
-				setBusinessHours(e.target.value);
+				setBusinessItem({ ...businessItem, businessHours: e.target.value });
 				break;
 			case '번호':
-				setPhoneNumber(e.target.value);
+				setBusinessItem({ ...businessItem, phoneNumber: e.target.value });
 				break;
 			case '이메일':
-				setEmail(e.target.value);
+				setBusinessItem({ ...businessItem, email: e.target.value });
 				break;
 		}
 	};
@@ -64,6 +79,11 @@ function BusinessInfoArea() {
 
 	const handleCheckDuplicateName = () => {};
 
+	const isValidPhoneNumber = (phoneNumber: string) => {
+		const regex = /^010\d{8}$/;
+		return regex.test(phoneNumber);
+	};
+
 	return (
 		<div className='flex flex-col gap-[20px]'>
 			<div className={divClass}>
@@ -71,8 +91,8 @@ function BusinessInfoArea() {
 					업체명 <span className={requiredClass}>*</span>
 				</p>
 				<RightButtonInput
-					inputData={businessName}
-					errorMsg=''
+					inputData={businessItem.name}
+					errorMsg={'업체명을 입력해주세요.'}
 					placeHolder='예시) (주)페이트펫'
 					onChange={(e) => onInputChange('업체명', e)}
 					buttonText='중복확인'
@@ -89,7 +109,7 @@ function BusinessInfoArea() {
 							key={business.category}
 							buttonText={business.category}
 							handleClick={() => handleCategoryClick(business.category)}
-							isClicked={category === business.category}
+							isClicked={businessItem.type === business.category}
 						/>
 					))}
 				</div>
@@ -108,7 +128,7 @@ function BusinessInfoArea() {
 				)}
 				<ImageUploadButton
 					type='business'
-					imageFile={imageFile}
+					imageFile={businessItem.thumbnail}
 					setImageFile={setImageFile}
 					setImgPreview={setImgPreview}
 				/>
@@ -129,9 +149,9 @@ function BusinessInfoArea() {
 					운영시간 <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={businessHours}
+					inputData={businessItem.businessHours}
 					disabled={false}
-					errorMsg=''
+					errorMsg='운영시간을 입력해주세요.'
 					placeHolder='예시) 월화수목금토 09:00~22:00 일요일 공휴일 휴무'
 					onChange={(e) => onInputChange('운영시간', e)}
 				/>
@@ -141,7 +161,7 @@ function BusinessInfoArea() {
 					휴대폰번호(숫자만) <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={phoneNumber}
+					inputData={businessItem.phoneNumber}
 					disabled={false}
 					errorMsg='형식이 올바르지 않습니다.'
 					placeHolder='예시) 01012341234'
@@ -153,7 +173,7 @@ function BusinessInfoArea() {
 					이메일 <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={email}
+					inputData={businessItem.email}
 					disabled={false}
 					errorMsg='형식이 올바르지 않습니다.'
 					placeHolder='예시) example@gmail.com'

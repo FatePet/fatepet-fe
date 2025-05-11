@@ -41,6 +41,7 @@ function AdditionalInfoArea() {
 					type='more'
 					inputData={moreInfo}
 					onChange={onTextAreaChange}
+					maxLength={500}
 				/>
 			</div>
 		</div>

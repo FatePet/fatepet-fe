@@ -2,7 +2,7 @@
 type IPostCreateBusinessRequestType = {
 	name: string;
 	type: string;
-	thumbnail: File;
+	thumbnail: File | null;
 	address: string;
 	businessHours: string;
 	phoneNumber: string;
