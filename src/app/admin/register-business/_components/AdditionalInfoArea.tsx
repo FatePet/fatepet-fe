@@ -27,19 +27,29 @@ function AdditionalInfoArea({
 	const [imgPreviewList, setImgPreviewList] = useState<string[]>([]);
 
 	useEffect(() => {
-		if (imgPreview != null) {
-			setImgPreviewList((prev) => [...prev, imgPreview]);
-		}
-	}, [imgPreview]);
-
-	useEffect(() => {
-		if (additionalImgFileList && additionalImgFileList.length === 10) {
+		if (checkIsLengthOver() === true) {
 			alert('기타 사진은 10장까지 업로드 가능합니다.');
 			return;
 		} else if (additionalImgFile != null) {
 			setAdditionalImgFileList((prev) => [...prev, additionalImgFile as File]);
 		}
 	}, [additionalImgFile]);
+
+	useEffect(() => {
+		if (checkIsLengthOver() === true) {
+			return;
+		} else if (imgPreview != null) {
+			setImgPreviewList((prev) => [...prev, imgPreview]);
+		}
+	}, [imgPreview]);
+
+	const checkIsLengthOver = (): boolean => {
+		if (additionalImgFileList.length >= 10 && imgPreviewList.length >= 10) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 
 	const onTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setBusinessItem({ ...businessItem, additionalInfo: e.target.value });
