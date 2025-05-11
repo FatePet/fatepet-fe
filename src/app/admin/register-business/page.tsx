@@ -53,9 +53,9 @@ function RegisterBusiness() {
 		},
 	]);
 	const [serviceImageList, setServiceImageList] = useState<(File | null)[]>([]);
-	const [additionalImgFile, setAdditionalImgFile] = useState<
-		string | File | null
-	>(null);
+	const [additionalImgFileList, setAdditionalImgFileList] = useState<
+		(File | null)[]
+	>([]);
 
 	useEffect(() => {
 		const updatedErrorMsgs = serviceList.map((service) =>
@@ -100,6 +100,7 @@ function RegisterBusiness() {
 
 		setErrorMsgs(newErrors);
 
+		//api 연동시 null 제거한 이미지 파일 배열 전달
 		const validServiceImgFiles = serviceImageList.filter(
 			(file): file is File => file !== null,
 		);
@@ -141,10 +142,10 @@ function RegisterBusiness() {
 					<p className={`${areaNameClass} mt-[50px]`}>기타 정보</p>
 					<div className={borderClass} />
 					<AdditionalInfoArea
-						additionalImgFile={additionalImgFile}
-						setAdditionalImgFile={setAdditionalImgFile}
+						setAdditionalImgFileList={setAdditionalImgFileList}
 						businessItem={businessItem}
 						setBusinessItem={setBusinessItem}
+						additionalImgFileList={additionalImgFileList}
 					/>
 				</div>
 			</div>

@@ -1,13 +1,12 @@
-import BigButton from '@/components/buttons/BigButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import TextArea from '@/components/inputs/TextArea';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 
 interface Props {
-	additionalImgFile: string | File | null;
-	setAdditionalImgFile: React.Dispatch<
-		React.SetStateAction<string | File | null>
+	additionalImgFileList: (File | null)[];
+	setAdditionalImgFileList: React.Dispatch<
+		React.SetStateAction<(File | null)[]>
 	>;
 	businessItem: IPostCreateBusinessRequestType;
 	setBusinessItem: React.Dispatch<
@@ -16,33 +15,56 @@ interface Props {
 }
 
 function AdditionalInfoArea({
-	additionalImgFile,
-	setAdditionalImgFile,
+	additionalImgFileList,
+	setAdditionalImgFileList,
 	businessItem,
 	setBusinessItem,
 }: Props) {
+	const [additionalImgFile, setAdditionalImgFile] = useState<
+		string | File | null
+	>(null);
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
+	const [imgPreviewList, setImgPreviewList] = useState<string[]>([]);
+
+	useEffect(() => {
+		if (imgPreview != null) {
+			setImgPreviewList((prev) => [...prev, imgPreview]);
+		}
+	}, [imgPreview]);
+
+	useEffect(() => {
+		if (additionalImgFileList && additionalImgFileList.length === 10) {
+			alert('기타 사진은 10장까지 업로드 가능합니다.');
+			return;
+		} else if (additionalImgFile != null) {
+			setAdditionalImgFileList((prev) => [...prev, additionalImgFile as File]);
+		}
+	}, [additionalImgFile]);
 
 	const onTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setBusinessItem({ ...businessItem, additionalInfo: e.target.value });
 	};
 
-	const handleDeleteImage = () => {
-		setAdditionalImgFile(null);
-		setImgPreview(null);
+	const handleDeleteImage = (index: number) => {
+		setAdditionalImgFileList((prev) => prev.filter((_, i) => i !== index));
+		setImgPreviewList((prev) => prev.filter((_, i) => i !== index));
 	};
 
 	return (
 		<div className='flex flex-col gap-[20px]'>
 			<div className='flex flex-col gap-[10px]'>
-				{imgPreview && (
-					<div className='relative'>
-						<img className='w-full h-full' src={imgPreview} />
-						<div className='absolute top-[10px] right-[10px]'>
-							<DeleteButton color='red' handleClick={handleDeleteImage} />
+				{imgPreviewList &&
+					imgPreviewList.map((img, idx) => (
+						<div className='relative' key={idx}>
+							<img className='w-full h-full' src={img} />
+							<div className='absolute top-[10px] right-[10px]'>
+								<DeleteButton
+									color='red'
+									handleClick={() => handleDeleteImage(idx)}
+								/>
+							</div>
 						</div>
-					</div>
-				)}
+					))}
 				<ImageUploadButton
 					type='more'
 					imageFile={additionalImgFile}
