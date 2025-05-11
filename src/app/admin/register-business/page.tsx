@@ -90,6 +90,10 @@ function RegisterBusiness() {
 		setBusinessItem({ ...businessItem, thumbnail: thumbnailFile as File });
 
 		setErrorMsgs(newErrors);
+
+		const validServiceImgFiles = serviceImageList.filter(
+			(file): file is File => file !== null,
+		);
 	};
 
 	return (
