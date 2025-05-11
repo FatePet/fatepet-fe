@@ -39,7 +39,39 @@ function RegisterBusiness() {
 		emailError: '',
 	});
 
-	const handleBusinessRegisterButton = () => {};
+	const isValidPhoneNumber = (phoneNumber: string) => {
+		const regex = /^010\d{8}$/;
+		return regex.test(phoneNumber);
+	};
+
+	const handleBusinessRegisterButton = () => {
+		const newErrors = { ...errorMsgs };
+
+		if (businessItem.name === '') {
+			newErrors.nameError = '업체명을 입력해주세요.';
+		} else {
+			newErrors.nameError = '';
+		}
+		if (businessItem.businessHours === '') {
+			newErrors.hoursError = '운영시간을 입력해주세요.';
+		} else {
+			newErrors.hoursError = '';
+		}
+		if (businessItem.phoneNumber === '') {
+			newErrors.phoneError = '휴대폰번호를 입력해주세요.';
+		} else if (!isValidPhoneNumber(businessItem.phoneNumber)) {
+			newErrors.phoneError = '형식이 올바르지 않습니다.';
+		} else {
+			newErrors.phoneError = '';
+		}
+		if (businessItem.email === '') {
+			newErrors.emailError = '이메일을 입력해주세요.';
+		} else {
+			newErrors.emailError = '';
+		}
+
+		setErrorMsgs(newErrors);
+	};
 
 	return (
 		<div className='mb-[60px]'>
@@ -58,6 +90,7 @@ function RegisterBusiness() {
 						setBusinessItem={setBusinessItem}
 						errorMsgs={errorMsgs}
 						setErrorMsgs={setErrorMsgs}
+						imageFile={imageFile}
 						setImageFile={setImageFile}
 					/>
 				</div>

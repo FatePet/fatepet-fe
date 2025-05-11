@@ -24,11 +24,14 @@ interface Props {
 	errorMsgs: IerrorMsgType;
 	setErrorMsgs: React.Dispatch<React.SetStateAction<IerrorMsgType>>;
 	setImageFile: React.Dispatch<React.SetStateAction<string | File | null>>;
+	imageFile: string | File | null;
 }
 
 function BusinessInfoArea({
+	errorMsgs,
 	businessItem,
 	setBusinessItem,
+	imageFile,
 	setImageFile,
 }: Props) {
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
@@ -79,11 +82,6 @@ function BusinessInfoArea({
 
 	const handleCheckDuplicateName = () => {};
 
-	const isValidPhoneNumber = (phoneNumber: string) => {
-		const regex = /^010\d{8}$/;
-		return regex.test(phoneNumber);
-	};
-
 	return (
 		<div className='flex flex-col gap-[20px]'>
 			<div className={divClass}>
@@ -92,7 +90,7 @@ function BusinessInfoArea({
 				</p>
 				<RightButtonInput
 					inputData={businessItem.name}
-					errorMsg={'업체명을 입력해주세요.'}
+					errorMsg={errorMsgs.nameError}
 					placeHolder='예시) (주)페이트펫'
 					onChange={(e) => onInputChange('업체명', e)}
 					buttonText='중복확인'
@@ -128,7 +126,7 @@ function BusinessInfoArea({
 				)}
 				<ImageUploadButton
 					type='business'
-					imageFile={businessItem.thumbnail}
+					imageFile={imageFile}
 					setImageFile={setImageFile}
 					setImgPreview={setImgPreview}
 				/>
@@ -151,7 +149,7 @@ function BusinessInfoArea({
 				<LongInput
 					inputData={businessItem.businessHours}
 					disabled={false}
-					errorMsg='운영시간을 입력해주세요.'
+					errorMsg={errorMsgs.hoursError}
 					placeHolder='예시) 월화수목금토 09:00~22:00 일요일 공휴일 휴무'
 					onChange={(e) => onInputChange('운영시간', e)}
 				/>
@@ -163,7 +161,7 @@ function BusinessInfoArea({
 				<LongInput
 					inputData={businessItem.phoneNumber}
 					disabled={false}
-					errorMsg='형식이 올바르지 않습니다.'
+					errorMsg={errorMsgs.phoneError}
 					placeHolder='예시) 01012341234'
 					onChange={(e) => onInputChange('번호', e)}
 				/>
@@ -175,7 +173,7 @@ function BusinessInfoArea({
 				<LongInput
 					inputData={businessItem.email}
 					disabled={false}
-					errorMsg='형식이 올바르지 않습니다.'
+					errorMsg={errorMsgs.emailError}
 					placeHolder='예시) example@gmail.com'
 					onChange={(e) => onInputChange('이메일', e)}
 				/>
