@@ -17,6 +17,7 @@ interface Props {
 	setServiceList: React.Dispatch<React.SetStateAction<IServiceItemType[]>>;
 	serviceImageList: (File | null)[];
 	setServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
+	errorMsg: string;
 }
 
 function ServiceCard({
@@ -25,6 +26,7 @@ function ServiceCard({
 	setServiceList,
 	setServiceImageList,
 	serviceImageList,
+	errorMsg,
 }: Props) {
 	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
 		null,
@@ -176,7 +178,7 @@ function ServiceCard({
 						inputData={serviceItem.name}
 						disabled={false}
 						onChange={onInputChange}
-						errorMsg=''
+						errorMsg={errorMsg}
 						placeHolder='서비스 명을 입력해주세요.'
 					/>
 				</div>

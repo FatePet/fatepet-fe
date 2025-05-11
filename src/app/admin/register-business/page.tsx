@@ -41,6 +41,7 @@ function RegisterBusiness() {
 		phoneError: '',
 		emailError: '',
 	});
+	const [serviceErrorMsgs, setServiceErrorMsgs] = useState<string[]>(['']);
 	const [serviceList, setServiceList] = useState<IServiceItemType[]>([
 		{
 			type: '',
@@ -55,6 +56,14 @@ function RegisterBusiness() {
 	const [additionalImgFile, setAdditionalImgFile] = useState<
 		string | File | null
 	>(null);
+
+	useEffect(() => {
+		const updatedErrorMsgs = serviceList.map((service) =>
+			service.name === '' ? '서비스명을 입력해주세요.' : '',
+		);
+
+		setServiceErrorMsgs(updatedErrorMsgs);
+	}, [serviceList]);
 
 	const isValidPhoneNumber = (phoneNumber: string) => {
 		const regex = /^010\d{8}$/;
@@ -125,6 +134,7 @@ function RegisterBusiness() {
 						setServiceList={setServiceList}
 						serviceImageList={serviceImageList}
 						setServiceImageList={setServiceImageList}
+						serviceErrorMsgs={serviceErrorMsgs}
 					/>
 				</div>
 				<div>
