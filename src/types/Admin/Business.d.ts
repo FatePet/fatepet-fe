@@ -31,5 +31,5 @@ type IAdminBusinessItemType = {
 };
 
 type IGetAdminBusinessResponseType = IResponseType & {
-	data: IAdminBusinessItemType;
+	data: IAdminBusinessItemType[];
 };
