@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ServiceCard from './ServiceCard';
 import BigButton from '@/components/buttons/BigButton';
 
-function ServiceInfoArea() {
-	const [serviceList, setServiceList] = useState<IServiceItemType[]>([
-		{
-			type: '',
-			name: '',
-			desc: '',
-			priceType: '',
-			price: '',
-			image: false,
-		},
-	]);
-
+interface Props {
+	serviceList: IServiceItemType[];
+	setServiceList: React.Dispatch<React.SetStateAction<IServiceItemType[]>>;
+	serviceImageList: (File | null)[];
+	setServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
+	serviceErrorMsgs: string[];
+}
+function ServiceInfoArea({
+	serviceList,
+	setServiceList,
+	serviceImageList,
+	setServiceImageList,
+	serviceErrorMsgs,
+}: Props) {
 	const handleAddService = () => {
 		if (serviceList.length === 100) {
 			alert('서비스는 최대 100개까지 추가 가능합니다.');
@@ -41,7 +43,11 @@ function ServiceInfoArea() {
 				<ServiceCard
 					key={idx}
 					serviceCount={idx + 1}
+					serviceItem={service}
 					setServiceList={setServiceList}
+					serviceImageList={serviceImageList}
+					setServiceImageList={setServiceImageList}
+					errorMsg={serviceErrorMsgs[idx]}
 				/>
 			))}
 

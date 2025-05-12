@@ -9,13 +9,31 @@ import RightButtonInput from '@/components/inputs/RightButtonInput';
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
-function BusinessInfoArea() {
-	const [businessName, setBusinessName] = useState<string>('');
-	const [category, setCategory] = useState<string>('장묘');
-	const [businessHours, setBusinessHours] = useState<string>('');
-	const [phoneNumber, setPhoneNumber] = useState<string>('');
-	const [email, setEmail] = useState<string>('');
-	const [imageFile, setImageFile] = useState<string | File | null>(null);
+interface IerrorMsgType {
+	nameError: string;
+	hoursError: string;
+	phoneError: string;
+	emailError: string;
+}
+
+interface Props {
+	businessItem: IPostCreateBusinessRequestType;
+	setBusinessItem: React.Dispatch<
+		React.SetStateAction<IPostCreateBusinessRequestType>
+	>;
+	errorMsgs: IerrorMsgType;
+	setErrorMsgs: React.Dispatch<React.SetStateAction<IerrorMsgType>>;
+	setImageFile: React.Dispatch<React.SetStateAction<string | File | null>>;
+	imageFile: string | File | null;
+}
+
+function BusinessInfoArea({
+	errorMsgs,
+	businessItem,
+	setBusinessItem,
+	imageFile,
+	setImageFile,
+}: Props) {
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
 
 	const businessCategory = [
@@ -34,7 +52,7 @@ function BusinessInfoArea() {
 	];
 
 	const handleCategoryClick = (category: string) => {
-		setCategory(category);
+		setBusinessItem({ ...businessItem, type: category });
 	};
 
 	const onInputChange = (
@@ -43,16 +61,16 @@ function BusinessInfoArea() {
 	) => {
 		switch (type) {
 			case '업체명':
-				setBusinessName(e.target.value);
+				setBusinessItem({ ...businessItem, name: e.target.value });
 				break;
 			case '운영시간':
-				setBusinessHours(e.target.value);
+				setBusinessItem({ ...businessItem, businessHours: e.target.value });
 				break;
 			case '번호':
-				setPhoneNumber(e.target.value);
+				setBusinessItem({ ...businessItem, phoneNumber: e.target.value });
 				break;
 			case '이메일':
-				setEmail(e.target.value);
+				setBusinessItem({ ...businessItem, email: e.target.value });
 				break;
 		}
 	};
@@ -71,8 +89,8 @@ function BusinessInfoArea() {
 					업체명 <span className={requiredClass}>*</span>
 				</p>
 				<RightButtonInput
-					inputData={businessName}
-					errorMsg=''
+					inputData={businessItem.name}
+					errorMsg={errorMsgs.nameError}
 					placeHolder='예시) (주)페이트펫'
 					onChange={(e) => onInputChange('업체명', e)}
 					buttonText='중복확인'
@@ -89,7 +107,7 @@ function BusinessInfoArea() {
 							key={business.category}
 							buttonText={business.category}
 							handleClick={() => handleCategoryClick(business.category)}
-							isClicked={category === business.category}
+							isClicked={businessItem.type === business.category}
 						/>
 					))}
 				</div>
@@ -129,9 +147,9 @@ function BusinessInfoArea() {
 					운영시간 <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={businessHours}
+					inputData={businessItem.businessHours}
 					disabled={false}
-					errorMsg=''
+					errorMsg={errorMsgs.hoursError}
 					placeHolder='예시) 월화수목금토 09:00~22:00 일요일 공휴일 휴무'
 					onChange={(e) => onInputChange('운영시간', e)}
 				/>
@@ -141,9 +159,9 @@ function BusinessInfoArea() {
 					휴대폰번호(숫자만) <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={phoneNumber}
+					inputData={businessItem.phoneNumber}
 					disabled={false}
-					errorMsg='형식이 올바르지 않습니다.'
+					errorMsg={errorMsgs.phoneError}
 					placeHolder='예시) 01012341234'
 					onChange={(e) => onInputChange('번호', e)}
 				/>
@@ -153,9 +171,9 @@ function BusinessInfoArea() {
 					이메일 <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={email}
+					inputData={businessItem.email}
 					disabled={false}
-					errorMsg='형식이 올바르지 않습니다.'
+					errorMsg={errorMsgs.emailError}
 					placeHolder='예시) example@gmail.com'
 					onChange={(e) => onInputChange('이메일', e)}
 				/>
