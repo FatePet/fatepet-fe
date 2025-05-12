@@ -35,16 +35,10 @@ function AdminMain() {
 					</div>
 				) : (
 					<div>
-						{testBusiness.data.map((item, index) => (
+						{testBusiness.data.map((_, index) => (
 							<AdminBusinessCard
 								key={index}
-								adminBusinessItem={{
-									businessId: item.businessId,
-									name: item.name,
-									address: item.address,
-									category: item.category,
-									thumbnailUrl: item.thumbnailUrl,
-								}}
+								adminBusinessItem={testBusiness.data[index]}
 								
 							/>
 						))}
