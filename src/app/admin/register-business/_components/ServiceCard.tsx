@@ -2,7 +2,7 @@ import BigButton from '@/components/buttons/BigButton';
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import TextArea from '@/components/inputs/TextArea';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import ModalLayout from '@/components/modals/ModalLayout';
@@ -13,15 +13,21 @@ const requiredClass = 'text-p-red';
 
 interface Props {
 	serviceCount: number;
+	serviceItem: IServiceItemType;
 	setServiceList: React.Dispatch<React.SetStateAction<IServiceItemType[]>>;
+	serviceImageList: (File | null)[];
+	setServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
+	errorMsg: string;
 }
 
-function ServiceCard({ serviceCount, setServiceList }: Props) {
-	const [serviceType, setServiceType] = useState<string>('기본항목');
-	const [serviceName, setServiceName] = useState<string>('');
-	const [serviceInfo, setServiceInfo] = useState<string>('');
-	const [servicePrice, setServicePrice] = useState<string>('직접입력');
-	const [servicePriceInfo, setServicePriceInfo] = useState<string>('');
+function ServiceCard({
+	serviceCount,
+	serviceItem,
+	setServiceList,
+	setServiceImageList,
+	serviceImageList,
+	errorMsg,
+}: Props) {
 	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
 		null,
 	);
@@ -43,16 +49,52 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 		{ priceType: '직접문의' },
 	];
 
+	useEffect(() => {
+		if (serviceImgFile !== null) {
+			setServiceList((prev) =>
+				prev.map((item, index) =>
+					index === serviceCount - 1 ? { ...item, image: true } : item,
+				),
+			);
+			setServiceImageList((prev) =>
+				prev.map((item, index) =>
+					index === serviceCount - 1 ? (serviceImgFile as File) : item,
+				),
+			);
+		} else {
+			setServiceList((prev) =>
+				prev.map((item, index) =>
+					index === serviceCount - 1 ? { ...item, image: false } : item,
+				),
+			);
+			setServiceImageList((prev) =>
+				prev.map((item, index) => (index === serviceCount - 1 ? null : item)),
+			);
+		}
+	}, [serviceImgFile]);
+
 	const handleTypeClick = (type: string) => {
-		setServiceType(type);
+		setServiceList((prev) =>
+			prev.map((item, index) =>
+				index === serviceCount - 1 ? { ...item, type: type } : item,
+			),
+		);
 	};
 
 	const handlePriceTypeClick = (type: string) => {
-		setServicePrice(type);
+		setServiceList((prev) =>
+			prev.map((item, index) =>
+				index === serviceCount - 1 ? { ...item, priceType: type } : item,
+			),
+		);
 	};
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setServiceName(e.target.value);
+		setServiceList((prev) =>
+			prev.map((item, index) =>
+				index === serviceCount - 1 ? { ...item, name: e.target.value } : item,
+			),
+		);
 	};
 
 	const onTextAreaChange = (
@@ -61,10 +103,22 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 	) => {
 		switch (type) {
 			case 'info':
-				setServiceInfo(e.target.value);
+				setServiceList((prev) =>
+					prev.map((item, index) =>
+						index === serviceCount - 1
+							? { ...item, desc: e.target.value }
+							: item,
+					),
+				);
 				break;
 			case 'price':
-				setServicePriceInfo(e.target.value);
+				setServiceList((prev) =>
+					prev.map((item, index) =>
+						index === serviceCount - 1
+							? { ...item, price: e.target.value }
+							: item,
+					),
+				);
 				break;
 		}
 	};
@@ -111,7 +165,7 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 								key={item.type}
 								buttonText={item.type}
 								handleClick={() => handleTypeClick(item.type)}
-								isClicked={serviceType === item.type}
+								isClicked={serviceItem.type === item.type}
 							/>
 						))}
 					</div>
@@ -121,10 +175,10 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 						서비스 명 <span className={requiredClass}>*</span>
 					</p>
 					<LongInput
-						inputData={serviceName}
+						inputData={serviceItem.name}
 						disabled={false}
 						onChange={onInputChange}
-						errorMsg=''
+						errorMsg={errorMsg}
 						placeHolder='서비스 명을 입력해주세요.'
 					/>
 				</div>
@@ -132,8 +186,9 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 					<p>서비스 설명</p>
 					<TextArea
 						type='service'
-						inputData={serviceInfo}
+						inputData={serviceItem.desc}
 						onChange={(e) => onTextAreaChange(e, 'info')}
+						maxLength={500}
 					/>
 				</div>
 				<div className={divClass}>
@@ -163,15 +218,18 @@ function ServiceCard({ serviceCount, setServiceList }: Props) {
 								key={price.priceType}
 								buttonText={price.priceType}
 								handleClick={() => handlePriceTypeClick(price.priceType)}
-								isClicked={servicePrice === price.priceType}
+								isClicked={serviceItem.priceType === price.priceType}
 							/>
 						))}
 					</div>
-					<TextArea
-						type='price'
-						inputData={servicePriceInfo}
-						onChange={(e) => onTextAreaChange(e, 'price')}
-					/>
+					{serviceItem.priceType === '직접입력' && (
+						<TextArea
+							type='price'
+							inputData={serviceItem.price}
+							onChange={(e) => onTextAreaChange(e, 'price')}
+							maxLength={500}
+						/>
+					)}
 				</div>
 			</div>
 			{isOpenServiceDeleteModal && (
