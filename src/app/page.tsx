@@ -291,6 +291,8 @@ export default function Main() {
 						modalConfirmText={`입력하신 정보가 저장되지 않았어요.\n업체 등록을 취소할까요?`}
 						handleLeftButtonClick={() => setIsCancelConfirmModalOpen(false)}
 						handleRightButtonClick={() => setIsCancelConfirmModalOpen(false)}
+						leftButtonText='등록 취소'
+						rightButtonText='계속 입력'
 					/>
 				</ModalLayout>
 			)}
