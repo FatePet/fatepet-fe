@@ -1,34 +1,36 @@
-import useAuthStore from '@/store/useAuthStore';
-
 interface IFetchOptions<T = unknown> {
 	endpoint: string;
 	body?: T;
 	method?: string;
 	authorization?: string;
 	id?: string;
+	setAccessToken?: (token: string) => void;
 }
 
 interface IGetOptions {
 	endpoint: string;
 	authorization?: string;
+	setAccessToken?: (token: string) => void;
 }
 
 interface IPostOptions<T = unknown> {
 	endpoint: string;
 	body?: T;
 	authorization?: string;
+	setAccessToken?: (token: string) => void;
 }
 
 interface IDeleteOptions {
 	endpoint: string;
 	authorization: string;
+	setAccessToken?: (token: string) => void;
 }
 
 const _fetch = async <T = unknown, R = unknown>(
 	options: IFetchOptions<T>,
 	retry = true,
 ): Promise<R> => {
-	const { method, endpoint, body, authorization } = options;
+	const { method, endpoint, body, authorization,setAccessToken } = options;
 	const headers: HeadersInit = {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
@@ -63,9 +65,11 @@ const _fetch = async <T = unknown, R = unknown>(
 					credentials: 'include',
 				},
 			);
-			if (!reissueResponse.ok) {
+      if (!reissueResponse.ok) {
 				// refreshToken도 만료된 상태
-				useAuthStore.setState({ accessToken: '' });
+				if (setAccessToken) {
+					setAccessToken('');
+				}
 				window.location.reload();
 				throw new Error('Failed to refreshToken');
 			}
@@ -85,8 +89,9 @@ const _fetch = async <T = unknown, R = unknown>(
 					'Access token is missing in the  x-amzn-Remapped-Authorization header',
 				);
 			}
-
-			useAuthStore.setState({ accessToken });
+      if (setAccessToken) {
+        setAccessToken(accessToken);
+      }
 			return _fetch<T, R>({ ...options, authorization: accessToken }, false);
 		}
 
