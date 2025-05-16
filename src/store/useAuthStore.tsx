@@ -2,9 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface AuthState {
-	isLogin: boolean;
 	accessToken: string;
-	setIsLogin: (isLogin: boolean) => void;
 	setAccessToken: (accessToken: string) => void;
 	clearAuth: () => void;
 }
@@ -12,12 +10,10 @@ interface AuthState {
 const useAuthStore = create<AuthState>()(
 	persist(
 		(set) => ({
-			isLogin: false,
 			accessToken: '',
-			setIsLogin: (isLogin) => set({ isLogin }),
 			setAccessToken: (accessToken) => set({ accessToken }),
 			clearAuth: () => {
-				set({ isLogin: false, accessToken: '' });
+				set({ accessToken: '' });
 				localStorage.removeItem('auth-storage');
 			},
 		}),
