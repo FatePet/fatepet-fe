@@ -1,7 +1,7 @@
 import BigButton from '@/components/buttons/BigButton';
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
@@ -61,6 +61,15 @@ function BusinessInfoArea({
 		},
 	];
 
+	useEffect(() => {
+		if (detailAddress !== '') {
+			const fullAddress = address + detailAddress;
+			setBusinessItem({ ...businessItem, address: fullAddress });
+		} else {
+			setBusinessItem({ ...businessItem, address: address });
+		}
+	}, [address, detailAddress]);
+
 	const handleCategoryClick = (category: string) => {
 		setBusinessItem({ ...businessItem, type: category });
 	};
@@ -84,6 +93,7 @@ function BusinessInfoArea({
 				break;
 			case '상세주소':
 				setDetailAddress(e.target.value);
+				break;
 		}
 	};
 

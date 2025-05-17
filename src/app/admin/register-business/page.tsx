@@ -74,11 +74,6 @@ function RegisterBusiness() {
 	};
 
 	const handleBusinessRegisterButton = () => {
-		if (detailAddress !== '') {
-			const fullAddress = address + detailAddress;
-			setBusinessItem({ ...businessItem, address: fullAddress });
-		}
-
 		const newErrors = { ...errorMsgs };
 
 		if (businessItem.name === '') {
@@ -117,6 +112,8 @@ function RegisterBusiness() {
 		const validServiceImgFiles = serviceImageList.filter(
 			(file): file is File => file !== null,
 		);
+
+		console.log(businessItem);
 	};
 
 	return (
