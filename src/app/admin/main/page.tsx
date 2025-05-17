@@ -5,18 +5,28 @@ import AdminBusinessCard from './_components/AdminBusinessCard';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { testBusiness } from './_components/adminMockup';
+import useAuthStore from '@/store/useAuthStore';
 
 function AdminMain() {
-	const handleLogout = () => {
-		// 로그아웃 로직
-
-		route.push('/admin/login')
-	}
+	const { setAccessToken } = useAuthStore();
+	const handleLogout = async () => {
+		// 로그아웃 로직(임시 프론트에서 처리)
+		try {
+			await fetch('/api/admin/auth/logout', {
+				method: 'POST',
+				credentials: 'include',
+			});
+			setAccessToken('');
+			route.push('/admin/login');
+		} catch (error) {
+			alert('로그아웃에 실패하셨습니다.');
+		}
+	};
 
 	const route = useRouter();
 	const handleRegisterClick = () => {
-		route.push('/admin/register-business')
-	}
+		route.push('/admin/register-business');
+	};
 
 	return (
 		<div>
@@ -45,7 +55,6 @@ function AdminMain() {
 									category: item.category,
 									thumbnailUrl: item.thumbnailUrl,
 								}}
-								
 							/>
 						))}
 					</div>
@@ -62,8 +71,7 @@ function AdminMain() {
 				/>
 			</div>
 		</div>
-
-	)
+	);
 }
 
 export default AdminMain;
