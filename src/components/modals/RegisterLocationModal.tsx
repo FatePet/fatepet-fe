@@ -3,20 +3,16 @@
 import React, { useState } from 'react';
 import BigButton from '../buttons/BigButton';
 import LongInput from '../inputs/LongInput';
+import DaumPost from '../location/DaumPost';
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	location: string;
+	address: string;
+	setAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function RegisterLocationModal({ setIsModalOpen, location }: Props) {
-	const [inputAddress, setInputAddress] = useState<string>(location);
+function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 	const [inputAddressErrorMsg, setInputAddressErrorMsg] = useState<string>('');
-
-	const handleSearchAddressBtnClick = () => {
-		// 주소 검색
-		return;
-	};
 
 	const handleSetCurrentLocationBtnClick = () => {
 		// 현재 위치로 설정
@@ -33,20 +29,11 @@ function RegisterLocationModal({ setIsModalOpen, location }: Props) {
 		setIsModalOpen(false);
 	};
 
-	const handleAddressInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		// 주소 입력 정규식 검사 필요함(예. 특수문자 금지)
-		const value = e.target.value;
-		setInputAddress(value);
-	};
-
 	return (
 		<div className='w-full max-w-[360px] h-[342px] rounded-[15px] bg-white shadow-md p-[10px] flex flex-col gap-[25px] justify-center'>
 			<div className='text-[20px] font-black text-p-black'>내 위치 설정</div>
 			<div className='w-full flex flex-col gap-[8px]'>
-				<BigButton
-					buttonText='주소 검색'
-					handleClick={handleSearchAddressBtnClick}
-				/>
+				<DaumPost setAddress={setAddress} />
 				<BigButton
 					buttonText='현재 위치로 설정'
 					handleClick={handleSetCurrentLocationBtnClick}
@@ -54,9 +41,8 @@ function RegisterLocationModal({ setIsModalOpen, location }: Props) {
 				<LongInput
 					disabled={true}
 					errorMsg={inputAddressErrorMsg}
-					inputData={inputAddress}
+					inputData={address}
 					placeHolder='주소 검색을 진행해 주세요.'
-					onChange={handleAddressInputChange}
 				/>
 			</div>
 			<div className='w-full flex gap-[5px] text-[20px] font-bold text-white'>

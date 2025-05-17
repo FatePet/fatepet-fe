@@ -26,6 +26,8 @@ import ConsultModal from './user/view-business/[category]/[businessId]/_componen
 import BusinessCard from '@/components/user/BusinessCard';
 import { getBusinessDetailData } from './user/view-business/[category]/[businessId]/_components/mockupData';
 import DaumPost from '@/components/location/DaumPost';
+import RegisterLocationButton from '@/components/location/RegisterLocationButton';
+import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -37,7 +39,6 @@ export default function Main() {
 		useState<boolean>(false);
 	const [isConsultingModalOpen, setIsConsultingModalOpen] =
 		useState<boolean>(false);
-	const [address, setAddress] = useState<string>('');
 	const placeHolder = 'Place Holder';
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const trimmedKeyword = e.target.value.trim();
@@ -47,6 +48,9 @@ export default function Main() {
 		const trimmedKeyword = e.target.value.trim();
 		setInputData(trimmedKeyword);
 	};
+	const [isLocationModalOpen, setIsLocationModalOpen] =
+		useState<boolean>(false);
+	const [address, setAddress] = useState<string>('');
 
 	// 끝
 	const pathname = usePathname();
@@ -365,8 +369,20 @@ export default function Main() {
 				}}
 			/>
 			<div> 주소검색 api</div>
-
-			<DaumPost setAddress={setAddress} />
+			<RegisterLocationButton
+				handleClick={() => {
+					setIsLocationModalOpen(true);
+				}}
+			/>
+			{isLocationModalOpen && (
+				<ModalLayout setIsModalOpen={setIsLocationModalOpen}>
+					<RegisterLocationModal
+						setIsModalOpen={setIsLocationModalOpen}
+						address={address}
+						setAddress={setAddress}
+					/>
+				</ModalLayout>
+			)}
 		</div>
 	);
 }
