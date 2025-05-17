@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
+import DaumPost from '@/components/location/DaumPost';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -14,6 +15,7 @@ interface IerrorMsgType {
 	hoursError: string;
 	phoneError: string;
 	emailError: string;
+	addressError: string;
 }
 
 interface Props {
@@ -25,6 +27,10 @@ interface Props {
 	setErrorMsgs: React.Dispatch<React.SetStateAction<IerrorMsgType>>;
 	setImageFile: React.Dispatch<React.SetStateAction<string | File | null>>;
 	imageFile: string | File | null;
+	address: string;
+	setAddress: React.Dispatch<React.SetStateAction<string>>;
+	detailAddress: string;
+	setDetailAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function BusinessInfoArea({
@@ -33,6 +39,10 @@ function BusinessInfoArea({
 	setBusinessItem,
 	imageFile,
 	setImageFile,
+	address,
+	setAddress,
+	detailAddress,
+	setDetailAddress,
 }: Props) {
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
 
@@ -72,6 +82,8 @@ function BusinessInfoArea({
 			case '이메일':
 				setBusinessItem({ ...businessItem, email: e.target.value });
 				break;
+			case '상세주소':
+				setDetailAddress(e.target.value);
 		}
 	};
 
@@ -135,12 +147,20 @@ function BusinessInfoArea({
 				<p>
 					주소 <span className={requiredClass}>*</span>
 				</p>
-				<BigButton
-					buttonText='주소 검색'
-					handleClick={() => {
-						return;
-					}}
+				<LongInput
+					inputData={address}
+					disabled={true}
+					errorMsg={errorMsgs.addressError}
+					placeHolder='주소를 검색해주세요.'
 				/>
+				<LongInput
+					inputData={detailAddress}
+					disabled={address === '' ? true : false}
+					errorMsg={''}
+					placeHolder='자세한 주소 직접 입력'
+					onChange={(e) => onInputChange('상세주소', e)}
+				/>
+				<DaumPost setAddress={setAddress} />
 			</div>
 			<div className={divClass}>
 				<p>

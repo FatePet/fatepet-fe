@@ -25,6 +25,7 @@ import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
 import ConsultModal from './user/view-business/[category]/[businessId]/_components/ConsultModal';
 import BusinessCard from '@/components/user/BusinessCard';
 import { getBusinessDetailData } from './user/view-business/[category]/[businessId]/_components/mockupData';
+import DaumPost from '@/components/location/DaumPost';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -36,6 +37,7 @@ export default function Main() {
 		useState<boolean>(false);
 	const [isConsultingModalOpen, setIsConsultingModalOpen] =
 		useState<boolean>(false);
+	const [address, setAddress] = useState<string>('');
 	const placeHolder = 'Place Holder';
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const trimmedKeyword = e.target.value.trim();
@@ -362,6 +364,9 @@ export default function Main() {
 					address: getBusinessDetailData.data.address,
 				}}
 			/>
+			<div> 주소검색 api</div>
+
+			<DaumPost setAddress={setAddress} />
 		</div>
 	);
 }
