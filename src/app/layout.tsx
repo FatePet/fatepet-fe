@@ -3,7 +3,6 @@ import './styles/globals.css';
 import RQProvider from '@/components/RQProvider';
 import { Suspense } from 'react';
 import localFont from 'next/font/local';
-import { constant } from '@/utils/constant';
 import Script from 'next/script';
 
 const pretendard = localFont({
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
 	description: '장묘 주선 서비스',
 };
 
-const API: string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
+const API: string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOKEY}&libraries=services,clusterer&autoload=false`;
 
 export default function RootLayout({
 	children,

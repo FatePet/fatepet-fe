@@ -7,13 +7,13 @@ interface KakaoAddressResponse {
 	};
 }
 
-export const convertCoordinatesToAddress = async (
+export async function convertCoordinatesToAddress(
 	lat: number,
 	lng: number,
 ): Promise<{
 	roadAddress: string | null;
 	bunjiAddress: string | null;
-} | null> => {
+} | null> {
 	const url = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`;
 	const headers = {
 		Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAOKEY}`,
@@ -35,4 +35,4 @@ export const convertCoordinatesToAddress = async (
 		console.error('Error converting coordinates to address:', error);
 		return null;
 	}
-};
+}

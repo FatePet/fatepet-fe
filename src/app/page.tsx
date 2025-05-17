@@ -25,7 +25,6 @@ import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
 import ConsultModal from './user/view-business/[category]/[businessId]/_components/ConsultModal';
 import BusinessCard from '@/components/user/BusinessCard';
 import { getBusinessDetailData } from './user/view-business/[category]/[businessId]/_components/mockupData';
-import DaumPost from '@/components/location/DaumPost';
 import RegisterLocationButton from '@/components/location/RegisterLocationButton';
 import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
 

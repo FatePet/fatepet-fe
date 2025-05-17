@@ -5,6 +5,8 @@ import BigButton from '../buttons/BigButton';
 import LongInput from '../inputs/LongInput';
 import DaumPost from '../location/DaumPost';
 import { convertCoordinatesToAddress } from '@/hooks/useGetAddressFromCoords';
+import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
+import useUserLocationStore from '@/store/useUserLocationStore';
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +15,7 @@ interface Props {
 }
 
 function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
+	const { setLocation } = useUserLocationStore();
 	const [inputAddressErrorMsg, setInputAddressErrorMsg] = useState<string>('');
 
 	const handleSetCurrentLocationBtnClick = () => {
@@ -39,6 +42,10 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 	};
 
 	const handleSaveBtnClick = () => {
+		convertAddressToCoordinates(address).then((result) => {
+			setLocation(address, result?.lat ?? 0, result?.lng ?? 0);
+			console.log(result);
+		});
 		// zustand에 location, latitude, longitude 저장해야함
 		// location으로 latitude, longitude 변환할수있는 Geocoding 함수 만들면 될듯
 		setIsModalOpen(false);
