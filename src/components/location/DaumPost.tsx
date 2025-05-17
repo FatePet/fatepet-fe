@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import BigButton from '../buttons/BigButton';
 

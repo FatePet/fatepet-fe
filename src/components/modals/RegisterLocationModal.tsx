@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import BigButton from '../buttons/BigButton';
 import LongInput from '../inputs/LongInput';
 import DaumPost from '../location/DaumPost';
+import { convertCoordinatesToAddress } from '@/hooks/useGetAddressFromCoords';
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +16,21 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 	const [inputAddressErrorMsg, setInputAddressErrorMsg] = useState<string>('');
 
 	const handleSetCurrentLocationBtnClick = () => {
-		// 현재 위치로 설정
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const { latitude, longitude } = position.coords;
+					convertCoordinatesToAddress(latitude, longitude).then((result) => {
+						setAddress(result?.roadAddress ?? '');
+					});
+				},
+				(error) => {
+					console.error('위치 가져오기 실패:', error);
+				},
+			);
+		} else {
+			console.error('이 브라우저는 위치 정보를 지원하지 않습니다.');
+		}
 		return;
 	};
 
