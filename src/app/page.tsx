@@ -25,6 +25,8 @@ import HeaderWithOnlyText from '@/components/headers/HeaderWithOnlyText';
 import ConsultModal from './user/view-business/[category]/[businessId]/_components/ConsultModal';
 import BusinessCard from '@/components/user/BusinessCard';
 import { getBusinessDetailData } from './user/view-business/[category]/[businessId]/_components/mockupData';
+import RegisterLocationButton from '@/components/location/RegisterLocationButton';
+import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
 
 export default function Main() {
 	// 공통 컴포넌트
@@ -45,6 +47,9 @@ export default function Main() {
 		const trimmedKeyword = e.target.value.trim();
 		setInputData(trimmedKeyword);
 	};
+	const [isLocationModalOpen, setIsLocationModalOpen] =
+		useState<boolean>(false);
+	const [address, setAddress] = useState<string>('');
 
 	// 끝
 	const pathname = usePathname();
@@ -362,6 +367,21 @@ export default function Main() {
 					address: getBusinessDetailData.data.address,
 				}}
 			/>
+			<div> 주소검색 api</div>
+			<RegisterLocationButton
+				handleClick={() => {
+					setIsLocationModalOpen(true);
+				}}
+			/>
+			{isLocationModalOpen && (
+				<ModalLayout setIsModalOpen={setIsLocationModalOpen}>
+					<RegisterLocationModal
+						setIsModalOpen={setIsLocationModalOpen}
+						address={address}
+						setAddress={setAddress}
+					/>
+				</ModalLayout>
+			)}
 		</div>
 	);
 }
