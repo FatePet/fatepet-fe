@@ -35,27 +35,15 @@ function UserMain() {
 
 			<div className='grid grid-cols-2 gap-4 text-white aspect-square p-3'>
 				<UserCategory
-					upperText='내 주변 장묘업체'
-					lowerText='찾아보기'
-					iconUrl='none'
 					category='장묘'
 				/>
 				<UserCategory
-					upperText='추억할 수 있는'
-					lowerText='악세사리 만들기'
-					iconUrl='none'
 					category='악세사리'
 				/>
 				<UserCategory
-					upperText='새로운 만남을 위해'
-					lowerText='브리더와 상담하기'
-					iconUrl='none'
 					category='브리더'
 				/>
 				<UserCategory
-					upperText='펫로스 증후군'
-					lowerText='전문 상담하기'
-					iconUrl='none'
 					category='행동상담'
 				/>
 			</div>
