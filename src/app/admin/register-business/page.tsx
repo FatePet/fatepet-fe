@@ -9,14 +9,6 @@ import AdditionalInfoArea from './_components/AdditionalInfoArea';
 const areaNameClass = 'font-bold text-[14px] text-gray-middle mt-[10px]';
 const borderClass = 'w-[100%] h-[1px] bg-gray-middle mb-[10px]';
 
-interface IerrorMsgType {
-	nameError: string;
-	hoursError: string;
-	phoneError: string;
-	emailError: string;
-	addressError: string;
-}
-
 function RegisterBusiness() {
 	const router = useRouter();
 	const [businessItem, setBusinessItem] =
@@ -37,7 +29,7 @@ function RegisterBusiness() {
 	);
 	const [address, setAddress] = useState<string>('');
 	const [detailAddress, setDetailAddress] = useState<string>('');
-	const [errorMsgs, setErrorMsgs] = useState<IerrorMsgType>({
+	const [errorMsgs, setErrorMsgs] = useState<IBusinessErrorMsgType>({
 		nameError: '',
 		hoursError: '',
 		phoneError: '',

@@ -10,21 +10,13 @@ import DaumPost from '@/components/location/DaumPost';
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
-interface IerrorMsgType {
-	nameError: string;
-	hoursError: string;
-	phoneError: string;
-	emailError: string;
-	addressError: string;
-}
-
 interface Props {
 	businessItem: IPostCreateBusinessRequestType;
 	setBusinessItem: React.Dispatch<
 		React.SetStateAction<IPostCreateBusinessRequestType>
 	>;
-	errorMsgs: IerrorMsgType;
-	setErrorMsgs: React.Dispatch<React.SetStateAction<IerrorMsgType>>;
+	errorMsgs: IBusinessErrorMsgType;
+	setErrorMsgs: React.Dispatch<React.SetStateAction<IBusinessErrorMsgType>>;
 	setImageFile: React.Dispatch<React.SetStateAction<string | File | null>>;
 	imageFile: string | File | null;
 	address: string;
