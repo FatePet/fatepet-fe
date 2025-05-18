@@ -4,10 +4,13 @@ type IPostCreateBusinessRequestType = {
 	type: string;
 	thumbnail: File | null;
 	address: string;
+	latitude: number;
+	longitude: number;
 	businessHours: string;
 	phoneNumber: string;
 	email: string;
 	service: IServiceItemType[];
+	serviceImage: File[];
 	additionalImage: File[];
 	additionalInfo: string;
 };

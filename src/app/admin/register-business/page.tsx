@@ -25,10 +25,13 @@ function RegisterBusiness() {
 			type: '',
 			thumbnail: null,
 			address: '',
+			latitude: 0,
+			longitude: 0,
 			businessHours: '',
 			phoneNumber: '',
 			email: '',
 			service: [],
+			serviceImage: [],
 			additionalImage: [],
 			additionalInfo: '',
 		});
