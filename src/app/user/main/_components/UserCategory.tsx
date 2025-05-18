@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface Props {
-    category: string;
+    category: '장묘' | '악세사리' | '브리더' | '행동상담';
 }
 
 function UserCategory({ category }: Props) {
