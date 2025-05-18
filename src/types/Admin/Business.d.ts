@@ -24,6 +24,14 @@ type IServiceItemType = {
 	image: boolean;
 };
 
+type IBusinessErrorMsgType = {
+	nameError: string;
+	hoursError: string;
+	phoneError: string;
+	emailError: string;
+	addressError: string;
+};
+
 // 업체 조회
 type IAdminBusinessItemType = {
 	businessId: number;
