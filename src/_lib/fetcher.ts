@@ -30,7 +30,7 @@ const _fetch = async <T = unknown, R = unknown>(
 	options: IFetchOptions<T>,
 	retry = true,
 ): Promise<R> => {
-	const { method, endpoint, body, authorization,setAccessToken } = options;
+	const { method, endpoint, body, authorization, setAccessToken } = options;
 	const headers: HeadersInit = {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const _fetch = async <T = unknown, R = unknown>(
 					credentials: 'include',
 				},
 			);
-      if (!reissueResponse.ok) {
+			if (!reissueResponse.ok) {
 				// refreshToken도 만료된 상태
 				if (setAccessToken) {
 					setAccessToken('');
@@ -89,9 +89,9 @@ const _fetch = async <T = unknown, R = unknown>(
 					'Access token is missing in the  x-amzn-Remapped-Authorization header',
 				);
 			}
-      if (setAccessToken) {
-        setAccessToken(accessToken);
-      }
+			if (setAccessToken) {
+				setAccessToken(accessToken);
+			}
 			return _fetch<T, R>({ ...options, authorization: accessToken }, false);
 		}
 
