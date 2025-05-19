@@ -8,19 +8,11 @@ import { testBusiness } from './_components/adminMockup';
 import useAuthStore from '@/store/useAuthStore';
 
 function AdminMain() {
-	const { setAccessToken } = useAuthStore();
+	const { clearAuth } = useAuthStore();
 	const handleLogout = async () => {
 		// 로그아웃 로직(임시 프론트에서 처리)
-		try {
-			await fetch('/api/admin/auth/logout', {
-				method: 'POST',
-				credentials: 'include',
-			});
-			setAccessToken('');
-			route.push('/admin/login');
-		} catch (error) {
-			alert('로그아웃에 실패하셨습니다.');
-		}
+		clearAuth();
+		route.replace('/admin/login');
 	};
 
 	const route = useRouter();
