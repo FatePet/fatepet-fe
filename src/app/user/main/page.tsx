@@ -8,7 +8,7 @@ import UserCategory from './_components/UserCategory';
 
 function UserMain() {
 	// 전역 location 값
-	const location = '';
+	const [address, setAddress] = useState<string>('');
 	const categories: ['장묘', '악세사리', '브리더', '행동상담'] = [
 		'장묘',
 		'악세사리',
@@ -35,7 +35,7 @@ function UserMain() {
 
 			<div className='min-w-[320px] max-[600px] -mx-[16.2px] my-3 mb-7'>
 				<LocationBar
-					location={location}
+					location={address}
 					handleClick={handleRegisterLocationModalBtnClick}
 				/>
 			</div>
@@ -50,7 +50,8 @@ function UserMain() {
 				<ModalLayout setIsModalOpen={setIsRegisterLocationModalOpen}>
 					<RegisterLocationModal
 						setIsModalOpen={setIsRegisterLocationModalOpen}
-						location={location}
+						address={address}
+						setAddress={setAddress}
 					/>
 				</ModalLayout>
 			)}
