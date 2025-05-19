@@ -10,13 +10,13 @@ function AdminMain() {
 	const handleLogout = () => {
 		// 로그아웃 로직
 
-		route.push('/admin/login')
-	}
+		route.push('/admin/login');
+	};
 
 	const route = useRouter();
 	const handleRegisterClick = () => {
-		route.push('/admin/register-business')
-	}
+		route.push('/admin/register-business');
+	};
 
 	return (
 		<div>
@@ -35,12 +35,8 @@ function AdminMain() {
 					</div>
 				) : (
 					<div>
-						{testBusiness.data.map((_, index) => (
-							<AdminBusinessCard
-								key={index}
-								adminBusinessItem={testBusiness.data[index]}
-								
-							/>
+						{testBusiness.data.map((businessItem, index) => (
+							<AdminBusinessCard key={index} adminBusinessItem={businessItem} />
 						))}
 					</div>
 				)}
@@ -56,8 +52,7 @@ function AdminMain() {
 				/>
 			</div>
 		</div>
-
-	)
+	);
 }
 
 export default AdminMain;
