@@ -14,6 +14,7 @@ interface IerrorMsgType {
 	hoursError: string;
 	phoneError: string;
 	emailError: string;
+	addressError: string;
 }
 
 function RegisterBusiness() {
@@ -34,12 +35,14 @@ function RegisterBusiness() {
 	const [thumbnailFile, setThumbnailFile] = useState<string | File | null>(
 		null,
 	);
-
+	const [address, setAddress] = useState<string>('');
+	const [detailAddress, setDetailAddress] = useState<string>('');
 	const [errorMsgs, setErrorMsgs] = useState<IerrorMsgType>({
 		nameError: '',
 		hoursError: '',
 		phoneError: '',
 		emailError: '',
+		addressError: '',
 	});
 	const [serviceErrorMsgs, setServiceErrorMsgs] = useState<string[]>(['']);
 	const [serviceList, setServiceList] = useState<IServiceItemType[]>([
@@ -95,6 +98,11 @@ function RegisterBusiness() {
 		} else {
 			newErrors.emailError = '';
 		}
+		if (businessItem.address === '') {
+			newErrors.addressError = '주소를 설정해주세요.';
+		} else {
+			newErrors.addressError = '';
+		}
 
 		setBusinessItem({ ...businessItem, thumbnail: thumbnailFile as File });
 
@@ -104,6 +112,8 @@ function RegisterBusiness() {
 		const validServiceImgFiles = serviceImageList.filter(
 			(file): file is File => file !== null,
 		);
+
+		console.log(businessItem);
 	};
 
 	return (
@@ -125,6 +135,10 @@ function RegisterBusiness() {
 						setErrorMsgs={setErrorMsgs}
 						imageFile={thumbnailFile}
 						setImageFile={setThumbnailFile}
+						address={address}
+						setAddress={setAddress}
+						detailAddress={detailAddress}
+						setDetailAddress={setDetailAddress}
 					/>
 				</div>
 				<div>
