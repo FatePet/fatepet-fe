@@ -9,8 +9,15 @@ import UserCategory from './_components/UserCategory';
 function UserMain() {
 	// 전역 location 값
 	const location = '';
+	const categories: ['장묘', '악세사리', '브리더', '행동상담'] = [
+		'장묘',
+		'악세사리',
+		'브리더',
+		'행동상담',
+	];
 
-	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] = useState<boolean>(false);
+	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] =
+		useState<boolean>(false);
 	const handleRegisterLocationModalBtnClick = () => {
 		setIsRegisterLocationModalOpen(true);
 	};
@@ -34,18 +41,9 @@ function UserMain() {
 			</div>
 
 			<div className='grid grid-cols-2 gap-4 text-white aspect-square p-3'>
-				<UserCategory
-					category='장묘'
-				/>
-				<UserCategory
-					category='악세사리'
-				/>
-				<UserCategory
-					category='브리더'
-				/>
-				<UserCategory
-					category='행동상담'
-				/>
+				{categories.map((categoryItem) => (
+					<UserCategory key={categoryItem} category={categoryItem} />
+				))}
 			</div>
 
 			{isRegisterLocationModalOpen && (
@@ -57,8 +55,7 @@ function UserMain() {
 				</ModalLayout>
 			)}
 		</div>
-
-	)
+	);
 }
 
 export default UserMain;
