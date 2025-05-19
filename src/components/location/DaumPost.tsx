@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import BigButton from '../buttons/BigButton';
 

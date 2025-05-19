@@ -21,7 +21,7 @@ function ViewBusinessList() {
 		'거리순',
 	);
 	// zustand에 저장된 location 값을 불러오는 부분
-	const location = '';
+	const [address, setAddress] = useState<string>('');
 
 	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] =
 		useState<boolean>(false);
@@ -58,7 +58,7 @@ function ViewBusinessList() {
 			/>
 			<div className='min-w-[320px] max-[600px] -mx-[16.2px]'>
 				<LocationBar
-					location={location}
+					location={address}
 					handleClick={handleRegisterLocationBtnClick}
 				/>
 			</div>
@@ -91,7 +91,8 @@ function ViewBusinessList() {
 				<ModalLayout setIsModalOpen={setIsRegisterLocationModalOpen}>
 					<RegisterLocationModal
 						setIsModalOpen={setIsRegisterLocationModalOpen}
-						location={location}
+						address={address}
+						setAddress={setAddress}
 					/>
 				</ModalLayout>
 			)}
