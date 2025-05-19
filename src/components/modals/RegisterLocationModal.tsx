@@ -46,8 +46,6 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 			setLocation(address, result?.lat ?? 0, result?.lng ?? 0);
 			console.log(result);
 		});
-		// zustand에 location, latitude, longitude 저장해야함
-		// location으로 latitude, longitude 변환할수있는 Geocoding 함수 만들면 될듯
 		setIsModalOpen(false);
 	};
 
