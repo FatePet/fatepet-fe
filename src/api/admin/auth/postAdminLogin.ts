@@ -22,10 +22,8 @@ export const postAdminLogin = async (
 		const result = await response.json();
 		throw new Error(result.message);
 	}
-	console.log([...response.headers.entries()]);
-	const authorization = response.headers.get(
-		'Authorizationx-amzn-Remapped-Authorization',
-	);
+	
+	const authorization = response.headers.get('x-amzn-remapped-authorization');
 	if (!authorization) {
 		throw new Error('Authorization header is missing');
 	}
