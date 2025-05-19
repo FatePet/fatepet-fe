@@ -8,7 +8,7 @@ interface Props {
 
 function BusinessCard({businessItem}: Props) {
   return (
-		<div className='w-full min-h-[286px] rounded-[16px] bg-white border-[0.5px] border-p-green-lite flex flex-col shadow-md overflow-hidden'>
+		<div className='w-full min-h-[286px] rounded-[16px] bg-white border-[0.5px] border-p-green-lite flex flex-col shadow-md overflow-hidden cursor-pointer'>
 			<div className='w-full h-[161px]'>
 				<img
 					src={businessItem.thumbnailUrl}
