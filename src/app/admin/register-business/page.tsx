@@ -57,10 +57,6 @@ function RegisterBusiness() {
 	>([]);
 
 	useEffect(() => {
-		console.log('businessItem 변경됨:', businessItem);
-	}, [businessItem]);
-
-	useEffect(() => {
 		const updatedErrorMsgs = serviceList.map((service) =>
 			service.name === '' ? '서비스명을 입력해주세요.' : '',
 		);
