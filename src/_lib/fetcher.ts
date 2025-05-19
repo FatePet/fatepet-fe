@@ -76,17 +76,17 @@ const _fetch = async <T = unknown, R = unknown>(
 
 			// Bearer 포함 accessToken 값 헤더에서 추출
 			const newAccessToken = reissueResponse.headers.get(
-				'x-amzn-Remapped-Authorization',
+				'x-amzn-remapped-authorization',
 			);
 			if (!newAccessToken) {
-				throw new Error('x-amzn-Remapped-Authorization header is missing');
+				throw new Error('x-amzn-remapped-authorization header is missing');
 			}
 
 			// Bearer 빼고 추출
 			const accessToken = newAccessToken.split(' ')[1];
 			if (!accessToken) {
 				throw new Error(
-					'Access token is missing in the  x-amzn-Remapped-Authorization header',
+					'Access token is missing in the  x-amzn-remapped-authorization header',
 				);
 			}
 			if (setAccessToken) {
