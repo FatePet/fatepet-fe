@@ -3,16 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-https": "./setup-https.sh"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.74.7",
     "@tanstack/react-query-devtools": "^5.74.7",
     "next": "15.3.1",
     "react": "^19.0.0",
+    "react-daum-postcode": "^3.2.0",
     "react-dom": "^19.0.0",
     "zustand": "^5.0.4"
   },

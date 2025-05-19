@@ -1,3 +1,12 @@
+## 기본 설정
+### localhost 서버 https 적용하는 방법
+<div>
+    <p>1. npm run setup-https</p>
+    <p>2. 실패 시 터미널 로그에 출력된 설명서를 보고 운영체제에 맞게 mkcert를 설치하고 다시 npm run setup-https</p>
+    <p>3. localhost-key.pem, localhost.pem 파일 생성됐는지 확인</p>
+    <p>4. npm run dev로 실행</p>
+</div>
+
 ## 📖 프로젝트 소개
 ### FatePet(페이트펫) : 
 

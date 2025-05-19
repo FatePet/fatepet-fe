@@ -6,20 +6,39 @@ import PackageServiceList from '@/app/user/view-business/[category]/[businessId]
 import PrimaryServiceList from '@/app/user/view-business/[category]/[businessId]/_components/PrimaryServiceList';
 import TextWithUnderLine from '@/app/user/view-business/[category]/[businessId]/_components/TextWithUnderLine';
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
+import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
+import ModalLayout from '@/components/modals/ModalLayout';
 import BusinessCard from '@/components/user/BusinessCard';
 import { useParams, useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 
 function AdminViewBusiness() {
 	const router = useRouter();
 	const params = useParams();
 	const businessId = params.businessId as string;
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+
 	const handleBackArrowClick = () => {
 		router.back();
 	};
 
 	const handleGoEditBtnClick = () => {
-		router.push(`/admin/edit-business/${businessId}`)
+		router.push(`/admin/edit-business/${businessId}`);
+	};
+
+	const handleDeleteBtnClick = () => {
+		setIsDeleteModalOpen(true);
+	};
+
+	const handleCancelBtnClick = () => {
+		setIsDeleteModalOpen(false)
+	}
+
+	const handleBusinessDelete = () => {
+		// 업체 삭제 api 연동 로직
+
+		// 성공 시 
+		router.back();
 	}
 
 	return (
@@ -30,7 +49,19 @@ function AdminViewBusiness() {
 				hasRightConfirmButton={true}
 				handleRightButtonClick={handleGoEditBtnClick}
 				type='수정'
+				handleDeleteButtonClick={handleDeleteBtnClick}
 			/>
+			{isDeleteModalOpen && (
+				<ModalLayout setIsModalOpen={setIsDeleteModalOpen}>
+					<CancelConfirmModal
+						modalConfirmText='해당 업체를 정말 삭제하실 건가요?'
+						leftButtonText='업체 삭제'
+						rightButtonText='취소'
+						handleLeftButtonClick={handleBusinessDelete}
+						handleRightButtonClick={handleCancelBtnClick}
+					/>
+				</ModalLayout>
+			)}
 			<div className='flex flex-col gap-[52px] pb-[100px]'>
 				<BusinessCard
 					businessItem={{

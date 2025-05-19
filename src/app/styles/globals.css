@@ -6,6 +6,7 @@
 @tailwind utilities;
 
 .root_container {
+	font-family: var(--font-pretendard);
 	min-width: 320px;
 	width: 100%;
 	max-width: 600px;

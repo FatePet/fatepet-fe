@@ -7,7 +7,8 @@ interface Props {
 	handleBackArrowClick: () => void;
 	hasRightConfirmButton: boolean;
 	handleRightButtonClick?: () => void;
-	type?: "확인" | "수정"
+	type?: "확인" | "수정";
+	handleDeleteButtonClick?: () => void;
 }
 
 function HeaderWithBackArrow({
@@ -15,7 +16,8 @@ function HeaderWithBackArrow({
 	handleBackArrowClick,
 	hasRightConfirmButton,
 	handleRightButtonClick,
-	type = "확인"
+	type = "확인",
+	handleDeleteButtonClick
 }: Props) {
 	return (
 		<div className='w-full h-[51px] flex items-center relative text-black bg-white'>
@@ -29,14 +31,21 @@ function HeaderWithBackArrow({
 			<div className='text-[20px] font-black ml-[15px]'>{headerTitle}</div>
 			{hasRightConfirmButton && (
 				<div className='ml-auto'>
-					{type === "확인" ? <CompleteButton
-						size='small'
-						handleClick={handleRightButtonClick!}
-					/>
-						:
-						<MiniButton buttonText='정보 수정' handleClick={handleRightButtonClick!} isClicked={true} />
-				}
-					
+					{type === '확인' ? (
+						<CompleteButton
+							size='small'
+							handleClick={handleRightButtonClick!}
+						/>
+					) : (
+						<div className="flex gap-[5px]">
+							<MiniButton
+								buttonText='정보 수정'
+								handleClick={handleRightButtonClick!}
+								isClicked={true}
+								/>
+								<MiniButton buttonText='삭제' handleClick={handleDeleteButtonClick!} isClicked={false} />
+						</div>
+					)}
 				</div>
 			)}
 		</div>
