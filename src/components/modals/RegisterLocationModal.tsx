@@ -44,7 +44,6 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 	const handleSaveBtnClick = () => {
 		convertAddressToCoordinates(address).then((result) => {
 			setLocation(address, result?.lat ?? 0, result?.lng ?? 0);
-			console.log(result);
 		});
 		setIsModalOpen(false);
 	};

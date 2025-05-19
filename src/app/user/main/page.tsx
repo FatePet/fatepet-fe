@@ -7,7 +7,6 @@ import ModalLayout from '@/components/modals/ModalLayout';
 import UserCategory from './_components/UserCategory';
 
 function UserMain() {
-	// 전역 location 값
 	const [address, setAddress] = useState<string>('');
 	const categories: ['장묘', '악세사리', '브리더', '행동상담'] = [
 		'장묘',
