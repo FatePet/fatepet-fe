@@ -6,12 +6,16 @@ interface Props {
 	modalConfirmText: string;
 	handleLeftButtonClick: () => void;
 	handleRightButtonClick: () => void;
+	leftButtonText: '등록 취소' | '계속 입력' | '확인' | '업체 삭제' | '취소';
+	rightButtonText: '등록 취소' | '계속 입력' | '확인' | '업체 삭제' | '취소';
 }
 
 function CancelConfirmModal({
 	modalConfirmText,
 	handleLeftButtonClick,
 	handleRightButtonClick,
+	leftButtonText,
+	rightButtonText
 }: Props) {
 	return (
 		<div className='w-full py-[20px] h-[201px] max-w-[360px] rounded-[15px] text-[14px] font-bold text-black bg-white'>
@@ -27,11 +31,11 @@ function CancelConfirmModal({
 				</div>
 				<div className='flex gap-[10px]'>
 					<ModalButton
-						buttonText='등록 취소'
+						buttonText={leftButtonText}
 						handleClick={handleLeftButtonClick}
 					/>
 					<ModalButton
-						buttonText='계속 입력'
+						buttonText={rightButtonText}
 						handleClick={handleRightButtonClick}
 					/>
 				</div>
