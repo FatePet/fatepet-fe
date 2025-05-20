@@ -1,5 +1,5 @@
 import { apiRoutes } from '@/_lib/apiRoutes';
-import { useMutation } from '@tanstack/react-query';
+import api from '@/_lib/fetcher';
 
 export const postCreateBusiness = async (
 	body: IPostCreateBusinessRequestType,
@@ -17,27 +17,18 @@ export const postCreateBusiness = async (
 	formData.append('email', body.email);
 	formData.append('service', JSON.stringify(body.service));
 	formData.append('additionalInfo', body.additionalInfo);
-
 	body.serviceImage.forEach((file) => {
 		formData.append('serviceImage', file);
 	});
-
 	body.additionalImage.forEach((file) => {
 		formData.append('additionalImage', file);
 	});
 
 	const response = await api.post<FormData, IResponseType>({
-		endpoint: apiRoutes.userInformation,
+		endpoint: apiRoutes.admin,
 		authorization: token,
 		body: formData,
 	});
 
 	return response;
-};
-
-export const usePostCreateBusiness = (token: string) => {
-	return useMutation({
-		mutationFn: (body: IPostCreateBusinessRequestType) =>
-			postCreateBusiness(body, token),
-	});
 };
