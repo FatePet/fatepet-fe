@@ -1,5 +1,4 @@
 import { apiRoutes } from '@/_lib/apiRoutes';
-import { useMutation } from '@tanstack/react-query';
 
 export const postAdminLogin = async (
 	body: IPostLoginRequestType,
@@ -36,8 +35,3 @@ export const postAdminLogin = async (
 	return accessToken;
 };
 
-export const usePostAdminLogin = () => {
-	return useMutation({
-		mutationFn: (body: IPostLoginRequestType) => postAdminLogin(body),
-	});
-};
