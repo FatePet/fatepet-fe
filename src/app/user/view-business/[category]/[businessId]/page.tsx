@@ -8,11 +8,11 @@ import OptionalServiceList from './_components/OptionalServiceList';
 import PackageServiceList from './_components/PackageServiceList';
 import BusinessCard from '@/components/user/BusinessCard';
 import AdditionalInfoList from './_components/AdditionalInfoList';
-import { getBusinessDetailData } from './_components/mockupData';
 import ConsultModal from './_components/ConsultModal';
 import StartConsultButton from '@/components/buttons/StartConsultButton';
 import ModalLayout from '@/components/modals/ModalLayout';
 import AlertModal from '@/components/modals/AlertModal';
+import { useGetUserBusinessDetail } from '@/hooks/api/user/useGetUserBusinessDetail';
 
 function UserViewBusiness() {
 	const router = useRouter();
@@ -23,6 +23,7 @@ function UserViewBusiness() {
 	const [isConsultModalOpen, setIsConsultModalOpen] = useState<boolean>(false);
 	const [isRequestSuccessModalOpen, setIsRequestSuccessModalOpen] =
 		useState<boolean>(false);
+	const { data: businessDetail } = useGetUserBusinessDetail(businessId);
 
 	const handleBackArrowClick = () => {
 		router.back();
@@ -31,6 +32,10 @@ function UserViewBusiness() {
 	const handleStartConsultBtnClick = () => {
 		setIsConsultModalOpen(true);
 	};
+
+	if (!businessDetail) {
+		return null;
+	}
 
 	return (
 		<div className='relative'>
@@ -42,51 +47,51 @@ function UserViewBusiness() {
 			<div className='flex flex-col gap-[52px] pb-[100px]'>
 				<BusinessCard
 					businessItem={{
-						name: getBusinessDetailData.data.name,
-						mainImageUrl: getBusinessDetailData.data.mainImageUrl,
-						businessHours: getBusinessDetailData.data.businessHours,
-						phoneNumber: getBusinessDetailData.data.phoneNumber,
-						category: getBusinessDetailData.data.category,
-						address: getBusinessDetailData.data.address,
+						name: businessDetail.data.name,
+						mainImageUrl: businessDetail.data.mainImageUrl,
+						businessHours: businessDetail.data.businessHours,
+						phoneNumber: businessDetail.data.phoneNumber,
+						category: businessDetail.data.category,
+						address: businessDetail.data.address,
 					}}
 				/>
-				{getBusinessDetailData.data.services.some(
+				{businessDetail.data.services.some(
 					(service) => service.category === '기본항목',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='기본항목' />
 						<PrimaryServiceList
-							services={getBusinessDetailData.data.services}
+							services={businessDetail.data.services}
 						/>
 					</div>
 				)}
 
-				{getBusinessDetailData.data.services.some(
+				{businessDetail.data.services.some(
 					(service) => service.category === '선택항목',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='선택항목' />
 						<OptionalServiceList
-							services={getBusinessDetailData.data.services}
+							services={businessDetail.data.services}
 						/>
 					</div>
 				)}
-				{getBusinessDetailData.data.services.some(
+				{businessDetail.data.services.some(
 					(service) => service.category === '패키지',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='패키지' />
 						<PackageServiceList
-							services={getBusinessDetailData.data.services}
+							services={businessDetail.data.services}
 						/>
 					</div>
 				)}
-				{(getBusinessDetailData.data.additionalInfo.description ||
-					getBusinessDetailData.data.additionalInfo.images) && (
+				{(businessDetail.data.additionalInfo.description ||
+					businessDetail.data.additionalInfo.images) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='기타정보' />
 						<AdditionalInfoList
-							additionalInfo={getBusinessDetailData.data.additionalInfo}
+							additionalInfo={businessDetail.data.additionalInfo}
 						/>
 					</div>
 				)}

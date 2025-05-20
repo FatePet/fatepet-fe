@@ -9,11 +9,6 @@ type IBusinessItemCommonType = {
 };
 
 // 업체 상세 조회
-type IGetBusinessDetailRequestType = {
-	businessId: string;
-	authorization?: string;
-};
-
 type IGetBusinessDetailResponseType = IResponseType & {
 	data: IBusinessDetailDataType;
 };

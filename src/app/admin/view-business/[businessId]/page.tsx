@@ -8,7 +8,7 @@ import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
 import ModalLayout from '@/components/modals/ModalLayout';
 import BusinessCard from '@/components/user/BusinessCard';
-import { useGetBusinessDetail } from '@/hooks/api/admin/business/useGetBusinessDetail';
+import { useGetAdminBusinessDetail } from '@/hooks/api/admin/business/useGetAdminBusinessDetail';
 import useAuthStore from '@/store/useAuthStore';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -19,10 +19,10 @@ function AdminViewBusiness() {
 	const businessId = params.businessId as string;
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const { accessToken } = useAuthStore();
-	const { data: businessDetail } = useGetBusinessDetail({
+	const { data: businessDetail } = useGetAdminBusinessDetail(
 		businessId,
-		authorization: accessToken,
-	});
+		accessToken,
+	);
 
 	const handleBackArrowClick = () => {
 		router.back();
@@ -88,9 +88,7 @@ function AdminViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='기본항목' />
-						<PrimaryServiceList
-							services={businessDetail.data.services}
-						/>
+						<PrimaryServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 
@@ -99,9 +97,7 @@ function AdminViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='선택항목' />
-						<OptionalServiceList
-							services={businessDetail.data.services}
-						/>
+						<OptionalServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 				{businessDetail.data.services.some(
@@ -109,9 +105,7 @@ function AdminViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='패키지' />
-						<PackageServiceList
-							services={businessDetail.data.services}
-						/>
+						<PackageServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 				{(businessDetail.data.additionalInfo.description ||

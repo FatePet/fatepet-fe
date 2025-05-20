@@ -1,10 +1,9 @@
 import { apiRoutes } from '@/_lib/apiRoutes';
 import api from '@/_lib/fetcher';
 
-export const getBusinessDetail = async (data: IGetBusinessDetailRequestType) => {
-	const authorization = data.authorization ?? undefined;
+export const getAdminBusinessDetail = async (businessId: string, authorization: string) => {
 	const response: IGetBusinessDetailResponseType = await api.get({
-		endpoint: `${apiRoutes.business}/${data.businessId}`,
+		endpoint: `${apiRoutes.business}/${businessId}`,
 		authorization,
 	});
     return response;
