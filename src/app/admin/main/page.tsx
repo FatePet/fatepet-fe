@@ -5,12 +5,14 @@ import AdminBusinessCard from './_components/AdminBusinessCard';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { testBusiness } from './_components/adminMockup';
+import useAuthStore from '@/store/useAuthStore';
 
 function AdminMain() {
-	const handleLogout = () => {
-		// 로그아웃 로직
-
-		route.push('/admin/login');
+	const { clearAuth } = useAuthStore();
+	const handleLogout = async () => {
+		// 로그아웃 로직(임시 프론트에서 처리)
+		clearAuth();
+		route.replace('/admin/login');
 	};
 
 	const route = useRouter();
