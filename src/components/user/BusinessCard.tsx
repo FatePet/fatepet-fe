@@ -11,7 +11,7 @@ function BusinessCard({businessItem}: Props) {
 		<div className='w-full min-h-[286px] rounded-[16px] bg-white border-[0.5px] border-p-green-lite flex flex-col shadow-md overflow-hidden cursor-pointer'>
 			<div className='w-full h-[161px]'>
 				<img
-					src={businessItem.thumbnailUrl}
+					src={businessItem.mainImageUrl}
 					alt='업체대표이미지'
 					className='w-full h-full'
 				/>

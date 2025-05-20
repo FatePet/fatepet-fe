@@ -43,7 +43,7 @@ function UserViewBusiness() {
 				<BusinessCard
 					businessItem={{
 						name: getBusinessDetailData.data.name,
-						thumbnailUrl: getBusinessDetailData.data.thumbnailUrl,
+						mainImageUrl: getBusinessDetailData.data.mainImageUrl,
 						businessHours: getBusinessDetailData.data.businessHours,
 						phoneNumber: getBusinessDetailData.data.phoneNumber,
 						category: getBusinessDetailData.data.category,
@@ -51,7 +51,7 @@ function UserViewBusiness() {
 					}}
 				/>
 				{getBusinessDetailData.data.services.some(
-					(service) => service.type === '기본항목',
+					(service) => service.category === '기본항목',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='기본항목' />
@@ -62,7 +62,7 @@ function UserViewBusiness() {
 				)}
 
 				{getBusinessDetailData.data.services.some(
-					(service) => service.type === '선택항목',
+					(service) => service.category === '선택항목',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='선택항목' />
@@ -72,7 +72,7 @@ function UserViewBusiness() {
 					</div>
 				)}
 				{getBusinessDetailData.data.services.some(
-					(service) => service.type === '패키지',
+					(service) => service.category === '패키지',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='패키지' />
@@ -82,7 +82,7 @@ function UserViewBusiness() {
 					</div>
 				)}
 				{(getBusinessDetailData.data.additionalInfo.description ||
-					getBusinessDetailData.data.additionalInfo.imageUrl) && (
+					getBusinessDetailData.data.additionalInfo.images) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='기타정보' />
 						<AdditionalInfoList

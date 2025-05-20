@@ -6,7 +6,7 @@ interface Props {
 	modalConfirmText: string;
 	handleLeftButtonClick: () => void;
 	handleRightButtonClick: () => void;
-	leftButtonText: '등록 취소' | '계속 입력' | '확인' | '업체 삭제' | '취소';
+	leftButtonText: '등록 취소' | '계속 입력' | '확인' | '업체 삭제' | '취소' | '서비스 삭제';
 	rightButtonText: '등록 취소' | '계속 입력' | '확인' | '업체 삭제' | '취소';
 }
 

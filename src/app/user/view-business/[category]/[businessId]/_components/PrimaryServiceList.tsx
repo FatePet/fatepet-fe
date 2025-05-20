@@ -8,7 +8,7 @@ interface Props {
 
 function PrimaryServiceList({ services }: Props) {
 	const primaryServices = services.filter(
-		(service) => service.type === '기본항목',
+		(service) => service.category === '기본항목',
 	);
 	return (
 		<div className='w-full flex flex-col gap-[5px]'>

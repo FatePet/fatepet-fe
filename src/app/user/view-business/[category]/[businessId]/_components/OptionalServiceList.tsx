@@ -9,7 +9,7 @@ interface Props{
 function OptionalServiceList({services}:Props) {
   
     const optionalServices = services.filter(
-		(service) => service.type === '선택항목')
+		(service) => service.category === '선택항목')
   
     return (
 			<div className='w-full flex flex-col gap-[5px]'>
