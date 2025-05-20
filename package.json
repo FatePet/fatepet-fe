@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-      "https": "node server.js"
+    "setup-https": "./setup-https.sh"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.74.7",

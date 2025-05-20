@@ -1,6 +1,6 @@
 'use client';
 import LongInput from '@/components/inputs/LongInput';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import BigButton from '@/components/buttons/BigButton';
 import { useRouter } from 'next/navigation';
@@ -12,7 +12,17 @@ function AdminLogin() {
 	const [password, setPassword] = useState<string>('');
 	const router = useRouter();
 	const Login = usePostAdminLogin();
-	const { setAccessToken } = useAuthStore();
+	const { setAccessToken, isHydrated, accessToken } = useAuthStore();
+
+	useEffect(() => {
+		if (!isHydrated) {
+			return;
+		}
+
+		if (accessToken) {
+			router.replace('/admin/main');
+		}
+	}, [accessToken, isHydrated, router]);
 
 	const handleIdInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const trimmedId = e.target.value.trim();
@@ -24,19 +34,28 @@ function AdminLogin() {
 		setPassword(trimmedPw);
 	};
 
-	const handleLoginBtnClick = () => {	
-		Login.mutate({ username, password },
+	const handleLoginBtnClick = () => {
+		Login.mutate(
+			{ username, password },
 			{
 				onSuccess: (accessToken: string) => {
 					setAccessToken(accessToken);
 					router.push('/admin/main');
 				},
 				onError: (error) => {
-					alert(error.message)
-				}
-			}
-		)
+					alert(error.message);
+				},
+			},
+		);
 	};
+
+	if (!isHydrated) {
+		return null;
+	}
+
+	if (accessToken) {
+		return null;
+	}
 
 	return (
 		<div>
