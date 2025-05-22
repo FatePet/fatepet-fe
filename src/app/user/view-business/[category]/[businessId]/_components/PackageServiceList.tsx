@@ -20,12 +20,14 @@ function PackageServiceList({ services }: Props) {
 						description={packageService.description}
 						imageUrl={packageService.imageUrl}
 						price={packageService.price}
+						key={packageService.serviceId}
 					/>
 				) : (
 					<ServiceCardWithNoImage
 						name={packageService.name}
 						description={packageService.description}
 						price={packageService.price}
+						key={packageService.serviceId}
 					/>
 				),
 			)}

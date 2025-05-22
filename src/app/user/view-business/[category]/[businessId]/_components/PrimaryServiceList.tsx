@@ -19,12 +19,14 @@ function PrimaryServiceList({ services }: Props) {
 						description={primaryService.description}
 						imageUrl={primaryService.imageUrl}
 						price={primaryService.price}
+						key={primaryService.serviceId}
 					/>
 				) : (
 					<ServiceCardWithNoImage
 						name={primaryService.name}
 						description={primaryService.description}
 						price={primaryService.price}
+						key={primaryService.serviceId}
 					/>
 				),
 			)}

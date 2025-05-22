@@ -22,7 +22,7 @@ function BusinessCard({businessItem}: Props) {
 					<Tag tagText={businessItem.category} />
 				</div>
 				<div className='flex gap-[5px]'>
-					<Image
+					<img
 						src='/icons/businessCard/locationIcon-black.svg'
 						alt='위치아이콘'
 						width={11}
@@ -31,7 +31,7 @@ function BusinessCard({businessItem}: Props) {
 					<div>{businessItem.address}</div>
 				</div>
 				<div className='flex gap-[5px]'>
-					<Image
+					<img
 						src='/icons/businessCard/timeIcon.svg'
 						alt='시계아이콘'
 						width={12}
@@ -40,7 +40,7 @@ function BusinessCard({businessItem}: Props) {
 					<div>{businessItem.businessHours}</div>
 				</div>
 				<div className='flex gap-[5px]'>
-					<Image
+					<img
 						src='/icons/businessCard/chatIcon.svg'
 						alt='채팅아이콘'
 						width={11}
