@@ -20,7 +20,7 @@ function AdminBusinessCard({ adminBusinessItem }: Props) {
 			>
 				<div className='relative flex flex-shrink-0 w-32 h-32'>
 					<Image
-						src={adminBusinessItem.thumbnailUrl}
+						src={adminBusinessItem.mainImageUrl}
 						alt={adminBusinessItem.name}
 						fill
 						className='object-cover rounded-xl'

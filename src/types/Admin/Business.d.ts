@@ -21,15 +21,15 @@ type IServiceItemType = {
 	image: boolean;
 };
 
-// 업체 조회
+// 업체 목록 조회
+type IGetAdminBusinessResponseType = IResponseType & {
+	data: IAdminBusinessItemType[];
+};
+
 type IAdminBusinessItemType = {
 	businessId: number;
 	name: string;
 	address: string;
 	category: string;
-	thumbnailUrl: string;
-};
-
-type IGetAdminBusinessResponseType = IResponseType & {
-	data: IAdminBusinessItemType[];
+	mainImageUrl: string;
 };

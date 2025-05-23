@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-	buttonText: '등록 취소' | '계속 입력' | '확인' | "업체 삭제" | '취소';
+	buttonText: '등록 취소' | '계속 입력' | '확인' | "업체 삭제" | '취소' | '서비스 삭제';
 	handleClick: () => void;
 }
 
@@ -13,6 +13,9 @@ function ModalButton({ buttonText, handleClick }: Props) {
 		className += ' w-[92px] bg-p-red';
 	} else if (buttonText === '계속 입력' || buttonText === '취소') {
 		className += ' w-[92px] bg-p-black ';
+	} 
+	 else if (buttonText === '서비스 삭제') {
+		className += ' w-[104px] bg-p-red ';
 	} 
 
 	return (

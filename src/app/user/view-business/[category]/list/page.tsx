@@ -3,12 +3,13 @@ import RoundedButton from '@/components/buttons/RoundedButton';
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import LocationBar from '@/components/location/LocationBar';
 import { useParams, useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SortOptionModal from './_components/SortOptionModal';
 import { getUserBusinessListData } from './_components/getUserBusinessListData';
 import BusinessCard from '@/components/user/BusinessCard';
 import ModalLayout from '@/components/modals/ModalLayout';
 import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
+import useUserLocationStore from '@/store/useUserLocationStore';
 
 function ViewBusinessList() {
 	const router = useRouter();
@@ -22,9 +23,16 @@ function ViewBusinessList() {
 	);
 	// zustand에 저장된 location 값을 불러오는 부분
 	const [address, setAddress] = useState<string>('');
+	const { location } = useUserLocationStore();
 
 	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] =
 		useState<boolean>(false);
+
+	useEffect(() => {
+		if (location) {
+			setAddress(location);
+		}
+	}, [location]);
 
 	const handleRegisterLocationBtnClick = () => {
 		setIsRegisterLocationModalOpen(true);

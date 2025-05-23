@@ -1,12 +1,14 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import LocationBar from '@/components/location/LocationBar';
 import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
 import ModalLayout from '@/components/modals/ModalLayout';
 import UserCategory from './_components/UserCategory';
+import useUserLocationStore from '@/store/useUserLocationStore';
 
 function UserMain() {
+	const { location } = useUserLocationStore();
 	const [address, setAddress] = useState<string>('');
 	const categories: ['장묘', '악세사리', '브리더', '행동상담'] = [
 		'장묘',
@@ -17,6 +19,13 @@ function UserMain() {
 
 	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] =
 		useState<boolean>(false);
+
+	useEffect(() => {
+		if (location) {
+			setAddress(location);
+		}
+	}, [location]);
+
 	const handleRegisterLocationModalBtnClick = () => {
 		setIsRegisterLocationModalOpen(true);
 	};
