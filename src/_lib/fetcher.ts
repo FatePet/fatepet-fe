@@ -75,9 +75,7 @@ const _fetch = async <T = unknown, R = unknown>(
 			}
 
 			// Bearer 포함 accessToken 값 헤더에서 추출
-			const newAccessToken = reissueResponse.headers.get(
-				'x-amzn-remapped-authorization',
-			);
+			const newAccessToken = reissueResponse.headers.get('Authorization');
 			if (!newAccessToken) {
 				throw new Error('x-amzn-remapped-authorization header is missing');
 			}
