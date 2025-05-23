@@ -6,18 +6,29 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { testBusiness } from './_components/adminMockup';
 import useAuthStore from '@/store/useAuthStore';
+import { useGetAdminBusiness } from '@/hooks/api/admin/business/useGetAdminBusiness';
 
 function AdminMain() {
+	const route = useRouter();
 	const { clearAuth } = useAuthStore();
+	const { accessToken } = useAuthStore();
+
 	const handleLogout = async () => {
 		// 로그아웃 로직(임시 프론트에서 처리)
 		clearAuth();
 		route.replace('/admin/login');
 	};
 
-	const route = useRouter();
 	const handleRegisterClick = () => {
 		route.push('/admin/register-business');
+	};
+
+	const { data: adminBusiness } = useGetAdminBusiness(
+		accessToken,
+	);
+
+	if (!adminBusiness) {
+		return null;
 	};
 
 	return (
@@ -37,7 +48,7 @@ function AdminMain() {
 					</div>
 				) : (
 					<div>
-						{testBusiness.data.map((businessItem, index) => (
+						{adminBusiness.data.map((businessItem, index) => (
 							<AdminBusinessCard key={index} adminBusinessItem={businessItem} />
 						))}
 					</div>
