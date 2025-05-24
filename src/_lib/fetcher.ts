@@ -50,6 +50,13 @@ const _fetch = async <T = unknown, R = unknown>(
 		requestOptions.body = JSON.stringify(body);
 	}
 
+	if (body instanceof FormData) {
+		delete headers['Content-Type'];
+		requestOptions.body = body;
+	} else if (body) {
+		requestOptions.body = JSON.stringify(body);
+	}
+
 	try {
 		const res = await fetch(
 			`${process.env.NEXT_PUBLIC_API}${endpoint}`,
