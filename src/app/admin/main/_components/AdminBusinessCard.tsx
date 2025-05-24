@@ -19,10 +19,9 @@ function AdminBusinessCard({ adminBusinessItem }: Props) {
 				onClick={handleClickFn}
 			>
 				<div className='relative flex flex-shrink-0 w-32 h-32'>
-					<Image
-						src={adminBusinessItem.mainImageUrl}
+					<img
+						src={adminBusinessItem.thumbnailUrl}
 						alt={adminBusinessItem.name}
-						fill
 						className='object-cover rounded-xl'
 					/>
 				</div>

@@ -1,17 +1,16 @@
 'use client';
 import HeaderWithRightbutton from '@/components/headers/HeaderWithRightbutton';
-import React, { useState } from 'react';
+import React from 'react';
 import AdminBusinessCard from './_components/AdminBusinessCard';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { testBusiness } from './_components/adminMockup';
 import useAuthStore from '@/store/useAuthStore';
 import { useGetAdminBusiness } from '@/hooks/api/admin/business/useGetAdminBusiness';
 
 function AdminMain() {
 	const route = useRouter();
 	const { clearAuth } = useAuthStore();
-	const { accessToken } = useAuthStore();
+	const { accessToken, setAccessToken} = useAuthStore();
 
 	const handleLogout = async () => {
 		// 로그아웃 로직(임시 프론트에서 처리)
@@ -24,7 +23,7 @@ function AdminMain() {
 	};
 
 	const { data: adminBusiness } = useGetAdminBusiness(
-		accessToken,
+		accessToken, setAccessToken
 	);
 
 	if (!adminBusiness) {
@@ -41,7 +40,7 @@ function AdminMain() {
 				/>
 			</div>
 			<div>
-				{testBusiness.data.length === 0 ? (
+				{adminBusiness.data.length === 0 ? (
 					<div className='flex flex-col justify-center items-center h-[70vh] font-bold text-gray-500'>
 						<div>등록된 업체가 없어요.</div>
 						<div>업체를 추가해 주세요</div>
