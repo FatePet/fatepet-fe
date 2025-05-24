@@ -1,4 +1,3 @@
-import BigButton from '@/components/buttons/BigButton';
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import React, { useEffect, useState } from 'react';
@@ -6,6 +5,8 @@ import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
+import { useGetCheckBusinessName } from '@/hooks/admin/business/useGetCheckBusinessName';
+import useAuthStore from '@/store/useAuthStore';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -36,7 +37,15 @@ function BusinessInfoArea({
 	detailAddress,
 	setDetailAddress,
 }: Props) {
+	const { accessToken } = useAuthStore();
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
+	const [isCheckName, setIsCheckName] = useState<boolean>(false);
+	const [nameErr, setNameErr] = useState<string>('');
+	const { refetch } = useGetCheckBusinessName(
+		accessToken,
+		businessItem.name,
+		isCheckName,
+	);
 
 	const businessCategory = [
 		{
@@ -94,7 +103,27 @@ function BusinessInfoArea({
 		setImgPreview(null);
 	};
 
-	const handleCheckDuplicateName = () => {};
+	const handleCheckDuplicateName = async () => {
+		setIsCheckName(true);
+		try {
+			const { data: checkNameData, error } = await refetch();
+			if (checkNameData) {
+				if (checkNameData.status === 200) {
+					console.log('중복어	ㅅ으');
+					setNameErr('');
+				} else {
+					setNameErr('이미 사용중인 이름입니다.');
+				}
+			}
+			if (error) {
+				alert(error);
+			}
+		} catch (err) {
+			alert(err);
+		} finally {
+			setIsCheckName(false);
+		}
+	};
 
 	return (
 		<div className='flex flex-col gap-[20px]'>
@@ -110,6 +139,7 @@ function BusinessInfoArea({
 					buttonText='중복확인'
 					handleButtonClick={handleCheckDuplicateName}
 				/>
+				{nameErr !== '' && <p>{nameErr}</p>}
 			</div>
 			<div className={divClass}>
 				<p>

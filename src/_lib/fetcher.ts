@@ -37,7 +37,7 @@ const _fetch = async <T = unknown, R = unknown>(
 	};
 
 	if (authorization) {
-		headers.access = authorization;
+		headers.Authorization = `Bearer ${authorization}`;
 	}
 
 	const requestOptions: RequestInit = {
