@@ -243,6 +243,8 @@ function ServiceCard({
 						rightButtonText='확인'
 						handleLeftButtonClick={handleLeftButtonClick}
 						handleRightButtonClick={handleRightButtonClick}
+						leftButtonText='서비스 삭제'
+						rightButtonText='계속 입력'
 					/>
 				</ModalLayout>
 			)}

@@ -1,5 +1,4 @@
 import { apiRoutes } from '@/_lib/apiRoutes';
-import { useMutation } from '@tanstack/react-query';
 
 export const postAdminLogin = async (
 	body: IPostLoginRequestType,
@@ -23,7 +22,7 @@ export const postAdminLogin = async (
 		throw new Error(result.message);
 	}
 	
-	const authorization = response.headers.get('x-amzn-remapped-authorization');
+	const authorization = response.headers.get('Authorization');
 	if (!authorization) {
 		throw new Error('Authorization header is missing');
 	}
@@ -36,8 +35,3 @@ export const postAdminLogin = async (
 	return accessToken;
 };
 
-export const usePostAdminLogin = () => {
-	return useMutation({
-		mutationFn: (body: IPostLoginRequestType) => postAdminLogin(body),
-	});
-};

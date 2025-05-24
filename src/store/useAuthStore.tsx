@@ -16,7 +16,6 @@ const useAuthStore = create<AuthState>()(
 			isHydrated: false,
 			clearAuth: () => {
 				set({ accessToken: '' });
-				localStorage.removeItem('auth-storage');
 			},
 		}),
 		{

@@ -8,9 +8,10 @@ function AdditionalInfoList({additionalInfo}:Props) {
   return (
 		<div className='w-full flex flex-col gap-[10px]'>
 			<div className='w-full rounded-[10px] flex flex-col gap-[10px]'>
-				{additionalInfo.imageUrl.map((image) => (
+				{additionalInfo.images.map((imageItem: IAdditionalImageType) => (
 					<img
-						src={image}
+						key={imageItem.imageId}
+						src={imageItem.url}
 						alt='기타정보사진'
 						className='w-full rounded-[10px] h-[232px]'
 					/>

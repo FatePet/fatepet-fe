@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import BigButton from '../buttons/BigButton';
 import LongInput from '../inputs/LongInput';
 import DaumPost from '../location/DaumPost';
@@ -16,7 +16,6 @@ interface Props {
 
 function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 	const { setLocation } = useUserLocationStore();
-	const [inputAddressErrorMsg, setInputAddressErrorMsg] = useState<string>('');
 
 	const handleSetCurrentLocationBtnClick = () => {
 		if (navigator.geolocation) {
@@ -59,7 +58,7 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 				/>
 				<LongInput
 					disabled={true}
-					errorMsg={inputAddressErrorMsg}
+					errorMsg=''
 					inputData={address}
 					placeHolder='주소 검색을 진행해 주세요.'
 				/>

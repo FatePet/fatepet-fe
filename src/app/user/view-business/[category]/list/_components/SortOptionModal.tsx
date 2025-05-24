@@ -15,9 +15,11 @@ function SortOptionModal({ handleSortOptionItemClick }: Props) {
 	return (
 		<div className='flex flex-col w-[123px] h-[116px] rounded-[11px] bg-p-black font-bold text-[12px] text-white items-center'>
 			{sortOptionArr.map((sortOption, index) => (
-				<div className='w-full flex flex-col items-center justify-center'>
+				<div
+					key={sortOption}
+					className='w-full flex flex-col items-center justify-center'
+				>
 					<div
-						key={sortOption}
 						className='w-full h-[38px] flex items-center justify-center cursor-pointer'
 						onClick={() => {
 							handleSortOptionItemClick(sortOption);

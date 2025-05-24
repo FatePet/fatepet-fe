@@ -8,7 +8,7 @@ interface Props {
 
 function PackageServiceList({ services }: Props) {
 	const packageServices = services.filter(
-		(service) => service.type === '패키지',
+		(service) => service.category === '패키지',
 	);
 
 	return (
@@ -20,12 +20,14 @@ function PackageServiceList({ services }: Props) {
 						description={packageService.description}
 						imageUrl={packageService.imageUrl}
 						price={packageService.price}
+						key={packageService.serviceId}
 					/>
 				) : (
 					<ServiceCardWithNoImage
 						name={packageService.name}
 						description={packageService.description}
 						price={packageService.price}
+						key={packageService.serviceId}
 					/>
 				),
 			)}

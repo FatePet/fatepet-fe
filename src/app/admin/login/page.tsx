@@ -4,15 +4,15 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import BigButton from '@/components/buttons/BigButton';
 import { useRouter } from 'next/navigation';
-import { usePostAdminLogin } from '@/api/admin/auth/postAdminLogin';
 import useAuthStore from '@/store/useAuthStore';
+import { usePostAdminLogin } from '@/hooks/api/admin/auth/usePostAdminLogin';
 
 function AdminLogin() {
 	const [username, setUsername] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const router = useRouter();
-	const Login = usePostAdminLogin();
-	const { setAccessToken, isHydrated, accessToken } = useAuthStore();
+	const { isHydrated, accessToken } = useAuthStore();
+	const { mutate: Login } = usePostAdminLogin();
 
 	useEffect(() => {
 		if (!isHydrated) {
@@ -35,18 +35,7 @@ function AdminLogin() {
 	};
 
 	const handleLoginBtnClick = () => {
-		Login.mutate(
-			{ username, password },
-			{
-				onSuccess: (accessToken: string) => {
-					setAccessToken(accessToken);
-					router.push('/admin/main');
-				},
-				onError: (error) => {
-					alert(error.message);
-				},
-			},
-		);
+		Login({ username, password });
 	};
 
 	if (!isHydrated) {
