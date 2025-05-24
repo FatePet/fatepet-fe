@@ -6,12 +6,16 @@ import ServiceInfoArea from './_components/ServiceInfoArea';
 import BusinessInfoArea from './_components/BusinessInfoArea';
 import AdditionalInfoArea from './_components/AdditionalInfoArea';
 import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
+import useAuthStore from '@/store/useAuthStore';
+import { usePostCreateBusiness } from '@/hooks/admin/business/usePostCreateBusiness';
 
 const areaNameClass = 'font-bold text-[14px] text-gray-middle mt-[10px]';
 const borderClass = 'w-[100%] h-[1px] bg-gray-middle mb-[10px]';
 
 function RegisterBusiness() {
 	const router = useRouter();
+	const { accessToken } = useAuthStore();
+	const { mutate: createBusiness } = usePostCreateBusiness(accessToken);
 	const [businessItem, setBusinessItem] =
 		useState<IPostCreateBusinessRequestType>({
 			name: '',
@@ -130,6 +134,8 @@ function RegisterBusiness() {
 			...prev,
 			serviceImage: validServiceImgFiles,
 		}));
+
+		createBusiness(businessItem);
 	};
 
 	return (
