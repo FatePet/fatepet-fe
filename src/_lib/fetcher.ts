@@ -37,7 +37,7 @@ const _fetch = async <T = unknown, R = unknown>(
 	};
 
 	if (authorization) {
-		headers.access = authorization;
+		headers.Authorization = `Bearer ${authorization}`;
 	}
 
 	const requestOptions: RequestInit = {
@@ -70,22 +70,20 @@ const _fetch = async <T = unknown, R = unknown>(
 				if (setAccessToken) {
 					setAccessToken('');
 				}
-				window.location.reload();
+				window.location.replace('/admin/login');
 				throw new Error('Failed to refreshToken');
 			}
 
 			// Bearer 포함 accessToken 값 헤더에서 추출
 			const newAccessToken = reissueResponse.headers.get('Authorization');
 			if (!newAccessToken) {
-				throw new Error('x-amzn-remapped-authorization header is missing');
+				throw new Error('Authorization is missing');
 			}
 
 			// Bearer 빼고 추출
 			const accessToken = newAccessToken.split(' ')[1];
 			if (!accessToken) {
-				throw new Error(
-					'Access token is missing in the  x-amzn-remapped-authorization header',
-				);
+				throw new Error('Access token is missing in the Authorization header');
 			}
 			if (setAccessToken) {
 				setAccessToken(accessToken);
@@ -109,39 +107,72 @@ const _fetch = async <T = unknown, R = unknown>(
 const _get = async <R = unknown>({
 	endpoint,
 	authorization,
+	setAccessToken,
 }: IGetOptions): Promise<R> => {
-	return _fetch<never, R>({ method: 'GET', endpoint, authorization });
+	return _fetch<never, R>({
+		method: 'GET',
+		endpoint,
+		authorization,
+		setAccessToken,
+	});
 };
 
 const _post = async <T = unknown, R = unknown>({
 	endpoint,
 	body,
 	authorization,
+	setAccessToken,
 }: IPostOptions<T>): Promise<R> => {
-	return _fetch<T, R>({ method: 'POST', endpoint, body, authorization });
+	return _fetch<T, R>({
+		method: 'POST',
+		endpoint,
+		body,
+		authorization,
+		setAccessToken,
+	});
 };
 
 const _patch = async <T = unknown, R = unknown>({
 	endpoint,
 	body,
 	authorization,
+	setAccessToken,
 }: IPostOptions<T>): Promise<R> => {
-	return _fetch<T, R>({ method: 'PATCH', endpoint, body, authorization });
+	return _fetch<T, R>({
+		method: 'PATCH',
+		endpoint,
+		body,
+		authorization,
+		setAccessToken,
+	});
 };
 
 const _put = async <T = unknown, R = unknown>({
 	endpoint,
 	body,
 	authorization,
+	setAccessToken,
 }: IPostOptions<T>): Promise<R> => {
-	return _fetch<T, R>({ method: 'PUT', endpoint, body, authorization });
+	return _fetch<T, R>({
+		method: 'PUT',
+		endpoint,
+		body,
+		authorization,
+		setAccessToken,
+	});
 };
 
 const _delete = async <R = unknown>({
 	endpoint,
 	authorization,
+	setAccessToken,
 }: IDeleteOptions): Promise<R> => {
-	return _fetch<never, R>({ method: 'DELETE', authorization, endpoint });
+	return _fetch<never, R>({
+		method: 'DELETE',
+		authorization,
+		endpoint,
+		setAccessToken,
+	});
 };
 
 const api = {
