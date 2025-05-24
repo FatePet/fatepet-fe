@@ -4,6 +4,7 @@ import api from '@/_lib/fetcher';
 export const postCreateBusiness = async (
 	body: IPostCreateBusinessRequestType,
 	token: string,
+	setAccessToken: (accessToken: string) => void,
 ) => {
 	const formData = new FormData();
 
@@ -14,6 +15,7 @@ export const postCreateBusiness = async (
 	formData.append('latitude', String(body.latitude));
 	formData.append('longitude', String(body.longitude));
 	formData.append('businessHours', body.businessHours);
+	formData.append('phoneNumber', body.phoneNumber);
 	formData.append('email', body.email);
 	formData.append('service', JSON.stringify(body.service));
 	formData.append('additionalInfo', body.additionalInfo);
@@ -28,6 +30,7 @@ export const postCreateBusiness = async (
 		endpoint: apiRoutes.admin,
 		authorization: token,
 		body: formData,
+		setAccessToken,
 	});
 
 	return response;

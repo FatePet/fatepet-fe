@@ -1,10 +1,13 @@
 import { postCreateBusiness } from '@/api/admin/business/postCreateBusiness';
 import { useMutation } from '@tanstack/react-query';
 
-export const usePostCreateBusiness = (token: string) => {
+export const usePostCreateBusiness = (
+	token: string,
+	setAccessToken: (accessToken: string) => void,
+) => {
 	return useMutation({
 		mutationFn: (body: IPostCreateBusinessRequestType) =>
-			postCreateBusiness(body, token),
+			postCreateBusiness(body, token, setAccessToken),
 		onSuccess: () => {
 			alert('업체 등록 완료!');
 		},

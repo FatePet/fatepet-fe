@@ -14,8 +14,11 @@ const borderClass = 'w-[100%] h-[1px] bg-gray-middle mb-[10px]';
 
 function RegisterBusiness() {
 	const router = useRouter();
-	const { accessToken } = useAuthStore();
-	const { mutate: createBusiness } = usePostCreateBusiness(accessToken);
+	const { accessToken, setAccessToken } = useAuthStore();
+	const { mutate: createBusiness } = usePostCreateBusiness(
+		accessToken,
+		setAccessToken,
+	);
 	const [businessItem, setBusinessItem] =
 		useState<IPostCreateBusinessRequestType>({
 			name: '',
@@ -68,6 +71,44 @@ function RegisterBusiness() {
 		setServiceErrorMsgs(updatedErrorMsgs);
 	}, [serviceList]);
 
+	useEffect(() => {
+		convertAddressToCoordinates(address).then((result) => {
+			setBusinessItem((prev) => ({
+				...prev,
+				latitude: result?.lat ?? 0,
+				longitude: result?.lng ?? 0,
+			}));
+		});
+
+		setBusinessItem((prev) => ({
+			...prev,
+			thumbnail: thumbnailFile as File,
+			service: serviceList,
+		}));
+
+		const validAdditionalImgFiles = additionalImgFileList.filter(
+			(file): file is File => file !== null,
+		);
+		setBusinessItem((prev) => ({
+			...prev,
+			additionalImage: validAdditionalImgFiles,
+		}));
+
+		const validServiceImgFiles = serviceImageList.filter(
+			(file): file is File => file !== null,
+		);
+		setBusinessItem((prev) => ({
+			...prev,
+			serviceImage: validServiceImgFiles,
+		}));
+	}, [
+		address,
+		thumbnailFile,
+		serviceImageList,
+		serviceList,
+		additionalImgFileList,
+	]);
+
 	const isValidPhoneNumber = (phoneNumber: string) => {
 		const regex = /^010\d{8}$/;
 		return regex.test(phoneNumber);
@@ -105,36 +146,7 @@ function RegisterBusiness() {
 		}
 		setErrorMsgs(newErrors);
 
-		convertAddressToCoordinates(address).then((result) => {
-			setBusinessItem((prev) => ({
-				...prev,
-				latitude: result?.lat ?? 0,
-				longitude: result?.lng ?? 0,
-			}));
-		});
-
-		setBusinessItem((prev) => ({
-			...prev,
-			thumbnail: thumbnailFile as File,
-			service: serviceList,
-		}));
-
-		const validAdditionalImgFiles = additionalImgFileList.filter(
-			(file): file is File => file !== null,
-		);
-		setBusinessItem((prev) => ({
-			...prev,
-			additionalImage: validAdditionalImgFiles,
-		}));
-
-		const validServiceImgFiles = serviceImageList.filter(
-			(file): file is File => file !== null,
-		);
-		setBusinessItem((prev) => ({
-			...prev,
-			serviceImage: validServiceImgFiles,
-		}));
-
+		console.log(businessItem);
 		createBusiness(businessItem);
 	};
 
