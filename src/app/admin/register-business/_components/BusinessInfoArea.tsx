@@ -37,13 +37,14 @@ function BusinessInfoArea({
 	detailAddress,
 	setDetailAddress,
 }: Props) {
-	const { accessToken } = useAuthStore();
+	const { accessToken, setAccessToken } = useAuthStore();
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
 	const [isCheckName, setIsCheckName] = useState<boolean>(false);
 	const [nameErr, setNameErr] = useState<string>('');
 	const { refetch } = useGetCheckBusinessName(
 		accessToken,
 		businessItem.name,
+		setAccessToken,
 		isCheckName,
 	);
 
@@ -105,6 +106,7 @@ function BusinessInfoArea({
 
 	const handleCheckDuplicateName = async () => {
 		setIsCheckName(true);
+
 		try {
 			const { data: checkNameData, error } = await refetch();
 			if (checkNameData) {
