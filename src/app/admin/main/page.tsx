@@ -9,8 +9,7 @@ import { useGetAdminBusiness } from '@/hooks/api/admin/business/useGetAdminBusin
 
 function AdminMain() {
 	const route = useRouter();
-	const { clearAuth } = useAuthStore();
-	const { accessToken, setAccessToken} = useAuthStore();
+	const { clearAuth ,accessToken, setAccessToken} = useAuthStore();
 
 	const handleLogout = async () => {
 		// 로그아웃 로직(임시 프론트에서 처리)
@@ -50,6 +49,8 @@ function AdminMain() {
 						{adminBusiness.data.map((businessItem, index) => (
 							<AdminBusinessCard key={index} adminBusinessItem={businessItem} />
 						))}
+
+						{JSON.stringify(adminBusiness.data)}
 					</div>
 				)}
 			</div>

@@ -5,11 +5,11 @@ import LocationBar from '@/components/location/LocationBar';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import SortOptionModal from './_components/SortOptionModal';
-import { getUserBusinessListData } from './_components/getUserBusinessListData';
 import BusinessCard from '@/components/user/BusinessCard';
 import ModalLayout from '@/components/modals/ModalLayout';
 import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
 import useUserLocationStore from '@/store/useUserLocationStore';
+import { useGetUserBusiness } from '@/hooks/api/user/useGetUserBusiness';
 
 function ViewBusinessList() {
 	const router = useRouter();
@@ -23,7 +23,7 @@ function ViewBusinessList() {
 	);
 	// zustand에 저장된 location 값을 불러오는 부분
 	const [address, setAddress] = useState<string>('');
-	const { location } = useUserLocationStore();
+	const { location, lat, lng } = useUserLocationStore();
 
 	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] =
 		useState<boolean>(false);
@@ -33,6 +33,14 @@ function ViewBusinessList() {
 			setAddress(location);
 		}
 	}, [location]);
+
+	const { data: userBusiness } = useGetUserBusiness(
+		sortOption,
+		1,
+		10,
+		lat,
+		lng,
+	);
 
 	const handleRegisterLocationBtnClick = () => {
 		setIsRegisterLocationModalOpen(true);
@@ -56,6 +64,10 @@ function ViewBusinessList() {
 	const handleBusinessItemClick = (businessId: number) => {
 		router.push(`/user/view-business/${category}/${businessId}`);
 	};
+
+	if (!userBusiness) {
+		return null;
+	}
 
 	return (
 		<div className='flex flex-col'>
@@ -84,7 +96,7 @@ function ViewBusinessList() {
 				)}
 			</div>
 			<div className='flex flex-col w-full gap-[8px]'>
-				{getUserBusinessListData.map((businessItem) => (
+				{userBusiness?.data.map((businessItem) => (
 					<div
 						key={businessItem.businessId}
 						onClick={() => {
