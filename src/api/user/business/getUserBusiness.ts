@@ -17,11 +17,11 @@ export const getUserBusiness = async (sortType: string, page: number, size: numb
             size: requestParams.size.toString(),
             latitude: requestParams.latitude.toString(),
             longitude: requestParams.longitude.toString(),
-        }).toString();
+        });
 
-    const response: IGetBusinessListResponseType = await api.get({
-        endpoint: `${apiRoutes.business}?${queryParams}`,
-    });
+        const response: IGetBusinessListResponseType = await api.get({
+            endpoint: `${apiRoutes.business}?${queryParams}`,
+        });
 
         return response;
     } else {
