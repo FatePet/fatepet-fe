@@ -33,7 +33,7 @@ function ViewBusinessList() {
 			setAddress(location);
 		}
 	}, [location]);
-
+	
 	const { data: userBusiness } = useGetUserBusiness(
 		sortOption,
 		1,

@@ -11,7 +11,7 @@ export const useGetUserBusiness = (
     longitude: number | null,
 ) => {
     return useQuery({
-        queryKey: ['USER_BUSINESS_LIST'],
+        queryKey: ['USER_BUSINESS_LIST', sortType],
         queryFn: () => getUserBusiness(sortType, page, size, latitude, longitude),
     });
 };
