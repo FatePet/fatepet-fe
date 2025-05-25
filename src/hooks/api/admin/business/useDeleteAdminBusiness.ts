@@ -17,9 +17,11 @@ export const useDeleteAdminBusiness = (
 			deleteAdminBusiness(authorization, businessId, setAccessToken),
 		onSuccess: (data: IResponseType) => {
 			alert(data.message);
-			queryClient.invalidateQueries({
-				queryKey: ['ADMIN_BUSINESS_LIST'],
-			});
+			['ADMIN_BUSINESS_LIST', 'USER_BUSINESS_LIST'].forEach((key) =>
+				queryClient.invalidateQueries({
+					queryKey: [`${key}`],
+				}),
+			);
 			router.back();
 		},
 		onError: (error) => {
