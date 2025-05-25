@@ -1,4 +1,7 @@
 export const apiRoutes = {
+	// 관리자
+	admin: '/admin',
+
 	// 인증관련
 	login: '/login',
 	reissue: '/token',
