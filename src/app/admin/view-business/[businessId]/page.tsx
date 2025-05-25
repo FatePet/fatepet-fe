@@ -8,6 +8,7 @@ import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
 import ModalLayout from '@/components/modals/ModalLayout';
 import BusinessCard from '@/components/user/BusinessCard';
+import { useDeleteAdminBusiness } from '@/hooks/api/admin/business/useDeleteAdminBusiness';
 import { useGetAdminBusinessDetail } from '@/hooks/api/admin/business/useGetAdminBusinessDetail';
 import useAuthStore from '@/store/useAuthStore';
 import { useParams, useRouter } from 'next/navigation';
@@ -18,10 +19,16 @@ function AdminViewBusiness() {
 	const params = useParams();
 	const businessId = params.businessId as string;
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-	const { accessToken } = useAuthStore();
+	const { accessToken, setAccessToken } = useAuthStore();
 	const { data: businessDetail } = useGetAdminBusinessDetail(
 		businessId,
 		accessToken,
+		setAccessToken
+	);
+	const { mutate: deleteBusiness } = useDeleteAdminBusiness(
+		accessToken,
+		businessId,
+		setAccessToken,
 	);
 
 	const handleBackArrowClick = () => {
@@ -41,10 +48,7 @@ function AdminViewBusiness() {
 	};
 
 	const handleBusinessDelete = () => {
-		// 업체 삭제 api 연동 로직
-
-		// 성공 시
-		router.back();
+		deleteBusiness();
 	};
 
 	if (!businessDetail) {
