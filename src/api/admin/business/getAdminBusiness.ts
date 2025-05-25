@@ -6,7 +6,7 @@ export const getAdminBusiness = async (
 	setAccessToken: (accessToken: string) => void,
 ) => {
 	const response: IGetAdminBusinessResponseType = await api.get({
-		endpoint: `${apiRoutes.admin}${apiRoutes.business}`,
+		endpoint: `${apiRoutes.adminBusiness}`,
 		authorization,
 		setAccessToken,
 	});
