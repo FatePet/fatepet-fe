@@ -23,35 +23,21 @@ export const getUserBusiness = async (
         if (!(latitude && longitude)) {
             latitude = 0;
             longitude = 0;
-
-            const queryParams = new URLSearchParams({
-                sortType: sortOption,
-                page: page.toString(),
-                size: size.toString(),
-                latitude: latitude.toString(),
-                longitude: longitude.toString(),
-            }).toString();
-
-            const response: IGetBusinessListResponseType = await api.get({
-                endpoint: `${apiRoutes.business}?${queryParams}`,
-            });
-
-            return response;
-        } else {
-            const queryParams = new URLSearchParams({
-                sortType: sortOption,
-                page: page.toString(),
-                size: size.toString(),
-                latitude: latitude.toString(),
-                longitude: longitude.toString(),
-            }).toString();
-
-            const response: IGetBusinessListResponseType = await api.get({
-                endpoint: `${apiRoutes.business}?${queryParams}`,
-            });
-
-            return response;
         }
+        
+        const queryParams = new URLSearchParams({
+            sortType: sortOption,
+            page: page.toString(),
+            size: size.toString(),
+            latitude: latitude.toString(),
+            longitude: longitude.toString(),
+        }).toString();
+
+        const response: IGetBusinessListResponseType = await api.get({
+            endpoint: `${apiRoutes.business}?${queryParams}`,
+        });
+
+        return response;
     } else {
         const queryParams = new URLSearchParams({
             sortType: sortOption,
