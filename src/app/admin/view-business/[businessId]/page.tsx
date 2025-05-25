@@ -23,6 +23,7 @@ function AdminViewBusiness() {
 	const { data: businessDetail } = useGetAdminBusinessDetail(
 		businessId,
 		accessToken,
+		setAccessToken
 	);
 	const { mutate: deleteBusiness } = useDeleteAdminBusiness(
 		accessToken,
