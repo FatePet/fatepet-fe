@@ -15,8 +15,8 @@ export const useDeleteAdminBusiness = (
 	return useMutation({
 		mutationFn: () =>
 			deleteAdminBusiness(authorization, businessId, setAccessToken),
-		onSuccess: () => {
-			alert('삭제 성공');
+		onSuccess: (data: IResponseType) => {
+			alert(data.message);
 			['ADMIN_BUSINESS_LIST', 'USER_BUSINESS_LIST'].forEach((key) =>
 				queryClient.invalidateQueries({
 					queryKey: [`${key}`],
