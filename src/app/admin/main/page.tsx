@@ -49,8 +49,6 @@ function AdminMain() {
 						{adminBusiness.data.map((businessItem, index) => (
 							<AdminBusinessCard key={index} adminBusinessItem={businessItem} />
 						))}
-
-						{JSON.stringify(adminBusiness.data)}
 					</div>
 				)}
 			</div>
