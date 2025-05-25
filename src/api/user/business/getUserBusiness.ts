@@ -8,7 +8,7 @@ export const getUserBusiness = async (
     latitude: number | null,
     longitude: number | null,
 ) => {
-    const sortOption = () => {
+    const sortOption: string = (() => {
         switch (sortType) {
             case '인기순':
                 return 'POPULAR';
@@ -17,25 +17,44 @@ export const getUserBusiness = async (
             default:
                 return 'DISTANCE';
         }
-    }
+    })();
 
-    if (sortType === 'DISTANCE' && latitude && longitude) {
-        const queryParams = new URLSearchParams({
-            sortType: sortOption().toString(),
-            page: page.toString(),
-            size: size.toString(),
-            latitude: latitude.toString(),
-            longitude: longitude.toString(),
-        }).toString();
+    if (sortOption === 'DISTANCE') {
+        if (!(latitude && longitude)) {
+            latitude = 0;
+            longitude = 0;
 
-        const response: IGetBusinessListResponseType = await api.get({
-            endpoint: `${apiRoutes.business}?${queryParams}`,
-        });
+            const queryParams = new URLSearchParams({
+                sortType: sortOption,
+                page: page.toString(),
+                size: size.toString(),
+                latitude: latitude.toString(),
+                longitude: longitude.toString(),
+            }).toString();
 
-        return response;
+            const response: IGetBusinessListResponseType = await api.get({
+                endpoint: `${apiRoutes.business}?${queryParams}`,
+            });
+
+            return response;
+        } else {
+            const queryParams = new URLSearchParams({
+                sortType: sortOption,
+                page: page.toString(),
+                size: size.toString(),
+                latitude: latitude.toString(),
+                longitude: longitude.toString(),
+            }).toString();
+
+            const response: IGetBusinessListResponseType = await api.get({
+                endpoint: `${apiRoutes.business}?${queryParams}`,
+            });
+
+            return response;
+        }
     } else {
         const queryParams = new URLSearchParams({
-            sortType: sortOption().toString(),
+            sortType: sortOption,
             page: page.toString(),
             size: size.toString(),
         }).toString();
