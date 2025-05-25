@@ -1,6 +1,6 @@
 export const apiRoutes = {
 	// 관리자
-	admin: '/admin',
+	admin: '/admin/business',
 
 	// 인증관련
 	login: '/login',

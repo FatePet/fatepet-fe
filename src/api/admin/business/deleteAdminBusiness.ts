@@ -7,7 +7,7 @@ export const deleteAdminBusiness = async (
 	setAccessToken: (accessToken: string) => void,
 ) => {
 	const response = api.delete<IResponseType>({
-		endpoint: `${apiRoutes.admin}${apiRoutes.business}/${businessId}`,
+		endpoint: `${apiRoutes.admin}/${businessId}`,
 		authorization,
 		setAccessToken,
 	});
