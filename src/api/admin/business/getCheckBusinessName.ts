@@ -1,6 +1,5 @@
 import { apiRoutes } from '@/_lib/apiRoutes';
 import api from '@/_lib/fetcher';
-import useAuthStore from '@/store/useAuthStore';
 
 export const getCheckBusinessName = async (
 	authorization: string,
