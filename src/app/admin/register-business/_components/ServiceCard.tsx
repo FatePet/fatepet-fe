@@ -236,10 +236,10 @@ function ServiceCard({
 				<ModalLayout setIsModalOpen={setIsOpenServiceDeleteModal}>
 					<CancelConfirmModal
 						modalConfirmText={`입력하신 정보가 저장되지 않았어요.\n 해당 서비스를 정말 삭제하실 건가요?`}
-						handleLeftButtonClick={handleLeftButtonClick}
-						handleRightButtonClick={handleRightButtonClick}
-						leftButtonText='서비스 삭제'
-						rightButtonText='계속 입력'
+						handleRightButtonClick={handleLeftButtonClick}
+						handleLeftButtonClick={handleRightButtonClick}
+						rightButtonText='서비스 삭제'
+						leftButtonText='계속 입력'
 					/>
 				</ModalLayout>
 			)}
