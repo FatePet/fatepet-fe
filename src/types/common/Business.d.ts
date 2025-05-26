@@ -20,7 +20,7 @@ type IBusinessDetailDataType = IBusinessItemCommonType & {
 };
 
 type IServiceDetailType = {
-    serviceId: number;
+	serviceId: number;
 	category: string;
 	name: string;
 	description: string;
@@ -34,6 +34,6 @@ type IAdditionalInfoType = {
 };
 
 type IAdditionalImageType = {
-    imageId: number;
-    url: string;
-}
+	imageId: number;
+	url: string;
+};
