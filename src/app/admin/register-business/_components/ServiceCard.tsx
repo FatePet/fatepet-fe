@@ -15,7 +15,6 @@ interface Props {
 	serviceCount: number;
 	serviceItem: IServiceItemType;
 	setServiceList: React.Dispatch<React.SetStateAction<IServiceItemType[]>>;
-	serviceImageList: (File | null)[];
 	setServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	errorMsg: string;
 }
@@ -24,7 +23,6 @@ function ServiceCard({
 	serviceCount,
 	serviceItem,
 	setServiceList,
-	serviceImageList,
 	setServiceImageList,
 	errorMsg,
 }: Props) {
@@ -189,7 +187,7 @@ function ServiceCard({
 					<p>서비스 설명</p>
 					<TextArea
 						type='service'
-						inputData={serviceItem.desc}
+						inputData={serviceItem.description}
 						onChange={(e) => onTextAreaChange(e, 'info')}
 						maxLength={500}
 					/>
@@ -221,11 +219,11 @@ function ServiceCard({
 								key={price.priceType}
 								buttonText={price.priceType}
 								handleClick={() => handlePriceTypeClick(price.priceType)}
-								isClicked={serviceItem.priceType === price.priceType}
+								isClicked={serviceItem.price === price.priceType}
 							/>
 						))}
 					</div>
-					{serviceItem.priceType === '직접입력' && (
+					{serviceItem.price === '직접입력' && (
 						<TextArea
 							type='price'
 							inputData={serviceItem.price}

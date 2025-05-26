@@ -88,7 +88,7 @@ function AdminViewBusiness() {
 					}}
 				/>
 				{businessDetail.data.services.some(
-					(service) => service.category === '기본항목',
+					(service) => service.type === '기본항목',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='기본항목' />
@@ -97,7 +97,7 @@ function AdminViewBusiness() {
 				)}
 
 				{businessDetail.data.services.some(
-					(service) => service.category === '선택항목',
+					(service) => service.type === '선택항목',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='선택항목' />
@@ -105,7 +105,7 @@ function AdminViewBusiness() {
 					</div>
 				)}
 				{businessDetail.data.services.some(
-					(service) => service.category === '패키지',
+					(service) => service.type === '패키지',
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='패키지' />

@@ -10,7 +10,7 @@ export const postCreateBusiness = async (
 
 	formData.append('name', body.name);
 	formData.append('category', body.type);
-	formData.append('thumbnail', body.thumbnail as File);
+	formData.append('mainImage', body.mainImage as File);
 	formData.append('address', body.address);
 	formData.append('latitude', String(body.latitude));
 	formData.append('longitude', String(body.longitude));

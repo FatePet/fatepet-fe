@@ -2,7 +2,7 @@
 type IPostCreateBusinessRequestType = {
 	name: string;
 	type: string;
-	thumbnail: File | null;
+	mainImage: File | null;
 	address: string;
 	latitude: number;
 	longitude: number;
@@ -18,8 +18,7 @@ type IPostCreateBusinessRequestType = {
 type IServiceItemType = {
 	type: string;
 	name: string;
-	desc: string;
-	priceType: string;
+	description: string;
 	price: string;
 	image: boolean;
 };
@@ -43,5 +42,5 @@ type IAdminBusinessItemType = {
 	name: string;
 	address: string;
 	category: string;
-	thumbnailUrl: string;
+	mainImageUrl: string;
 };

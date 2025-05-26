@@ -23,7 +23,7 @@ function RegisterBusiness() {
 		useState<IPostCreateBusinessRequestType>({
 			name: '',
 			type: '',
-			thumbnail: null,
+			mainImage: null,
 			address: '',
 			latitude: 0,
 			longitude: 0,
@@ -52,8 +52,7 @@ function RegisterBusiness() {
 		{
 			type: '',
 			name: '',
-			desc: '',
-			priceType: '',
+			description: '',
 			price: '',
 			image: false,
 		},

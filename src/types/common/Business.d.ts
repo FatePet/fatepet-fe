@@ -21,7 +21,7 @@ type IBusinessDetailDataType = IBusinessItemCommonType & {
 
 type IServiceDetailType = {
 	serviceId: number;
-	category: string;
+	type: string;
 	name: string;
 	description: string;
 	imageUrl: string;

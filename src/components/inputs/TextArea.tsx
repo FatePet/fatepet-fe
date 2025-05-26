@@ -4,7 +4,7 @@ interface Props {
 	inputData: string;
 	onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 	maxLength: 200 | 500 | 2000;
-	type: "service" | "price" | "more" | "etc";
+	type: 'service' | 'price' | 'more' | 'etc';
 }
 
 function TextArea({ inputData, onChange, maxLength, type }: Props) {
@@ -23,7 +23,7 @@ function TextArea({ inputData, onChange, maxLength, type }: Props) {
 				setPlaceholer('기타 정보에 대해서 자세하게 적어주세요.');
 				break;
 			case 'etc':
-				setPlaceholer('기타 문의사항')
+				setPlaceholer('기타 문의사항');
 			default:
 				break;
 		}
@@ -39,7 +39,7 @@ function TextArea({ inputData, onChange, maxLength, type }: Props) {
 				placeholder={placeholder}
 			/>
 			<div className='text-[14px] font-medium text-[#010101]'>
-				{inputData.length}
+				{inputData && inputData.length}
 				<span className='text-[#B3B3B3]'>/{maxLength}</span>
 			</div>
 		</div>

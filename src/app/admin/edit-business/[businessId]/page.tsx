@@ -2,7 +2,6 @@
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-
 import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
 import { usePostCreateBusiness } from '@/hooks/admin/business/usePostCreateBusiness';
@@ -32,7 +31,7 @@ function EditBusiness() {
 		useState<IPostCreateBusinessRequestType>({
 			name: '',
 			type: '',
-			thumbnail: null,
+			mainImage: null,
 			address: '',
 			latitude: 0,
 			longitude: 0,
@@ -61,24 +60,23 @@ function EditBusiness() {
 		{
 			type: '',
 			name: '',
-			desc: '',
-			priceType: '',
+			description: '',
 			price: '',
 			image: false,
 		},
 	]);
-	const [originServiceList, setOriginServiceList] = useState<
-		IServiceDetailType[]
-	>([
-		{
-			serviceId: 0,
-			category: '',
-			name: '',
-			description: '',
-			imageUrl: '',
-			price: '',
-		},
-	]);
+	// const [originServiceList, setOriginServiceList] = useState<
+	// 	IServiceDetailType[]
+	// >([
+	// 	{
+	// 		serviceId: 0,
+	// 		category: '',
+	// 		name: '',
+	// 		description: '',
+	// 		imageUrl: '',
+	// 		price: '',
+	// 	},
+	// ]);
 	const [serviceImageList, setServiceImageList] = useState<(File | null)[]>([]);
 	const [additionalImgFileList, setAdditionalImgFileList] = useState<
 		(File | null)[]
@@ -90,7 +88,7 @@ function EditBusiness() {
 			setPostBusinessItem({
 				name: itemData.name,
 				type: itemData.category,
-				thumbnail: null,
+				mainImage: null,
 				address: itemData.address,
 				latitude: 0,
 				longitude: 0,
@@ -102,11 +100,13 @@ function EditBusiness() {
 				additionalImage: [],
 				additionalInfo: itemData.additionalInfo.description,
 			});
+			setThumbnailFile(itemData.mainImageUrl);
+			handleSplitAddress(itemData.address);
 			setServiceList(
 				itemData.services.map((item) => ({
-					type: item.category,
+					type: item.type,
 					name: item.name,
-					desc: item.description,
+					description: item.description,
 					priceType: item.price,
 					price: item.price,
 					image: item.description ? true : false,
@@ -160,6 +160,12 @@ function EditBusiness() {
 		serviceList,
 		additionalImgFileList,
 	]);
+
+	const handleSplitAddress = (address: string) => {
+		const splitedAddress = address.split(')');
+		setAddress(splitedAddress[0] + ')');
+		setDetailAddress(splitedAddress[1]);
+	};
 
 	const isValidPhoneNumber = (phoneNumber: string) => {
 		const regex = /^010\d{8}$/;
