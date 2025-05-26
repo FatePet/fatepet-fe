@@ -69,10 +69,10 @@ function AdminViewBusiness() {
 				<ModalLayout setIsModalOpen={setIsDeleteModalOpen}>
 					<CancelConfirmModal
 						modalConfirmText='해당 업체를 정말 삭제하실 건가요?'
-						leftButtonText='업체 삭제'
-						rightButtonText='취소'
-						handleLeftButtonClick={handleBusinessDelete}
-						handleRightButtonClick={handleCancelBtnClick}
+						rightButtonText='업체 삭제'
+						leftButtonText='취소'
+						handleRightButtonClick={handleBusinessDelete}
+						handleLeftButtonClick={handleCancelBtnClick}
 					/>
 				</ModalLayout>
 			)}
