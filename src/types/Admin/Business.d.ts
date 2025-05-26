@@ -31,5 +31,5 @@ type IAdminBusinessItemType = {
 	name: string;
 	address: string;
 	category: string;
-	mainImageUrl: string;
+	thumbnailUrl: string;
 };
