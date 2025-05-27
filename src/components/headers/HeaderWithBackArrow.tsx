@@ -7,7 +7,7 @@ interface Props {
 	handleBackArrowClick: () => void;
 	hasRightConfirmButton: boolean;
 	handleRightButtonClick?: () => void;
-	type?: "확인" | "수정";
+	type?: '확인' | '수정';
 	handleDeleteButtonClick?: () => void;
 }
 
@@ -16,13 +16,14 @@ function HeaderWithBackArrow({
 	handleBackArrowClick,
 	hasRightConfirmButton,
 	handleRightButtonClick,
-	type = "확인",
-	handleDeleteButtonClick
+	type = '확인',
+	handleDeleteButtonClick,
 }: Props) {
 	return (
 		<div className='w-full h-[51px] flex items-center relative text-black bg-white'>
 			<img
 				src='/images/backArrow.png'
+				className='cursor-pointer'
 				width={22}
 				height={25}
 				alt='뒤로가기버튼'
@@ -37,13 +38,17 @@ function HeaderWithBackArrow({
 							handleClick={handleRightButtonClick!}
 						/>
 					) : (
-						<div className="flex gap-[5px]">
+						<div className='flex gap-[5px]'>
 							<MiniButton
 								buttonText='정보 수정'
 								handleClick={handleRightButtonClick!}
 								isClicked={true}
-								/>
-								<MiniButton buttonText='삭제' handleClick={handleDeleteButtonClick!} isClicked={false} />
+							/>
+							<MiniButton
+								buttonText='삭제'
+								handleClick={handleDeleteButtonClick!}
+								isClicked={false}
+							/>
 						</div>
 					)}
 				</div>

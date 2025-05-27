@@ -5,6 +5,7 @@ import PackageServiceList from '@/app/user/view-business/[category]/[businessId]
 import PrimaryServiceList from '@/app/user/view-business/[category]/[businessId]/_components/PrimaryServiceList';
 import TextWithUnderLine from '@/app/user/view-business/[category]/[businessId]/_components/TextWithUnderLine';
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
 import ModalLayout from '@/components/modals/ModalLayout';
 import BusinessCard from '@/components/user/BusinessCard';
@@ -20,7 +21,7 @@ function AdminViewBusiness() {
 	const businessId = params.businessId as string;
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const { accessToken, setAccessToken } = useAuthStore();
-	const { data: businessDetail } = useGetAdminBusinessDetail(
+	const { data: businessDetail, isLoading } = useGetAdminBusinessDetail(
 		businessId,
 		accessToken,
 		setAccessToken
@@ -51,6 +52,10 @@ function AdminViewBusiness() {
 		deleteBusiness();
 	};
 
+	if (isLoading) {
+		return <LoadingSpinner/>
+	}
+
 	if (!businessDetail) {
 		return null;
 	}
@@ -69,10 +74,10 @@ function AdminViewBusiness() {
 				<ModalLayout setIsModalOpen={setIsDeleteModalOpen}>
 					<CancelConfirmModal
 						modalConfirmText='해당 업체를 정말 삭제하실 건가요?'
-						leftButtonText='업체 삭제'
-						rightButtonText='취소'
-						handleLeftButtonClick={handleBusinessDelete}
-						handleRightButtonClick={handleCancelBtnClick}
+						rightButtonText='업체 삭제'
+						leftButtonText='취소'
+						handleRightButtonClick={handleBusinessDelete}
+						handleLeftButtonClick={handleCancelBtnClick}
 					/>
 				</ModalLayout>
 			)}

@@ -24,8 +24,8 @@ function ServiceCard({
 	serviceCount,
 	serviceItem,
 	setServiceList,
-	setServiceImageList,
 	serviceImageList,
+	setServiceImageList,
 	errorMsg,
 }: Props) {
 	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
@@ -50,27 +50,27 @@ function ServiceCard({
 	];
 
 	useEffect(() => {
-		if (serviceImgFile !== null) {
-			setServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceCount - 1 ? { ...item, image: true } : item,
-				),
-			);
-			setServiceImageList((prev) =>
-				prev.map((item, index) =>
-					index === serviceCount - 1 ? (serviceImgFile as File) : item,
-				),
-			);
-		} else {
-			setServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceCount - 1 ? { ...item, image: false } : item,
-				),
-			);
-			setServiceImageList((prev) =>
-				prev.map((item, index) => (index === serviceCount - 1 ? null : item)),
-			);
-		}
+		const targetIndex = serviceCount - 1;
+		const updatedImageFlag = serviceImgFile !== null;
+
+		setServiceList((prev) =>
+			prev.map((item, index) =>
+				index === targetIndex ? { ...item, image: updatedImageFlag } : item,
+			),
+		);
+
+		const imgFile =
+			serviceImgFile instanceof File ? (serviceImgFile as File) : null;
+
+		setServiceImageList((prev) => {
+			if (prev.length === serviceCount) {
+				return prev.map((item, index) =>
+					index === targetIndex ? imgFile : item,
+				);
+			} else {
+				return [...prev, imgFile];
+			}
+		});
 	}, [serviceImgFile]);
 
 	const handleTypeClick = (type: string) => {
@@ -126,6 +126,9 @@ function ServiceCard({
 	const handleDeleteImage = () => {
 		setServiceImgFile(null);
 		setServiceImgPreview(null);
+		setServiceImageList((prev) =>
+			prev.map((item, index) => (index === serviceCount - 1 ? null : item)),
+		);
 	};
 
 	const handleLeftButtonClick = () => {
@@ -236,10 +239,10 @@ function ServiceCard({
 				<ModalLayout setIsModalOpen={setIsOpenServiceDeleteModal}>
 					<CancelConfirmModal
 						modalConfirmText={`입력하신 정보가 저장되지 않았어요.\n 해당 서비스를 정말 삭제하실 건가요?`}
-						handleLeftButtonClick={handleLeftButtonClick}
-						handleRightButtonClick={handleRightButtonClick}
-						leftButtonText='서비스 삭제'
-						rightButtonText='계속 입력'
+						handleRightButtonClick={handleLeftButtonClick}
+						handleLeftButtonClick={handleRightButtonClick}
+						rightButtonText='서비스 삭제'
+						leftButtonText='계속 입력'
 					/>
 				</ModalLayout>
 			)}

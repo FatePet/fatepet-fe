@@ -5,30 +5,33 @@ import React, { useEffect, useState } from 'react';
 import ServiceInfoArea from './_components/ServiceInfoArea';
 import BusinessInfoArea from './_components/BusinessInfoArea';
 import AdditionalInfoArea from './_components/AdditionalInfoArea';
+import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
+import useAuthStore from '@/store/useAuthStore';
+import { usePostCreateBusiness } from '@/hooks/admin/business/usePostCreateBusiness';
 
 const areaNameClass = 'font-bold text-[14px] text-gray-middle mt-[10px]';
 const borderClass = 'w-[100%] h-[1px] bg-gray-middle mb-[10px]';
 
-interface IerrorMsgType {
-	nameError: string;
-	hoursError: string;
-	phoneError: string;
-	emailError: string;
-	addressError: string;
-}
-
 function RegisterBusiness() {
 	const router = useRouter();
+	const { accessToken, setAccessToken } = useAuthStore();
+	const { mutate: createBusiness } = usePostCreateBusiness(
+		accessToken,
+		setAccessToken,
+	);
 	const [businessItem, setBusinessItem] =
 		useState<IPostCreateBusinessRequestType>({
 			name: '',
 			type: '',
 			thumbnail: null,
 			address: '',
+			latitude: 0,
+			longitude: 0,
 			businessHours: '',
 			phoneNumber: '',
 			email: '',
 			service: [],
+			serviceImage: [],
 			additionalImage: [],
 			additionalInfo: '',
 		});
@@ -37,7 +40,7 @@ function RegisterBusiness() {
 	);
 	const [address, setAddress] = useState<string>('');
 	const [detailAddress, setDetailAddress] = useState<string>('');
-	const [errorMsgs, setErrorMsgs] = useState<IerrorMsgType>({
+	const [errorMsgs, setErrorMsgs] = useState<IBusinessErrorMsgType>({
 		nameError: '',
 		hoursError: '',
 		phoneError: '',
@@ -67,6 +70,44 @@ function RegisterBusiness() {
 
 		setServiceErrorMsgs(updatedErrorMsgs);
 	}, [serviceList]);
+
+	useEffect(() => {
+		convertAddressToCoordinates(address).then((result) => {
+			setBusinessItem((prev) => ({
+				...prev,
+				latitude: result?.lat ?? 0,
+				longitude: result?.lng ?? 0,
+			}));
+		});
+
+		setBusinessItem((prev) => ({
+			...prev,
+			thumbnail: thumbnailFile as File,
+			service: serviceList,
+		}));
+
+		const validAdditionalImgFiles = additionalImgFileList.filter(
+			(file): file is File => file !== null,
+		);
+		setBusinessItem((prev) => ({
+			...prev,
+			additionalImage: validAdditionalImgFiles,
+		}));
+
+		const validServiceImgFiles = serviceImageList.filter(
+			(file): file is File => file !== null,
+		);
+		setBusinessItem((prev) => ({
+			...prev,
+			serviceImage: validServiceImgFiles,
+		}));
+	}, [
+		address,
+		thumbnailFile,
+		serviceImageList,
+		serviceList,
+		additionalImgFileList,
+	]);
 
 	const isValidPhoneNumber = (phoneNumber: string) => {
 		const regex = /^010\d{8}$/;
@@ -103,17 +144,10 @@ function RegisterBusiness() {
 		} else {
 			newErrors.addressError = '';
 		}
-
-		setBusinessItem({ ...businessItem, thumbnail: thumbnailFile as File });
-
 		setErrorMsgs(newErrors);
 
-		//api 연동시 null 제거한 이미지 파일 배열 전달
-		const validServiceImgFiles = serviceImageList.filter(
-			(file): file is File => file !== null,
-		);
-
 		console.log(businessItem);
+		createBusiness(businessItem);
 	};
 
 	return (
