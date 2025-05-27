@@ -12,7 +12,7 @@ import ConsultModal from './_components/ConsultModal';
 import StartConsultButton from '@/components/buttons/StartConsultButton';
 import ModalLayout from '@/components/modals/ModalLayout';
 import AlertModal from '@/components/modals/AlertModal';
-import { useGetUserBusinessDetail } from '@/hooks/api/user/useGetUserBusinessDetail';
+import { useGetUserBusinessDetail } from '@/hooks/api/user/business/useGetUserBusinessDetail';
 
 function UserViewBusiness() {
 	const router = useRouter();
@@ -24,7 +24,7 @@ function UserViewBusiness() {
 	const [isRequestSuccessModalOpen, setIsRequestSuccessModalOpen] =
 		useState<boolean>(false);
 	const { data: businessDetail } = useGetUserBusinessDetail(businessId);
-
+	
 	const handleBackArrowClick = () => {
 		router.back();
 	};
@@ -60,9 +60,7 @@ function UserViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='기본항목' />
-						<PrimaryServiceList
-							services={businessDetail.data.services}
-						/>
+						<PrimaryServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 
@@ -71,9 +69,7 @@ function UserViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='선택항목' />
-						<OptionalServiceList
-							services={businessDetail.data.services}
-						/>
+						<OptionalServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 				{businessDetail.data.services.some(
@@ -81,9 +77,7 @@ function UserViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='패키지' />
-						<PackageServiceList
-							services={businessDetail.data.services}
-						/>
+						<PackageServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 				{(businessDetail.data.additionalInfo.description ||
@@ -107,6 +101,7 @@ function UserViewBusiness() {
 					<ConsultModal
 						setIsModalOpen={setIsConsultModalOpen}
 						setIsRequestCompleteModalOpen={setIsRequestSuccessModalOpen}
+						businessId={businessId}
 					/>
 				</ModalLayout>
 			)}
