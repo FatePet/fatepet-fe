@@ -12,6 +12,7 @@ import ConsultModal from './_components/ConsultModal';
 import StartConsultButton from '@/components/buttons/StartConsultButton';
 import ModalLayout from '@/components/modals/ModalLayout';
 import AlertModal from '@/components/modals/AlertModal';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useGetUserBusinessDetail } from '@/hooks/api/user/business/useGetUserBusinessDetail';
 
 function UserViewBusiness() {
@@ -23,8 +24,9 @@ function UserViewBusiness() {
 	const [isConsultModalOpen, setIsConsultModalOpen] = useState<boolean>(false);
 	const [isRequestSuccessModalOpen, setIsRequestSuccessModalOpen] =
 		useState<boolean>(false);
-	const { data: businessDetail } = useGetUserBusinessDetail(businessId);
-	
+	const { data: businessDetail, isLoading, error } =
+		useGetUserBusinessDetail(businessId);
+
 	const handleBackArrowClick = () => {
 		router.back();
 	};
@@ -32,6 +34,15 @@ function UserViewBusiness() {
 	const handleStartConsultBtnClick = () => {
 		setIsConsultModalOpen(true);
 	};
+
+	if (isLoading) {
+		return <LoadingSpinner />;
+	}
+
+	if (error) {
+		alert(error.message)
+		router.push(`/user/view-business/${category}/list`);
+	}
 
 	if (!businessDetail) {
 		return null;
