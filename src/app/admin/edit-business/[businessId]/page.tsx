@@ -61,9 +61,6 @@ function EditBusiness() {
 			removeAdditionalImageIds: null,
 			additionalInfo: null,
 		});
-	const [thumbnailFile, setThumbnailFile] = useState<string | File | null>(
-		null,
-	);
 	const [patchMainImageFile, setPathchMainImageFile] = useState<
 		string | File | null
 	>(null);
@@ -114,8 +111,8 @@ function EditBusiness() {
 	>([]);
 	const [removeServiceIds, setRemoveServiceIds] = useState<number[]>([]);
 
-	const [originAdditionalImgFileList, setOriginAdditionalImgFileList] =
-		useState<(File | null)[]>([]);
+	// const [originAdditionalImgFileList, setOriginAdditionalImgFileList] =
+	// 	useState<(File | null)[]>([]);
 	const [addAdditionalImageList, setAddAdditionalImageList] = useState<
 		(File | null)[]
 	>([]);
@@ -128,7 +125,6 @@ function EditBusiness() {
 			const itemData = businessDetail.data;
 
 			setOriginBusinessItem(itemData);
-			setThumbnailFile(itemData.mainImageUrl);
 
 			if (!itemData.address.endsWith(')')) {
 				handleSplitAddress(itemData.address);
@@ -269,14 +265,12 @@ function EditBusiness() {
 						setPatchBusinessItem={setPatchBusinessItem}
 						errorMsgs={errorMsgs}
 						setErrorMsgs={setErrorMsgs}
-						imageFile={patchMainImageFile ?? thumbnailFile}
+						imageFile={patchMainImageFile ?? originBusinessItem.mainImageUrl}
 						setImageFile={setPathchMainImageFile}
 						address={address}
 						setAddress={setAddress}
 						detailAddress={detailAddress}
 						setDetailAddress={setDetailAddress}
-						patchMainImageFile={patchMainImageFile}
-						setPathchMainImageFile={setPathchMainImageFile}
 					/>
 				</div>
 				<div>
@@ -287,7 +281,6 @@ function EditBusiness() {
 						setOriginServiceList={setOriginServiceList}
 						addServiceList={addServiceList}
 						setAddServiceList={setAddServiceList}
-						updateServiceList={updateServiceList}
 						setUpdateServiceList={setUpdateServiceList}
 						serviceImageList={serviceImageList}
 						setServiceImageList={setServiceImageList}

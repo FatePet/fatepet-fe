@@ -5,7 +5,6 @@ import EditServiceCard from './EditServiceCard';
 
 interface Props {
 	originServiceList: IServiceDetailType[];
-	updateServiceList: IUpdateServiceItemType[];
 	addServiceList: IServiceItemType[];
 	setOriginServiceList: React.Dispatch<
 		React.SetStateAction<IServiceDetailType[]>
@@ -27,7 +26,6 @@ interface Props {
 function EditServiceInfoArea({
 	originServiceList,
 	setOriginServiceList,
-	updateServiceList,
 	setUpdateServiceList,
 	addServiceList,
 	setAddServiceList,
