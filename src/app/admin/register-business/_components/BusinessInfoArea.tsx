@@ -5,7 +5,7 @@ import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
-import { useGetCheckBusinessName } from '@/hooks/admin/business/useGetCheckBusinessName';
+import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
 import useAuthStore from '@/store/useAuthStore';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
@@ -73,7 +73,7 @@ function BusinessInfoArea({
 	}, [address, detailAddress]);
 
 	const handleCategoryClick = (category: string) => {
-		setBusinessItem({ ...businessItem, type: category });
+		setBusinessItem({ ...businessItem, category: category });
 	};
 
 	const onInputChange = (
@@ -153,7 +153,7 @@ function BusinessInfoArea({
 							key={business.category}
 							buttonText={business.category}
 							handleClick={() => handleCategoryClick(business.category)}
-							isClicked={businessItem.type === business.category}
+							isClicked={businessItem.category === business.category}
 						/>
 					))}
 				</div>

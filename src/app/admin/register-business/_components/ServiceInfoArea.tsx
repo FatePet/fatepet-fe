@@ -12,7 +12,6 @@ interface Props {
 function ServiceInfoArea({
 	serviceList,
 	setServiceList,
-	serviceImageList,
 	setServiceImageList,
 	serviceErrorMsgs,
 }: Props) {
@@ -26,6 +25,7 @@ function ServiceInfoArea({
 			type: '',
 			name: '',
 			description: '',
+			priceType: '',
 			price: '',
 			image: false,
 		};

@@ -104,7 +104,7 @@ function ServiceCard({
 				setServiceList((prev) =>
 					prev.map((item, index) =>
 						index === serviceCount - 1
-							? { ...item, desc: e.target.value }
+							? { ...item, description: e.target.value }
 							: item,
 					),
 				);
@@ -219,11 +219,11 @@ function ServiceCard({
 								key={price.priceType}
 								buttonText={price.priceType}
 								handleClick={() => handlePriceTypeClick(price.priceType)}
-								isClicked={serviceItem.price === price.priceType}
+								isClicked={serviceItem.priceType === price.priceType}
 							/>
 						))}
 					</div>
-					{serviceItem.price === '직접입력' && (
+					{serviceItem.priceType === '직접입력' && (
 						<TextArea
 							type='price'
 							inputData={serviceItem.price}

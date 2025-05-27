@@ -7,7 +7,7 @@ import BusinessInfoArea from './_components/BusinessInfoArea';
 import AdditionalInfoArea from './_components/AdditionalInfoArea';
 import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
-import { usePostCreateBusiness } from '@/hooks/admin/business/usePostCreateBusiness';
+import { usePostCreateBusiness } from '@/hooks/api/admin/business/usePostCreateBusiness';
 
 const areaNameClass = 'font-bold text-[14px] text-gray-middle mt-[10px]';
 const borderClass = 'w-[100%] h-[1px] bg-gray-middle mb-[10px]';
@@ -22,7 +22,7 @@ function RegisterBusiness() {
 	const [businessItem, setBusinessItem] =
 		useState<IPostCreateBusinessRequestType>({
 			name: '',
-			type: '',
+			category: '',
 			mainImage: null,
 			address: '',
 			latitude: 0,
@@ -53,6 +53,7 @@ function RegisterBusiness() {
 			type: '',
 			name: '',
 			description: '',
+			priceType: '',
 			price: '',
 			image: false,
 		},
