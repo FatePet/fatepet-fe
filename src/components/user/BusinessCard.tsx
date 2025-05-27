@@ -19,7 +19,7 @@ function BusinessCard({ businessItem }: Props) {
 			<div className='flex flex-col gap-[5px] p-[20px] text-[13px] font-semibold text-[#47576A]'>
 				<div className='flex justify-between text-[20px] font-black text-p-black'>
 					<div>{businessItem.name}</div>
-					<Tag tagText={businessItem.category} />
+					<Tag tagText={businessItem.type} />
 				</div>
 				<div className='flex gap-[5px]'>
 					<img
