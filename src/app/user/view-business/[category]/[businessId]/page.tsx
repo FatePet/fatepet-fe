@@ -12,8 +12,8 @@ import ConsultModal from './_components/ConsultModal';
 import StartConsultButton from '@/components/buttons/StartConsultButton';
 import ModalLayout from '@/components/modals/ModalLayout';
 import AlertModal from '@/components/modals/AlertModal';
-import { useGetUserBusinessDetail } from '@/hooks/api/user/useGetUserBusinessDetail';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { useGetUserBusinessDetail } from '@/hooks/api/user/business/useGetUserBusinessDetail';
 
 function UserViewBusiness() {
 	const router = useRouter();
@@ -112,6 +112,7 @@ function UserViewBusiness() {
 					<ConsultModal
 						setIsModalOpen={setIsConsultModalOpen}
 						setIsRequestCompleteModalOpen={setIsRequestSuccessModalOpen}
+						businessId={businessId}
 					/>
 				</ModalLayout>
 			)}
