@@ -13,6 +13,7 @@ import StartConsultButton from '@/components/buttons/StartConsultButton';
 import ModalLayout from '@/components/modals/ModalLayout';
 import AlertModal from '@/components/modals/AlertModal';
 import { useGetUserBusinessDetail } from '@/hooks/api/user/useGetUserBusinessDetail';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 function UserViewBusiness() {
 	const router = useRouter();
@@ -23,7 +24,8 @@ function UserViewBusiness() {
 	const [isConsultModalOpen, setIsConsultModalOpen] = useState<boolean>(false);
 	const [isRequestSuccessModalOpen, setIsRequestSuccessModalOpen] =
 		useState<boolean>(false);
-	const { data: businessDetail } = useGetUserBusinessDetail(businessId);
+	const { data: businessDetail, isLoading, error } =
+		useGetUserBusinessDetail(businessId);
 
 	const handleBackArrowClick = () => {
 		router.back();
@@ -32,6 +34,15 @@ function UserViewBusiness() {
 	const handleStartConsultBtnClick = () => {
 		setIsConsultModalOpen(true);
 	};
+
+	if (isLoading) {
+		return <LoadingSpinner />;
+	}
+
+	if (error) {
+		alert(error.message)
+		router.push(`/user/view-business/${category}/list`);
+	}
 
 	if (!businessDetail) {
 		return null;
@@ -60,9 +71,7 @@ function UserViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='기본항목' />
-						<PrimaryServiceList
-							services={businessDetail.data.services}
-						/>
+						<PrimaryServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 
@@ -71,9 +80,7 @@ function UserViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='선택항목' />
-						<OptionalServiceList
-							services={businessDetail.data.services}
-						/>
+						<OptionalServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 				{businessDetail.data.services.some(
@@ -81,9 +88,7 @@ function UserViewBusiness() {
 				) && (
 					<div className='flex flex-col gap-[10px]'>
 						<TextWithUnderLine itemType='패키지' />
-						<PackageServiceList
-							services={businessDetail.data.services}
-						/>
+						<PackageServiceList services={businessDetail.data.services} />
 					</div>
 				)}
 				{(businessDetail.data.additionalInfo.description ||
