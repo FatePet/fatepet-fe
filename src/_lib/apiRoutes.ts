@@ -6,6 +6,9 @@ export const apiRoutes = {
 	login: '/login',
 	reissue: '/token',
 
+	// 사용자
+	consultation: '/business/consultations',
+
 	// 공통
 	business: '/business',
 };
