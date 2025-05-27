@@ -29,20 +29,16 @@ function EditBusiness() {
 		setAccessToken,
 	);
 	const [originBusinessItem, setOriginBusinessItem] =
-		useState<IPostCreateBusinessRequestType>({
+		useState<IBusinessDetailDataType>({
 			name: '',
 			category: '',
-			mainImage: null,
+			mainImageUrl: '',
 			address: '',
-			latitude: 0,
-			longitude: 0,
 			businessHours: '',
 			phoneNumber: '',
 			email: '',
-			service: [],
-			serviceImage: [],
-			additionalImage: [],
-			additionalInfo: '',
+			services: [],
+			additionalInfo: { images: [], description: '' },
 		});
 
 	const [patchBusinessItem, setPatchBusinessItem] =
@@ -118,31 +114,20 @@ function EditBusiness() {
 	>([]);
 	const [removeServiceIds, setRemoveServiceIds] = useState<number[]>([]);
 
-	const [additionalImgFileList, setAdditionalImgFileList] = useState<
-		(File | null)[]
-	>([]);
+	const [originAdditionalImgFileList, setOriginAdditionalImgFileList] =
+		useState<(File | null)[]>([]);
 	const [addAdditionalImageList, setAddAdditionalImageList] = useState<
 		(File | null)[]
+	>([]);
+	const [removeAdditionalImageIds, setRemoveAdditionalImageIds] = useState<
+		number[]
 	>([]);
 
 	useEffect(() => {
 		if (businessDetail) {
 			const itemData = businessDetail.data;
-			setOriginBusinessItem({
-				name: itemData.name,
-				category: itemData.category,
-				mainImage: null,
-				address: itemData.address,
-				latitude: 0,
-				longitude: 0,
-				businessHours: itemData.businessHours,
-				phoneNumber: itemData.phoneNumber,
-				email: itemData.email,
-				service: [],
-				serviceImage: [],
-				additionalImage: [],
-				additionalInfo: itemData.additionalInfo.description,
-			});
+
+			setOriginBusinessItem(itemData);
 			setThumbnailFile(itemData.mainImageUrl);
 			handleSplitAddress(itemData.address);
 			setServiceList(
@@ -186,7 +171,7 @@ function EditBusiness() {
 			service: serviceList,
 		}));
 
-		const validAdditionalImgFiles = additionalImgFileList.filter(
+		const validAdditionalImgFiles = originAdditionalImgFileList.filter(
 			(file): file is File => file !== null,
 		);
 		setOriginBusinessItem((prev) => ({
@@ -206,7 +191,7 @@ function EditBusiness() {
 		thumbnailFile,
 		serviceImageList,
 		serviceList,
-		additionalImgFileList,
+		originAdditionalImgFileList,
 	]);
 
 	const handleSplitAddress = (address: string) => {
@@ -301,10 +286,14 @@ function EditBusiness() {
 					<p className={`${areaNameClass} mt-[50px]`}>기타 정보</p>
 					<div className={borderClass} />
 					<EditAdditionalInfoArea
-						setAdditionalImgFileList={setAdditionalImgFileList}
-						businessItem={originBusinessItem}
-						setBusinessItem={setOriginBusinessItem}
-						additionalImgFileList={additionalImgFileList}
+						setAddAdditionalImgFileList={setAddAdditionalImageList}
+						setOriginBusinessItem={setOriginBusinessItem}
+						// setOriginAdditionalImgFileList={setOriginAdditionalImgFileList}
+						addAdditionalImgFileList={addAdditionalImageList}
+						originBusinessItem={originBusinessItem}
+						patchBusinessItem={patchBusinessItem}
+						setPatchBusinessItem={setPatchBusinessItem}
+						setRemoveAdditionalImgaIds={setRemoveAdditionalImageIds}
 					/>
 				</div>
 			</div>

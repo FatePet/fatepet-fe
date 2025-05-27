@@ -12,7 +12,7 @@ const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
 interface Props {
-	originBusinessItem: IPostCreateBusinessRequestType;
+	originBusinessItem: IBusinessDetailDataType;
 	patchBusinessItem: IPatchBusinessRequestType;
 	setPatchBusinessItem: React.Dispatch<
 		React.SetStateAction<IPatchBusinessRequestType>
@@ -49,6 +49,8 @@ function EditBusinessInfoArea({
 		setAccessToken,
 		isCheckName,
 	);
+
+	useEffect(() => {}, [originBusinessItem.address]);
 
 	const businessCategory = [
 		{
