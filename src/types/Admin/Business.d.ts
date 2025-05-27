@@ -1,7 +1,7 @@
 //업체 등록
 type IPostCreateBusinessRequestType = {
 	name: string;
-	type: string;
+	category: string;
 	mainImage: File | null;
 	address: string;
 	latitude: number;
@@ -19,9 +19,14 @@ type IServiceItemType = {
 	type: string;
 	name: string;
 	description: string;
+	priceType: string;
 	price: string;
 	image: boolean;
 };
+
+type IUpdateServiceItemType = {
+	serviceId: number;
+} & IServiceItemType;
 
 type IBusinessErrorMsgType = {
 	nameError: string;
@@ -29,6 +34,27 @@ type IBusinessErrorMsgType = {
 	phoneError: string;
 	emailError: string;
 	addressError: string;
+};
+
+//업체 수정
+type IPatchBusinessRequestType = {
+	name: string | null;
+	category: string | null;
+	mainImage: File | null;
+	address: string | null;
+	latitude: number | null;
+	longitude: number | null;
+	businessHours: string | null;
+	phoneNumber: string | null;
+	email: string | null;
+	addService: IServiceItemType[] | null;
+	addServiceImage: File[] | null;
+	updateService: IUpdateServiceItemType[] | null;
+	updateServiceImage: File[] | null;
+	removeServiceIds: number[] | null;
+	addAdditionalImage: File[] | null;
+	removeAdditionalImageIds: number[] | null;
+	additionalInfo: string | null;
 };
 
 // 업체 조회

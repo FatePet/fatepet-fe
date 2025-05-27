@@ -25,6 +25,7 @@ type IServiceDetailType = {
 	name: string;
 	description: string;
 	imageUrl: string;
+	priceType: string;
 	price: string;
 };
 
