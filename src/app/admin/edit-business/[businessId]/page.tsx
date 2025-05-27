@@ -106,7 +106,7 @@ function EditBusiness() {
 		},
 	]);
 	const [serviceImageList, setServiceImageList] = useState<(File | null)[]>([]);
-	const [addAddServiceImageList, setAddServiceImageList] = useState<
+	const [addServiceImageList, setAddServiceImageList] = useState<
 		(File | null)[]
 	>([]);
 	const [updateServiceImageList, setUpdateServiceImageList] = useState<
@@ -129,7 +129,12 @@ function EditBusiness() {
 
 			setOriginBusinessItem(itemData);
 			setThumbnailFile(itemData.mainImageUrl);
-			handleSplitAddress(itemData.address);
+
+			if (!itemData.address.endsWith(')')) {
+				handleSplitAddress(itemData.address);
+			} else {
+				setAddress(itemData.address);
+			}
 			setServiceList(
 				itemData.services.map((item) => ({
 					type: item.type,
@@ -158,40 +163,46 @@ function EditBusiness() {
 
 	useEffect(() => {
 		convertAddressToCoordinates(address).then((result) => {
-			setOriginBusinessItem((prev) => ({
+			setPatchBusinessItem((prev) => ({
 				...prev,
 				latitude: result?.lat ?? 0,
 				longitude: result?.lng ?? 0,
 			}));
 		});
 
-		setOriginBusinessItem((prev) => ({
-			...prev,
-			thumbnail: thumbnailFile as File,
-			service: serviceList,
-		}));
-
-		const validAdditionalImgFiles = originAdditionalImgFileList.filter(
+		const validAddServiceImage = addServiceImageList.filter(
 			(file): file is File => file !== null,
 		);
-		setOriginBusinessItem((prev) => ({
-			...prev,
-			additionalImage: validAdditionalImgFiles,
-		}));
 
-		const validServiceImgFiles = serviceImageList.filter(
+		const validUpdateServiceImage = updateServiceImageList.filter(
 			(file): file is File => file !== null,
 		);
-		setOriginBusinessItem((prev) => ({
+
+		const validAddAdditionalImage = addAdditionalImageList.filter(
+			(file): file is File => file !== null,
+		);
+
+		setPatchBusinessItem((prev) => ({
 			...prev,
-			serviceImage: validServiceImgFiles,
+			mainImageUrl: patchMainImageFile as string,
+			addservice: addServiceList,
+			addServiceImage: validAddAdditionalImage,
+			updateService: updateServiceList,
+			updateServiceImage: validUpdateServiceImage,
+			removeServiceIds: removeServiceIds,
+			addAdditionalImage: validAddAdditionalImage,
+			removeAdditionalImageIds: removeAdditionalImageIds,
 		}));
 	}, [
 		address,
-		thumbnailFile,
-		serviceImageList,
-		serviceList,
-		originAdditionalImgFileList,
+		patchMainImageFile,
+		addServiceList,
+		addAdditionalImageList,
+		updateServiceList,
+		updateServiceImageList,
+		removeServiceIds,
+		removeAdditionalImageIds,
+		addAdditionalImageList,
 	]);
 
 	const handleSplitAddress = (address: string) => {
@@ -236,6 +247,8 @@ function EditBusiness() {
 			newErrors.addressError = '';
 		}
 		setErrorMsgs(newErrors);
+
+		editBusiness(patchBusinessItem);
 	};
 
 	return (
@@ -262,6 +275,8 @@ function EditBusiness() {
 						setAddress={setAddress}
 						detailAddress={detailAddress}
 						setDetailAddress={setDetailAddress}
+						patchMainImageFile={patchMainImageFile}
+						setPathchMainImageFile={setPathchMainImageFile}
 					/>
 				</div>
 				<div>
@@ -288,7 +303,6 @@ function EditBusiness() {
 					<EditAdditionalInfoArea
 						setAddAdditionalImgFileList={setAddAdditionalImageList}
 						setOriginBusinessItem={setOriginBusinessItem}
-						// setOriginAdditionalImgFileList={setOriginAdditionalImgFileList}
 						addAdditionalImgFileList={addAdditionalImageList}
 						originBusinessItem={originBusinessItem}
 						patchBusinessItem={patchBusinessItem}

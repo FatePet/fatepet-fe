@@ -80,11 +80,19 @@ function ServiceCard({
 	};
 
 	const handlePriceTypeClick = (type: string) => {
-		setServiceList((prev) =>
-			prev.map((item, index) =>
-				index === serviceCount - 1 ? { ...item, priceType: type } : item,
-			),
-		);
+		if (type === '직접문의') {
+			setServiceList((prev) =>
+				prev.map((item, index) =>
+					index === serviceCount - 1 ? { ...item, priceType: type } : item,
+				),
+			);
+		} else {
+			setServiceList((prev) =>
+				prev.map((item, index) =>
+					index === serviceCount - 1 ? { ...item, price: type } : item,
+				),
+			);
+		}
 	};
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

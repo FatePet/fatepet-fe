@@ -25,6 +25,10 @@ interface Props {
 	setAddress: React.Dispatch<React.SetStateAction<string>>;
 	detailAddress: string;
 	setDetailAddress: React.Dispatch<React.SetStateAction<string>>;
+	patchMainImageFile: string | File | null;
+	setPathchMainImageFile: React.Dispatch<
+		React.SetStateAction<string | File | null>
+	>;
 }
 
 function EditBusinessInfoArea({
@@ -38,6 +42,8 @@ function EditBusinessInfoArea({
 	setAddress,
 	detailAddress,
 	setDetailAddress,
+	patchMainImageFile,
+	setPathchMainImageFile,
 }: Props) {
 	const { accessToken, setAccessToken } = useAuthStore();
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
@@ -49,8 +55,6 @@ function EditBusinessInfoArea({
 		setAccessToken,
 		isCheckName,
 	);
-
-	useEffect(() => {}, [originBusinessItem.address]);
 
 	const businessCategory = [
 		{

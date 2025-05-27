@@ -79,26 +79,17 @@ function RegisterBusiness() {
 				longitude: result?.lng ?? 0,
 			}));
 		});
-
-		setBusinessItem((prev) => ({
-			...prev,
-			thumbnail: thumbnailFile as File,
-			service: serviceList,
-		}));
-
 		const validAdditionalImgFiles = additionalImgFileList.filter(
 			(file): file is File => file !== null,
 		);
-		setBusinessItem((prev) => ({
-			...prev,
-			additionalImage: validAdditionalImgFiles,
-		}));
-
 		const validServiceImgFiles = serviceImageList.filter(
 			(file): file is File => file !== null,
 		);
 		setBusinessItem((prev) => ({
 			...prev,
+			mainImage: thumbnailFile as File,
+			service: serviceList,
+			additionalImage: validAdditionalImgFiles,
 			serviceImage: validServiceImgFiles,
 		}));
 	}, [
