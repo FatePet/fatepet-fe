@@ -21,6 +21,7 @@ export const getUserBusiness = async (
 
     if (sortOption === 'DISTANCE') {
         if (!(latitude && longitude)) {
+            // 위치를 설정하지 않았을 경우, 임의로 설정
             latitude = 0;
             longitude = 0;
         }

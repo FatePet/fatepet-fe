@@ -1,11 +1,7 @@
 export const apiRoutes = {
 	// 관리자
-<<<<<<< HEAD
-	admin: '/admin',
-=======
 	admin: '/admin/business',
 
->>>>>>> origin/dev
 	// 인증관련
 	login: '/login',
 	reissue: '/token',
