@@ -34,7 +34,7 @@ function ViewBusinessList() {
 		}
 	}, [location]);
 	
-	const { data: userBusiness } = useGetUserBusiness(
+	const { data: userBusiness, isLoading } = useGetUserBusiness(
 		sortOption,
 		0,
 		20,
@@ -65,9 +65,13 @@ function ViewBusinessList() {
 		router.push(`/user/view-business/${category}/${businessId}`);
 	};
 
+	if (isLoading) {
+		return;
+	};
+
 	if (!userBusiness) {
 		return null;
-	}
+	};
 
 	return (
 		<div className='flex flex-col'>
@@ -96,7 +100,7 @@ function ViewBusinessList() {
 				)}
 			</div>
 			<div className='flex flex-col w-full gap-[8px]'>
-				{userBusiness?.data.map((businessItem) => (
+				{userBusiness.data.map((businessItem) => (
 					<div
 						key={businessItem.businessId}
 						onClick={() => {
