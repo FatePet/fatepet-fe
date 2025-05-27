@@ -2,14 +2,14 @@ import { apiRoutes } from "@/_lib/apiRoutes"
 import api from "@/_lib/fetcher"
 
 export const getUserBusiness = async (
-    sortType: string,
+    sort: string,
     page: number,
     size: number,
     latitude: number | null,
     longitude: number | null,
 ) => {
     const sortOption: string = (() => {
-        switch (sortType) {
+        switch (sort) {
             case '인기순':
                 return 'POPULAR';
             case '추천순':
@@ -26,7 +26,7 @@ export const getUserBusiness = async (
         }
         
         const queryParams = new URLSearchParams({
-            sortType: sortOption,
+            sort: sortOption,
             page: page.toString(),
             size: size.toString(),
             latitude: latitude.toString(),
@@ -40,7 +40,7 @@ export const getUserBusiness = async (
         return response;
     } else {
         const queryParams = new URLSearchParams({
-            sortType: sortOption,
+            sort: sortOption,
             page: page.toString(),
             size: size.toString(),
         }).toString();

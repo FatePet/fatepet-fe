@@ -5,7 +5,7 @@ type IBusinessItemCommonType = {
 	mainImageUrl: string;
 	businessHours: string;
 	phoneNumber: string;
-	category: string;
+	type: string;
 };
 
 // 업체 상세 조회
