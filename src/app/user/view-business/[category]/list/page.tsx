@@ -36,8 +36,8 @@ function ViewBusinessList() {
 	
 	const { data: userBusiness } = useGetUserBusiness(
 		sortOption,
-		1,
-		10,
+		0,
+		20,
 		lat,
 		lng,
 	);
