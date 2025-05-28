@@ -25,10 +25,13 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         port: 22
         script: |
-          cd /home/ubuntu/fatepet-fe
-          git fetch origin
-          git checkout main
-          git pull origin main
-          npm install
-          npm run build
-          pm2 restart next-app
+         export NVM_DIR="$HOME/.nvm"
+         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+         nvm use 22.16.0
+         cd /home/ubuntu/fatepet-fe
+         git fetch origin
+         git checkout main
+         git pull origin main
+         npm install
+         npm run build
+         pm2 restart next-app
