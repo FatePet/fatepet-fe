@@ -1,29 +1,35 @@
 @import url('./reset.css');
 @import url('./variables.css');
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .root_container {
-  max-width: 375px;
-  height: 100vh;
-  margin: 0 auto;
-  position: relative;
-  box-sizing: border-box;
-  background-color: var(--white);
+	font-family: var(--font-pretendard);
+	min-width: 320px;
+	width: 100%;
+	max-width: 600px;
+	min-height: 100vh;
+	overflow: scroll;
+	margin: 0 auto;
+	position: relative;
+	padding: 0 16px 20px 16px;
+	box-sizing: border-box;
+	background-color: white;
+	scrollbar-width: none;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 @font-face {
-  font-family: 'NanumSquare';
-  src: url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-  font-weight: normal;
-  font-style: normal;
 }
 
 body,
 button,
 textarea,
 input {
-  font-family: 'NanumSquare';
 }
 
 div {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }

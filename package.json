@@ -3,21 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-https": "./setup-https.sh"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.74.7",
     "@tanstack/react-query-devtools": "^5.74.7",
     "next": "15.3.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-daum-postcode": "^3.2.0",
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.1.4",
     "@tanstack/eslint-plugin-query": "^5.74.7",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -28,7 +31,7 @@
     "eslint-config-prettier": "^10.1.2",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }
 }
