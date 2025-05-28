@@ -10,8 +10,7 @@ import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 function AdminMain() {
 	const route = useRouter();
-	const { clearAuth } = useAuthStore();
-	const { accessToken, setAccessToken} = useAuthStore();
+	const { clearAuth ,accessToken, setAccessToken} = useAuthStore();
 
 	const handleLogout = async () => {
 		// 로그아웃 로직(임시 프론트에서 처리)
