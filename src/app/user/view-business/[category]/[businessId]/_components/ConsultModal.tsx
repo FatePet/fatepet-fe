@@ -5,6 +5,7 @@ import TextArea from '@/components/inputs/TextArea';
 import { usePostRequestConsultation } from '@/hooks/api/user/business/usePostRequestConsultation';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,7 +41,7 @@ function ConsultModal({
 			return;
 		}
 		if (!isPrivacyPolicyAgreed) {
-			alert('개인정보 활용에 동의해주세요.');
+			toast.error('개인정보 활용에 동의해주세요.');
 			return;
 		}
 		const contactType = consultType === '전화' ? 'CALL' : 'SMS';

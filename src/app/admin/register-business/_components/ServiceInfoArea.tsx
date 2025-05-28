@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ServiceCard from './ServiceCard';
 import BigButton from '@/components/buttons/BigButton';
+import toast from 'react-hot-toast';
 
 interface Props {
 	serviceList: IServiceItemType[];
@@ -18,7 +19,7 @@ function ServiceInfoArea({
 }: Props) {
 	const handleAddService = () => {
 		if (serviceList.length === 100) {
-			alert('서비스는 최대 100개까지 추가 가능합니다.');
+			toast.error('서비스는 최대 100개까지 추가 가능합니다.');
 			return;
 		}
 

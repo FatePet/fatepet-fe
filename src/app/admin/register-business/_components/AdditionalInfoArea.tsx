@@ -2,6 +2,7 @@ import DeleteButton from '@/components/buttons/DeleteButton';
 import TextArea from '@/components/inputs/TextArea';
 import React, { useEffect, useState } from 'react';
 import ImageUploadButton from './ImageUploadButton';
+import toast from 'react-hot-toast';
 
 interface Props {
 	additionalImgFileList: (File | null)[];
@@ -28,7 +29,7 @@ function AdditionalInfoArea({
 
 	useEffect(() => {
 		if (checkIsLengthOver() === true) {
-			alert('기타 사진은 10장까지 업로드 가능합니다.');
+			toast.error('기타 사진은 10장까지 업로드 가능합니다.');
 			return;
 		} else if (additionalImgFile != null) {
 			setAdditionalImgFileList((prev) => [...prev, additionalImgFile as File]);
