@@ -26,6 +26,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='ko'>
+			<head>
+				<link rel='icon' href='/logo/fatepetLogo.svg' type='image/svg+xml' />
+			</head>
 			<body className='vsc-initialized'>
 				<RQProvider>
 					<Suspense>

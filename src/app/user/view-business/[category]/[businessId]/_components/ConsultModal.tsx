@@ -2,17 +2,20 @@
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import TextArea from '@/components/inputs/TextArea';
+import { usePostRequestConsultation } from '@/hooks/api/user/business/usePostRequestConsultation';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsRequestCompleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	businessId: string;
 }
 
 function ConsultModal({
 	setIsModalOpen,
 	setIsRequestCompleteModalOpen,
+	businessId,
 }: Props) {
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
 	const [phoneNumberInputError, setPhoneNumberInputError] =
@@ -22,6 +25,10 @@ function ConsultModal({
 	const [otherInquiries, setOtherInquiries] = useState<string>('');
 	const [consultType, setConsultType] = useState<'문자' | '전화'>('문자');
 	const [isPhoneNumberValid, setIsPhoneNumberValid] = useState<boolean>(false);
+	const { mutate: requestConsultation } = usePostRequestConsultation(
+		setIsModalOpen,
+		setIsRequestCompleteModalOpen,
+	);
 
 	const handleCancelBtnClick = () => {
 		setIsModalOpen(false);
@@ -36,11 +43,14 @@ function ConsultModal({
 			alert('개인정보 활용에 동의해주세요.');
 			return;
 		}
-		// 상담 요청 api 호출
-		// 성공 시
+		const contactType = consultType === '전화' ? 'CALL' : 'SMS';
 
-		setIsRequestCompleteModalOpen(true);
-		setIsModalOpen(false);
+		requestConsultation({
+			businessId,
+			contactType,
+			phoneNumber,
+			inquiry: otherInquiries,
+		});
 	};
 
 	const handleConsultTypeBtnClick = (type: '문자' | '전화') => {

@@ -5,6 +5,7 @@ import PackageServiceList from '@/app/user/view-business/[category]/[businessId]
 import PrimaryServiceList from '@/app/user/view-business/[category]/[businessId]/_components/PrimaryServiceList';
 import TextWithUnderLine from '@/app/user/view-business/[category]/[businessId]/_components/TextWithUnderLine';
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
 import ModalLayout from '@/components/modals/ModalLayout';
 import BusinessCard from '@/components/user/BusinessCard';
@@ -20,7 +21,7 @@ function AdminViewBusiness() {
 	const businessId = params.businessId as string;
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const { accessToken, setAccessToken } = useAuthStore();
-	const { data: businessDetail } = useGetAdminBusinessDetail(
+	const { data: businessDetail, isLoading } = useGetAdminBusinessDetail(
 		businessId,
 		accessToken,
 		setAccessToken
@@ -50,6 +51,10 @@ function AdminViewBusiness() {
 	const handleBusinessDelete = () => {
 		deleteBusiness();
 	};
+
+	if (isLoading) {
+		return <LoadingSpinner/>
+	}
 
 	if (!businessDetail) {
 		return null;

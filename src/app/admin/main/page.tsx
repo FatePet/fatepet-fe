@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/useAuthStore';
 import { useGetAdminBusiness } from '@/hooks/api/admin/business/useGetAdminBusiness';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 function AdminMain() {
 	const route = useRouter();
@@ -22,9 +23,13 @@ function AdminMain() {
 		route.push('/admin/register-business');
 	};
 
-	const { data: adminBusiness } = useGetAdminBusiness(
+	const { data: adminBusiness, isLoading } = useGetAdminBusiness(
 		accessToken, setAccessToken
 	);
+
+	if (isLoading) {
+		return <LoadingSpinner/>
+	}
 
 	if (!adminBusiness) {
 		return null;
