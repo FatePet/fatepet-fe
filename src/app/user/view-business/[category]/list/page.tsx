@@ -10,6 +10,8 @@ import ModalLayout from '@/components/modals/ModalLayout';
 import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
 import useUserLocationStore from '@/store/useUserLocationStore';
 import { useGetUserBusiness } from '@/hooks/api/user/useGetUserBusiness';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 function ViewBusinessList() {
 	const router = useRouter();
@@ -33,14 +35,12 @@ function ViewBusinessList() {
 			setAddress(location);
 		}
 	}, [location]);
-	
-	const { data: userBusiness, isLoading } = useGetUserBusiness(
-		sortOption,
-		0,
-		20,
-		lat,
-		lng,
-	);
+
+	const {
+		data: userBusiness,
+		isLoading,
+		error,
+	} = useGetUserBusiness(sortOption, 0, 20, lat, lng);
 
 	const handleRegisterLocationBtnClick = () => {
 		setIsRegisterLocationModalOpen(true);
@@ -66,12 +66,16 @@ function ViewBusinessList() {
 	};
 
 	if (isLoading) {
-		return;
-	};
+		return <LoadingSpinner />;
+	}
+
+	if (error) {
+		toast.error(error.message);
+	}
 
 	if (!userBusiness) {
 		return null;
-	};
+	}
 
 	return (
 		<div className='flex flex-col'>
