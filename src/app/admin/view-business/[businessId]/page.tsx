@@ -14,6 +14,7 @@ import { useGetAdminBusinessDetail } from '@/hooks/api/admin/business/useGetAdmi
 import useAuthStore from '@/store/useAuthStore';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 function AdminViewBusiness() {
 	const router = useRouter();
@@ -21,7 +22,7 @@ function AdminViewBusiness() {
 	const businessId = params.businessId as string;
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 	const { accessToken, setAccessToken } = useAuthStore();
-	const { data: businessDetail, isLoading } = useGetAdminBusinessDetail(
+	const { data: businessDetail, isLoading, error } = useGetAdminBusinessDetail(
 		businessId,
 		accessToken,
 		setAccessToken
@@ -54,6 +55,10 @@ function AdminViewBusiness() {
 
 	if (isLoading) {
 		return <LoadingSpinner/>
+	}
+
+	if (error) {
+		toast.error(error.message);
 	}
 
 	if (!businessDetail) {

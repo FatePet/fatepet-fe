@@ -1,6 +1,9 @@
+'use client'
+
 import { postCreateBusiness } from '@/api/admin/business/postCreateBusiness';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export const usePostCreateBusiness = (
 	token: string,
@@ -10,12 +13,17 @@ export const usePostCreateBusiness = (
 	return useMutation({
 		mutationFn: (body: IPostCreateBusinessRequestType) =>
 			postCreateBusiness(body, token, setAccessToken),
+		onMutate: () => {
+			toast.loading("처리 중...", {id: "createBusinessLoading"})
+		},
 		onSuccess: () => {
-			alert('업체 등록 완료!');
+			toast.dismiss('createBusinessLoading');
+			toast.success('업체 등록 완료!');
 			router.push('/admin/main');
 		},
 		onError: () => {
-			alert('업체 등록에 실패했습니다.');
+			toast.dismiss('createBusinessLoading');
+			toast.error('업체 등록에 실패했습니다.');
 		},
 	});
 };

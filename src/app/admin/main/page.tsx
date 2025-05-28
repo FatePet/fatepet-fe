@@ -7,11 +7,11 @@ import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/useAuthStore';
 import { useGetAdminBusiness } from '@/hooks/api/admin/business/useGetAdminBusiness';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 function AdminMain() {
 	const route = useRouter();
-	const { clearAuth } = useAuthStore();
-	const { accessToken, setAccessToken} = useAuthStore();
+	const { clearAuth ,accessToken, setAccessToken} = useAuthStore();
 
 	const handleLogout = async () => {
 		// 로그아웃 로직(임시 프론트에서 처리)
@@ -23,12 +23,16 @@ function AdminMain() {
 		route.push('/admin/register-business');
 	};
 
-	const { data: adminBusiness, isLoading } = useGetAdminBusiness(
+	const { data: adminBusiness, isLoading, error } = useGetAdminBusiness(
 		accessToken, setAccessToken
 	);
 
 	if (isLoading) {
 		return <LoadingSpinner/>
+	}
+
+	if (error) {
+		toast.error(error.message);
 	}
 
 	if (!adminBusiness) {
