@@ -21,7 +21,7 @@ function ViewBusinessList() {
 	const [isSortOptionModalOpen, setIsSortOptionModalOpen] =
 		useState<boolean>(false);
 	const [sortOption, setSortOption] = useState<'거리순' | '인기순' | '추천순'>(
-		'거리순',
+		'인기순',
 	);
 	// zustand에 저장된 location 값을 불러오는 부분
 	const [address, setAddress] = useState<string>('');
