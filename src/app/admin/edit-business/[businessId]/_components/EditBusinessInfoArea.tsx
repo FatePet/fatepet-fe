@@ -7,6 +7,7 @@ import DaumPost from '@/components/location/DaumPost';
 import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
 import useAuthStore from '@/store/useAuthStore';
 import ImageUploadButton from '../../../register-business/_components/ImageUploadButton';
+import toast from 'react-hot-toast';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -119,10 +120,11 @@ function EditBusinessInfoArea({
 			const { data: checkNameData, error } = await refetch();
 			if (checkNameData) {
 				if (checkNameData.status === 200) {
-					console.log('중복어	ㅅ으');
+					toast.success('사용 가능한 이름입니다.');
 					setNameErr('');
 				} else {
 					setNameErr('이미 사용중인 이름입니다.');
+					toast.error('이미 사용중인 이름입니다.');
 				}
 			}
 			if (error) {

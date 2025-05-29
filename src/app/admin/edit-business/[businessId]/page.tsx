@@ -147,10 +147,6 @@ function EditBusiness() {
 	}, [businessDetail]);
 
 	useEffect(() => {
-		console.log(patchBusinessItem);
-	}, [patchBusinessItem]);
-
-	useEffect(() => {
 		const updatedErrorMsgs = serviceList.map((service) =>
 			service.name === '' ? '서비스명을 입력해주세요.' : '',
 		);

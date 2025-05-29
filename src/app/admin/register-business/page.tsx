@@ -137,7 +137,6 @@ function RegisterBusiness() {
 		}
 		setErrorMsgs(newErrors);
 
-		console.log(businessItem);
 		createBusiness(businessItem);
 	};
 

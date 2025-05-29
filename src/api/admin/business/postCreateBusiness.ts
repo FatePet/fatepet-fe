@@ -7,7 +7,6 @@ export const postCreateBusiness = async (
 	setAccessToken: (accessToken: string) => void,
 ) => {
 	const formData = new FormData();
-	console.log(body);
 
 	formData.append('name', body.name);
 	formData.append('category', body.category);
