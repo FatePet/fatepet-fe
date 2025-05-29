@@ -22,7 +22,7 @@ function RegisterBusiness() {
 	const [businessItem, setBusinessItem] =
 		useState<IPostCreateBusinessRequestType>({
 			name: '',
-			category: '',
+			category: '장묘',
 			mainImage: null,
 			address: '',
 			latitude: 0,
@@ -50,7 +50,7 @@ function RegisterBusiness() {
 	const [serviceErrorMsgs, setServiceErrorMsgs] = useState<string[]>(['']);
 	const [serviceList, setServiceList] = useState<IServiceItemType[]>([
 		{
-			type: '',
+			type: '기본항목',
 			name: '',
 			description: '',
 			priceType: '',
