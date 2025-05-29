@@ -4,6 +4,7 @@ import api from '@/_lib/fetcher';
 export const patchEditBusiness = async (
 	body: IPatchBusinessRequestType,
 	token: string,
+	businessId: string,
 	setAccessToken: (accessToken: string) => void,
 ) => {
 	const formData = new FormData();
@@ -60,8 +61,8 @@ export const patchEditBusiness = async (
 		formData.append('additionalInfo', body.additionalInfo);
 	}
 
-	const response = await api.post<FormData, IResponseType>({
-		endpoint: apiRoutes.admin,
+	const response = await api.patch<FormData, IResponseType>({
+		endpoint: `${apiRoutes.admin}/${businessId}`,
 		authorization: token,
 		body: formData,
 		setAccessToken,

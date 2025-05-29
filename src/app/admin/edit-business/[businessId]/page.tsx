@@ -26,6 +26,7 @@ function EditBusiness() {
 	);
 	const { mutate: editBusiness } = usePatchEditBusiness(
 		accessToken,
+		businessId,
 		setAccessToken,
 	);
 	const [originBusinessItem, setOriginBusinessItem] =

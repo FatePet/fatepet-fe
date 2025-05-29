@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 
 export const usePatchEditBusiness = (
 	authorization: string,
+	businessId: string,
 	setAccessToken: (accessToken: string) => void,
 ) => {
 	// const queryClient = useQueryClient();
@@ -14,7 +15,7 @@ export const usePatchEditBusiness = (
 
 	return useMutation({
 		mutationFn: (body: IPatchBusinessRequestType) =>
-			patchEditBusiness(body, authorization, setAccessToken),
+			patchEditBusiness(body, authorization, businessId, setAccessToken),
 		onSuccess: (data: IResponseType) => {
 			alert(data.message);
 			router.back();
