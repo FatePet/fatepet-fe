@@ -19,13 +19,13 @@ export const postCreateBusiness = async (
 	formData.append('phoneNumber', body.phoneNumber);
 	formData.append('email', body.email);
 	formData.append('service', JSON.stringify(body.service));
-	formData.append('additionalInfo', body.additionalInfo);
 	body.serviceImage.forEach((file) => {
 		formData.append('serviceImage', file);
 	});
 	body.additionalImage.forEach((file) => {
 		formData.append('additionalImage', file);
 	});
+	formData.append('additionalInfo', body.additionalInfo);
 
 	const response = await api.post<FormData, IResponseType>({
 		endpoint: apiRoutes.admin,

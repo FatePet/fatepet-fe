@@ -53,7 +53,7 @@ function RegisterBusiness() {
 			type: '기본항목',
 			name: '',
 			description: '',
-			priceType: '',
+			priceType: '직접입력',
 			price: '',
 			image: false,
 		},
