@@ -36,10 +36,17 @@ function ViewBusinessList() {
 		}
 	}, [location]);
 
+	useEffect(() => {
+		if (address) {
+			refetch();
+		}
+	}, [address])
+
 	const {
 		data: userBusiness,
 		isLoading,
 		error,
+		refetch
 	} = useGetUserBusiness(sortOption, 0, 20, lat, lng);
 
 	const handleRegisterLocationBtnClick = () => {
