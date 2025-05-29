@@ -55,7 +55,7 @@ function AdminMain() {
 						<div>업체를 추가해 주세요</div>
 					</div>
 				) : (
-					<div>
+					<div className='flex flex-col gap-[12px]'>
 						{adminBusiness.data.map((businessItem, index) => (
 							<AdminBusinessCard key={index} adminBusinessItem={businessItem} />
 						))}
