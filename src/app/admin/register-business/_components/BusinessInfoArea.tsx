@@ -7,6 +7,7 @@ import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
 import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
 import useAuthStore from '@/store/useAuthStore';
+import toast from 'react-hot-toast';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -118,10 +119,10 @@ function BusinessInfoArea({
 				}
 			}
 			if (error) {
-				alert(error);
+				toast.error(error.message);
 			}
 		} catch (err) {
-			alert(err);
+			console.error(err);
 		} finally {
 			setIsCheckName(false);
 		}

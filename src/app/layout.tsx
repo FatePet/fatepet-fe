@@ -4,6 +4,7 @@ import RQProvider from '@/components/RQProvider';
 import { Suspense } from 'react';
 import localFont from 'next/font/local';
 import Script from 'next/script';
+import { Toaster } from 'react-hot-toast';
 
 const pretendard = localFont({
 	src: '../../public/fonts/PretendardVariable.woff2',
@@ -32,7 +33,41 @@ export default function RootLayout({
 			<body className='vsc-initialized'>
 				<RQProvider>
 					<Suspense>
-						<div className='root_container'>{children}</div>
+						<div className='root_container'>
+							<Toaster
+								position='top-center'
+								toastOptions={{
+									duration: 3000,
+									style: { fontSize: '15px' },
+									success: {
+										style: {
+											background: '#4BB543',
+											color: 'white',
+										},
+									},
+									error: {
+										style: {
+											background: '#FF4C4C',
+											color: 'white',
+										},
+									},
+									loading: {
+										style: {
+											fontSize: '13px',
+											background: '#333',
+											color: '#fff',
+											borderRadius: '8px',
+											padding: '12px 16px',
+										},
+										iconTheme: {
+											primary: '#fff',
+											secondary: '#888',
+										},
+									},
+								}}
+							/>
+							{children}
+						</div>
 						<Script src={API} strategy='afterInteractive' />
 					</Suspense>
 				</RQProvider>

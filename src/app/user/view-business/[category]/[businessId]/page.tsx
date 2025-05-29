@@ -14,6 +14,7 @@ import ModalLayout from '@/components/modals/ModalLayout';
 import AlertModal from '@/components/modals/AlertModal';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useGetUserBusinessDetail } from '@/hooks/api/user/business/useGetUserBusinessDetail';
+import toast from 'react-hot-toast';
 
 function UserViewBusiness() {
 	const router = useRouter();
@@ -24,8 +25,11 @@ function UserViewBusiness() {
 	const [isConsultModalOpen, setIsConsultModalOpen] = useState<boolean>(false);
 	const [isRequestSuccessModalOpen, setIsRequestSuccessModalOpen] =
 		useState<boolean>(false);
-	const { data: businessDetail, isLoading, error } =
-		useGetUserBusinessDetail(businessId);
+	const {
+		data: businessDetail,
+		isLoading,
+		error,
+	} = useGetUserBusinessDetail(businessId);
 
 	const handleBackArrowClick = () => {
 		router.back();
@@ -40,8 +44,7 @@ function UserViewBusiness() {
 	}
 
 	if (error) {
-		alert(error.message)
-		router.push(`/user/view-business/${category}/list`);
+		toast.error(error.message);
 	}
 
 	if (!businessDetail) {
