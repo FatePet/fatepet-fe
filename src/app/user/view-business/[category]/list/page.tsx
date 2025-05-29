@@ -40,13 +40,13 @@ function ViewBusinessList() {
 		if (address) {
 			refetch();
 		}
-	}, [address])
+	}, [address]);
 
 	const {
 		data: userBusiness,
 		isLoading,
 		error,
-		refetch
+		refetch,
 	} = useGetUserBusiness(sortOption, 0, 20, lat, lng);
 
 	const handleRegisterLocationBtnClick = () => {
@@ -64,6 +64,10 @@ function ViewBusinessList() {
 	const handleChangeSortOption = (
 		sortOption: '인기순' | '거리순' | '추천순',
 	) => {
+		if (!location && !lat && !lng && sortOption === '거리순') {
+			toast.error('위치를 먼저 설정해주세요.');
+			return;
+		}
 		setSortOption(sortOption);
 		setIsSortOptionModalOpen(false);
 	};
@@ -110,7 +114,7 @@ function ViewBusinessList() {
 					</div>
 				)}
 			</div>
-			<div className='flex flex-col w-full gap-[20px]'>
+			<div className='flex flex-col w-full gap-[12px]'>
 				{userBusiness.data.map((businessItem) => (
 					<div
 						key={businessItem.businessId}
