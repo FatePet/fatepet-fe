@@ -1,21 +1,21 @@
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import React, { useEffect, useState } from 'react';
-import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
 import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
 import useAuthStore from '@/store/useAuthStore';
-import toast from 'react-hot-toast';
+import ImageUploadButton from '../../../register-business/_components/ImageUploadButton';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
 interface Props {
-	businessItem: IPostCreateBusinessRequestType;
-	setBusinessItem: React.Dispatch<
-		React.SetStateAction<IPostCreateBusinessRequestType>
+	originBusinessItem: IBusinessDetailDataType;
+	patchBusinessItem: IPatchBusinessRequestType;
+	setPatchBusinessItem: React.Dispatch<
+		React.SetStateAction<IPatchBusinessRequestType>
 	>;
 	errorMsgs: IBusinessErrorMsgType;
 	setErrorMsgs: React.Dispatch<React.SetStateAction<IBusinessErrorMsgType>>;
@@ -27,10 +27,11 @@ interface Props {
 	setDetailAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function BusinessInfoArea({
+function EditBusinessInfoArea({
 	errorMsgs,
-	businessItem,
-	setBusinessItem,
+	originBusinessItem,
+	patchBusinessItem,
+	setPatchBusinessItem,
 	imageFile,
 	setImageFile,
 	address,
@@ -44,7 +45,7 @@ function BusinessInfoArea({
 	const [nameErr, setNameErr] = useState<string>('');
 	const { refetch } = useGetCheckBusinessName(
 		accessToken,
-		businessItem.name,
+		patchBusinessItem.name ?? '',
 		setAccessToken,
 		isCheckName,
 	);
@@ -67,14 +68,14 @@ function BusinessInfoArea({
 	useEffect(() => {
 		if (detailAddress !== '') {
 			const fullAddress = address + detailAddress;
-			setBusinessItem({ ...businessItem, address: fullAddress });
+			setPatchBusinessItem({ ...patchBusinessItem, address: fullAddress });
 		} else {
-			setBusinessItem({ ...businessItem, address: address });
+			setPatchBusinessItem({ ...patchBusinessItem, address: address });
 		}
 	}, [address, detailAddress]);
 
 	const handleCategoryClick = (category: string) => {
-		setBusinessItem({ ...businessItem, category: category });
+		setPatchBusinessItem({ ...patchBusinessItem, category: category });
 	};
 
 	const onInputChange = (
@@ -83,16 +84,22 @@ function BusinessInfoArea({
 	) => {
 		switch (type) {
 			case '업체명':
-				setBusinessItem({ ...businessItem, name: e.target.value });
+				setPatchBusinessItem({ ...patchBusinessItem, name: e.target.value });
 				break;
 			case '운영시간':
-				setBusinessItem({ ...businessItem, businessHours: e.target.value });
+				setPatchBusinessItem({
+					...patchBusinessItem,
+					businessHours: e.target.value,
+				});
 				break;
 			case '번호':
-				setBusinessItem({ ...businessItem, phoneNumber: e.target.value });
+				setPatchBusinessItem({
+					...patchBusinessItem,
+					phoneNumber: e.target.value,
+				});
 				break;
 			case '이메일':
-				setBusinessItem({ ...businessItem, email: e.target.value });
+				setPatchBusinessItem({ ...patchBusinessItem, email: e.target.value });
 				break;
 			case '상세주소':
 				setDetailAddress(e.target.value);
@@ -119,10 +126,10 @@ function BusinessInfoArea({
 				}
 			}
 			if (error) {
-				toast.error(error.message);
+				alert(error);
 			}
 		} catch (err) {
-			console.error(err);
+			alert(err);
 		} finally {
 			setIsCheckName(false);
 		}
@@ -135,7 +142,7 @@ function BusinessInfoArea({
 					업체명 <span className={requiredClass}>*</span>
 				</p>
 				<RightButtonInput
-					inputData={businessItem.name}
+					inputData={patchBusinessItem.name ?? originBusinessItem.name}
 					errorMsg={errorMsgs.nameError}
 					placeHolder='예시) (주)페이트펫'
 					onChange={(e) => onInputChange('업체명', e)}
@@ -154,7 +161,11 @@ function BusinessInfoArea({
 							key={business.category}
 							buttonText={business.category}
 							handleClick={() => handleCategoryClick(business.category)}
-							isClicked={businessItem.category === business.category}
+							isClicked={
+								patchBusinessItem.category
+									? patchBusinessItem.category === business.category
+									: originBusinessItem.category === business.category
+							}
 						/>
 					))}
 				</div>
@@ -202,7 +213,9 @@ function BusinessInfoArea({
 					운영시간 <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={businessItem.businessHours}
+					inputData={
+						patchBusinessItem.businessHours ?? originBusinessItem.businessHours
+					}
 					disabled={false}
 					errorMsg={errorMsgs.hoursError}
 					placeHolder='예시) 월화수목금토 09:00~22:00 일요일 공휴일 휴무'
@@ -214,7 +227,9 @@ function BusinessInfoArea({
 					휴대폰번호(숫자만) <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={businessItem.phoneNumber}
+					inputData={
+						patchBusinessItem.phoneNumber ?? originBusinessItem.phoneNumber
+					}
 					disabled={false}
 					errorMsg={errorMsgs.phoneError}
 					placeHolder='예시) 01012341234'
@@ -226,7 +241,7 @@ function BusinessInfoArea({
 					이메일 <span className={requiredClass}>*</span>
 				</p>
 				<LongInput
-					inputData={businessItem.email}
+					inputData={patchBusinessItem.email ?? originBusinessItem.email}
 					disabled={false}
 					errorMsg={errorMsgs.emailError}
 					placeHolder='예시) example@gmail.com'
@@ -237,4 +252,4 @@ function BusinessInfoArea({
 	);
 }
 
-export default BusinessInfoArea;
+export default EditBusinessInfoArea;

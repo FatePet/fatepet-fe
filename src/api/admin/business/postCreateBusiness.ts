@@ -7,10 +7,11 @@ export const postCreateBusiness = async (
 	setAccessToken: (accessToken: string) => void,
 ) => {
 	const formData = new FormData();
+	console.log(body);
 
 	formData.append('name', body.name);
-	formData.append('category', body.type);
-	formData.append('thumbnail', body.thumbnail as File);
+	formData.append('category', body.category);
+	if (body.mainImage) formData.append('mainImage', body.mainImage as File);
 	formData.append('address', body.address);
 	formData.append('latitude', String(body.latitude));
 	formData.append('longitude', String(body.longitude));
@@ -18,13 +19,13 @@ export const postCreateBusiness = async (
 	formData.append('phoneNumber', body.phoneNumber);
 	formData.append('email', body.email);
 	formData.append('service', JSON.stringify(body.service));
-	formData.append('additionalInfo', body.additionalInfo);
 	body.serviceImage.forEach((file) => {
 		formData.append('serviceImage', file);
 	});
 	body.additionalImage.forEach((file) => {
 		formData.append('additionalImage', file);
 	});
+	formData.append('additionalInfo', body.additionalInfo);
 
 	const response = await api.post<FormData, IResponseType>({
 		endpoint: apiRoutes.admin,

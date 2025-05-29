@@ -7,7 +7,7 @@ import BusinessInfoArea from './_components/BusinessInfoArea';
 import AdditionalInfoArea from './_components/AdditionalInfoArea';
 import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
-import { usePostCreateBusiness } from '@/hooks/admin/business/usePostCreateBusiness';
+import { usePostCreateBusiness } from '@/hooks/api/admin/business/usePostCreateBusiness';
 
 const areaNameClass = 'font-bold text-[14px] text-gray-middle mt-[10px]';
 const borderClass = 'w-[100%] h-[1px] bg-gray-middle mb-[10px]';
@@ -22,8 +22,8 @@ function RegisterBusiness() {
 	const [businessItem, setBusinessItem] =
 		useState<IPostCreateBusinessRequestType>({
 			name: '',
-			type: '',
-			thumbnail: null,
+			category: '장묘',
+			mainImage: null,
 			address: '',
 			latitude: 0,
 			longitude: 0,
@@ -50,10 +50,10 @@ function RegisterBusiness() {
 	const [serviceErrorMsgs, setServiceErrorMsgs] = useState<string[]>(['']);
 	const [serviceList, setServiceList] = useState<IServiceItemType[]>([
 		{
-			type: '',
+			type: '기본항목',
 			name: '',
-			desc: '',
-			priceType: '',
+			description: '',
+			priceType: '직접입력',
 			price: '',
 			image: false,
 		},
@@ -79,26 +79,17 @@ function RegisterBusiness() {
 				longitude: result?.lng ?? 0,
 			}));
 		});
-
-		setBusinessItem((prev) => ({
-			...prev,
-			thumbnail: thumbnailFile as File,
-			service: serviceList,
-		}));
-
 		const validAdditionalImgFiles = additionalImgFileList.filter(
 			(file): file is File => file !== null,
 		);
-		setBusinessItem((prev) => ({
-			...prev,
-			additionalImage: validAdditionalImgFiles,
-		}));
-
 		const validServiceImgFiles = serviceImageList.filter(
 			(file): file is File => file !== null,
 		);
 		setBusinessItem((prev) => ({
 			...prev,
+			mainImage: thumbnailFile as File,
+			service: serviceList,
+			additionalImage: validAdditionalImgFiles,
 			serviceImage: validServiceImgFiles,
 		}));
 	}, [
