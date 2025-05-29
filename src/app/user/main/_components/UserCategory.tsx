@@ -9,10 +9,13 @@ interface Props {
 
 function UserCategory({ category }: Props) {
 	const router = useRouter();
-	const { themeColor, content, iconUrl, width, height } = categoryStyles[category];
-
+	const { themeColor, content, iconUrl, width, height } =
+		categoryStyles[category];
 
 	const handleCategoryClick = () => {
+		if (category !== '장묘') {
+			// toast.error("서비스 준비 중입니다.")
+		}
 		router.push(`/user/view-business/${category}/list`);
 	};
 

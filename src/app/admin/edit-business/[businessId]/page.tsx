@@ -181,7 +181,7 @@ function EditBusiness() {
 
 		setPatchBusinessItem((prev) => ({
 			...prev,
-			mainImageUrl: patchMainImageFile as string,
+			mainImage: patchMainImageFile as File,
 			addservice: addServiceList,
 			addServiceImage: validAddAdditionalImage,
 			updateService: updateServiceList,

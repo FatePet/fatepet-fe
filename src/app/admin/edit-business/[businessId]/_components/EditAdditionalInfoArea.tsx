@@ -100,7 +100,7 @@ function EditAdditionalInfoArea({
 							<div className='absolute top-[10px] right-[10px]'>
 								<DeleteButton
 									color='red'
-									handleClick={() => handleDeleteImage(img.imageId, true)}
+									handleClick={() => handleDeleteImage(idx, true)}
 								/>
 							</div>
 						</div>

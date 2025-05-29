@@ -1,4 +1,3 @@
-import BigButton from '@/components/buttons/BigButton';
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import TextArea from '@/components/inputs/TextArea';
