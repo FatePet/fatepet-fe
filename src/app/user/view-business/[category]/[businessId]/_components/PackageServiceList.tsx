@@ -8,7 +8,7 @@ interface Props {
 
 function PackageServiceList({ services }: Props) {
 	const packageServices = services.filter(
-		(service) => service.category === '패키지',
+		(service) => service.type === '패키지',
 	);
 
 	return (

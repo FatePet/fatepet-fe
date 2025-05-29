@@ -13,7 +13,6 @@ interface Props {
 function ServiceInfoArea({
 	serviceList,
 	setServiceList,
-	serviceImageList,
 	setServiceImageList,
 	serviceErrorMsgs,
 }: Props) {
@@ -26,7 +25,7 @@ function ServiceInfoArea({
 		const newServiceItem: IServiceItemType = {
 			type: '',
 			name: '',
-			desc: '',
+			description: '',
 			priceType: '',
 			price: '',
 			image: false,
@@ -46,7 +45,6 @@ function ServiceInfoArea({
 					serviceCount={idx + 1}
 					serviceItem={service}
 					setServiceList={setServiceList}
-					serviceImageList={serviceImageList}
 					setServiceImageList={setServiceImageList}
 					errorMsg={serviceErrorMsgs[idx]}
 				/>
