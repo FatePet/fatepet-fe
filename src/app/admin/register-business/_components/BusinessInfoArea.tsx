@@ -112,9 +112,10 @@ function BusinessInfoArea({
 			const { data: checkNameData, error } = await refetch();
 			if (checkNameData) {
 				if (checkNameData.status === 200) {
-					console.log('중복어	ㅅ으');
+					toast.success('사용 가능한 이름입니다.');
 					setNameErr('');
 				} else {
+					toast.error('이미 사용중인 이름입니다.');
 					setNameErr('이미 사용중인 이름입니다.');
 				}
 			}
