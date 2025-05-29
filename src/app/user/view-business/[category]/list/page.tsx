@@ -103,7 +103,7 @@ function ViewBusinessList() {
 					</div>
 				)}
 			</div>
-			<div className='flex flex-col w-full gap-[8px]'>
+			<div className='flex flex-col w-full gap-[20px]'>
 				{userBusiness.data.map((businessItem) => (
 					<div
 						key={businessItem.businessId}
