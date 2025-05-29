@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import categoryStyles from './categoryStyles';
+import toast from 'react-hot-toast';
 
 interface Props {
 	category: '장묘' | '악세사리' | '브리더' | '행동상담';
@@ -14,7 +15,8 @@ function UserCategory({ category }: Props) {
 
 	const handleCategoryClick = () => {
 		if (category !== '장묘') {
-			// toast.error("서비스 준비 중입니다.")
+			toast.error('서비스 준비 중입니다.');
+			return;
 		}
 		router.push(`/user/view-business/${category}/list`);
 	};
