@@ -2,18 +2,19 @@ import React from 'react';
 
 interface Props {
 	handleSortOptionItemClick: (
-		sortOption: '거리순' | '인기순' | '추천순',
+		sortOption: '거리순' | '인기순' | '추천순'| '최저가순',
 	) => void;
 }
 
 function SortOptionModal({ handleSortOptionItemClick }: Props) {
-	const sortOptionArr: Array<'거리순' | '인기순' | '추천순'> = [
+	const sortOptionArr: Array<'거리순' | '인기순' | '추천순' | '최저가순'> = [
 		'인기순',
 		'추천순',
 		'거리순',
+		'최저가순'
 	];
 	return (
-		<div className='flex flex-col w-[123px] h-[116px] rounded-[11px] bg-p-black font-bold text-[12px] text-white items-center'>
+		<div className='flex flex-col w-[123px] h-[155px] rounded-[11px] bg-p-black font-bold text-[12px] text-white items-center'>
 			{sortOptionArr.map((sortOption, index) => (
 				<div
 					key={sortOption}
@@ -27,7 +28,7 @@ function SortOptionModal({ handleSortOptionItemClick }: Props) {
 					>
 						{sortOption}
 					</div>
-					{index !== 2 && <div className='w-full h-[1px] bg-gray-middle' />}
+					{index !== 3 && <div className='w-full h-[1px] bg-gray-middle' />}
 				</div>
 			))}
 		</div>
