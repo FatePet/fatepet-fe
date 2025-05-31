@@ -212,6 +212,15 @@ function EditBusiness() {
 	};
 
 	const handleBusinessRegisterButton = () => {
+		if (
+			handleCheckErrorMsgs() &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			editBusiness(patchBusinessItem);
+		}
+	};
+
+	const handleCheckErrorMsgs = (): boolean => {
 		const newErrors = { ...errorMsgs };
 
 		if (patchBusinessItem.name === '') {
@@ -245,11 +254,10 @@ function EditBusiness() {
 		}
 		setErrorMsgs(newErrors);
 
-		if (
-			Object.values(errorMsgs).every((msg) => msg === '') &&
-			Object.values(serviceErrorMsgs).every((msg) => msg === '')
-		) {
-			editBusiness(patchBusinessItem);
+		if (Object.values(newErrors).every((msg) => msg === '')) {
+			return true;
+		} else {
+			return false;
 		}
 	};
 

@@ -30,6 +30,7 @@ interface Props {
 
 function EditBusinessInfoArea({
 	errorMsgs,
+	setErrorMsgs,
 	originBusinessItem,
 	patchBusinessItem,
 	setPatchBusinessItem,
@@ -43,12 +44,11 @@ function EditBusinessInfoArea({
 	isCheckedName,
 }: Props) {
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
-	const [nameErr, setNameErr] = useState<string>('');
 	const { checkDuplicateName } = useCheckDuplicateName(
 		patchBusinessItem.name ?? '',
 		isCheckedName,
 		setIsCheckedName,
-		setNameErr,
+		setErrorMsgs,
 	);
 
 	const businessCategory = [
@@ -128,7 +128,7 @@ function EditBusinessInfoArea({
 					buttonText='중복확인'
 					handleButtonClick={checkDuplicateName}
 				/>
-				{nameErr !== '' && <p>{nameErr}</p>}
+				{errorMsgs.nameError !== '' && <p>{errorMsgs.nameError}</p>}
 			</div>
 			<div className={divClass}>
 				<p>

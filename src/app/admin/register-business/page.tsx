@@ -104,6 +104,15 @@ function RegisterBusiness() {
 	};
 
 	const handleBusinessRegisterButton = () => {
+		if (
+			handleCheckErrorMsgs() &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			createBusiness(businessItem);
+		}
+	};
+
+	const handleCheckErrorMsgs = (): boolean => {
 		const newErrors = { ...errorMsgs };
 
 		if (businessItem.name === '') {
@@ -120,7 +129,7 @@ function RegisterBusiness() {
 		}
 		if (businessItem.phoneNumber === '') {
 			newErrors.phoneError = '휴대폰번호를 입력해주세요.';
-		} else if (!isValidPhoneNumber(businessItem.phoneNumber)) {
+		} else if (!isValidPhoneNumber(businessItem.phoneNumber ?? '')) {
 			newErrors.phoneError = '형식이 올바르지 않습니다.';
 		} else {
 			newErrors.phoneError = '';
@@ -137,11 +146,10 @@ function RegisterBusiness() {
 		}
 		setErrorMsgs(newErrors);
 
-		if (
-			Object.values(errorMsgs).every((msg) => msg === '') &&
-			Object.values(serviceErrorMsgs).every((msg) => msg === '')
-		) {
-			createBusiness(businessItem);
+		if (Object.values(newErrors).every((msg) => msg === '')) {
+			return true;
+		} else {
+			return false;
 		}
 	};
 

@@ -7,7 +7,7 @@ export function useCheckDuplicateName(
 	businessName: string,
 	isCheckedName: boolean,
 	setIsCheckedName: Dispatch<SetStateAction<boolean>>,
-	setNameError: Dispatch<SetStateAction<string>>,
+	setErrorMsgs: React.Dispatch<React.SetStateAction<IBusinessErrorMsgType>>,
 ) {
 	const { accessToken, setAccessToken } = useAuthStore();
 	const { refetch } = useGetCheckBusinessName(
@@ -26,11 +26,14 @@ export function useCheckDuplicateName(
 			if (checkNameData) {
 				if (checkNameData.status === 200) {
 					toast.success('사용 가능한 이름입니다.');
-					setNameError('');
+					setErrorMsgs((prev) => ({ ...prev, nameError: '' }));
 					setIsCheckedName(true);
 				} else {
 					toast.error('이미 사용중인 이름입니다.');
-					setNameError('이미 사용중인 이름입니다.');
+					setErrorMsgs((prev) => ({
+						...prev,
+						nameError: '이미 사용중인 이름입니다.',
+					}));
 				}
 			}
 
@@ -46,7 +49,7 @@ export function useCheckDuplicateName(
 		refetch,
 		setAccessToken,
 		setIsCheckedName,
-		setNameError,
+		setErrorMsgs,
 	]);
 
 	return { checkDuplicateName };
