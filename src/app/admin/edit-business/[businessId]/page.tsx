@@ -4,7 +4,6 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
-import AdditionalInfoArea from '../../register-business/_components/AdditionalInfoArea';
 import { useGetAdminBusinessDetail } from '@/hooks/api/admin/business/useGetAdminBusinessDetail';
 import { usePatchEditBusiness } from '@/hooks/api/admin/business/usePatchEditBusiness';
 import EditBusinessInfoArea from './_components/EditBusinessInfoArea';
@@ -123,6 +122,10 @@ function EditBusiness() {
 	const [isCheckedName, setIsCheckedName] = useState<boolean>(true);
 
 	useEffect(() => {
+		console.log(patchBusinessItem);
+	}, [patchBusinessItem]);
+
+	useEffect(() => {
 		if (businessDetail) {
 			const itemData = businessDetail.data;
 
@@ -182,7 +185,7 @@ function EditBusiness() {
 			...prev,
 			mainImage: patchMainImageFile as File,
 			addservice: addServiceList,
-			addServiceImage: validAddAdditionalImage,
+			addServiceImage: validAddServiceImage,
 			updateService: updateServiceList,
 			updateServiceImage: validUpdateServiceImage,
 			removeServiceIds: removeServiceIds,
@@ -208,15 +211,6 @@ function EditBusiness() {
 	const isValidPhoneNumber = (phoneNumber: string): boolean => {
 		const regex = /^010\d{8}$/;
 		return regex.test(phoneNumber);
-	};
-
-	const handleBusinessRegisterButton = () => {
-		if (
-			handleCheckErrorMsgs() &&
-			Object.values(serviceErrorMsgs).every((msg) => msg === '')
-		) {
-			editBusiness(patchBusinessItem);
-		}
 	};
 
 	const handleCheckErrorMsgs = (): boolean => {
@@ -264,6 +258,15 @@ function EditBusiness() {
 		}
 	};
 
+	const handleBusinessRegisterButton = () => {
+		if (
+			handleCheckErrorMsgs() &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			editBusiness(patchBusinessItem);
+		}
+	};
+
 	return (
 		<div className='mb-[60px]'>
 			<HeaderWithBackArrow
@@ -300,6 +303,7 @@ function EditBusiness() {
 						setOriginServiceList={setOriginServiceList}
 						addServiceList={addServiceList}
 						setAddServiceList={setAddServiceList}
+						updateServiceList={updateServiceList}
 						setUpdateServiceList={setUpdateServiceList}
 						serviceImageList={serviceImageList}
 						setServiceImageList={setServiceImageList}

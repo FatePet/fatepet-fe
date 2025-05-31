@@ -9,6 +9,7 @@ interface Props {
 	setOriginServiceList: React.Dispatch<
 		React.SetStateAction<IServiceDetailType[]>
 	>;
+	updateServiceList: IUpdateServiceItemType[];
 	setUpdateServiceList: React.Dispatch<
 		React.SetStateAction<IUpdateServiceItemType[]>
 	>;
@@ -26,6 +27,7 @@ interface Props {
 function EditServiceInfoArea({
 	originServiceList,
 	setOriginServiceList,
+	updateServiceList,
 	setUpdateServiceList,
 	addServiceList,
 	setAddServiceList,
@@ -42,10 +44,10 @@ function EditServiceInfoArea({
 		}
 
 		const newServiceItem: IServiceItemType = {
-			type: '',
+			type: '기본항목',
 			name: '',
 			description: '',
-			priceType: '',
+			priceType: '직접입력',
 			price: '',
 			image: false,
 		};
@@ -67,7 +69,9 @@ function EditServiceInfoArea({
 					serviceId={service.serviceId}
 					serviceItem={service}
 					setOriginServiceList={setOriginServiceList}
+					addServiceList={addServiceList}
 					setAddServiceList={setAddServiceList}
+					updateServiceList={updateServiceList}
 					setUpdateServiceList={setUpdateServiceList}
 					setServiceImageList={setServiceImageList}
 					setAddServiceImageList={setAddServiceImageList}
@@ -84,7 +88,9 @@ function EditServiceInfoArea({
 					serviceIdx={idx}
 					serviceItem={service}
 					setOriginServiceList={setOriginServiceList}
+					addServiceList={addServiceList}
 					setAddServiceList={setAddServiceList}
+					updateServiceList={updateServiceList}
 					setUpdateServiceList={setUpdateServiceList}
 					setServiceImageList={setServiceImageList}
 					setAddServiceImageList={setAddServiceImageList}

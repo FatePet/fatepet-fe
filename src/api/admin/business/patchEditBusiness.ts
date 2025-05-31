@@ -29,7 +29,13 @@ export const patchEditBusiness = async (
 	}
 
 	if (body.updateService) {
-		formData.append('updateService', JSON.stringify(body.updateService));
+		const filtered = body.updateService.map((item) =>
+			Object.fromEntries(
+				Object.entries(item).filter(([_, value]) => value !== ''),
+			),
+		);
+		console.log(filtered);
+		formData.append('updateService', JSON.stringify(filtered));
 	}
 	if (body.updateServiceImage && body.updateServiceImage.length > 0) {
 		body.updateServiceImage.forEach((file) => {
