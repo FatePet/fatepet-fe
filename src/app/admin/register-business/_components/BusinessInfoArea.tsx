@@ -7,7 +7,7 @@ import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
 import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
 import useAuthStore from '@/store/useAuthStore';
-import toast from 'react-hot-toast';
+import { useCheckDuplicateName } from '@/hooks/useCheckDuplicateName';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -25,6 +25,8 @@ interface Props {
 	setAddress: React.Dispatch<React.SetStateAction<string>>;
 	detailAddress: string;
 	setDetailAddress: React.Dispatch<React.SetStateAction<string>>;
+	setIsCheckedName: React.Dispatch<React.SetStateAction<boolean>>;
+	isCheckedName: boolean;
 }
 
 function BusinessInfoArea({
@@ -37,16 +39,16 @@ function BusinessInfoArea({
 	setAddress,
 	detailAddress,
 	setDetailAddress,
+	setIsCheckedName,
+	isCheckedName,
 }: Props) {
-	const { accessToken, setAccessToken } = useAuthStore();
 	const [imgPreview, setImgPreview] = useState<string | null>(null);
-	const [isCheckName, setIsCheckName] = useState<boolean>(false);
 	const [nameErr, setNameErr] = useState<string>('');
-	const { refetch } = useGetCheckBusinessName(
-		accessToken,
+	const { checkDuplicateName } = useCheckDuplicateName(
 		businessItem.name,
-		setAccessToken,
-		isCheckName,
+		isCheckedName,
+		setIsCheckedName,
+		setNameErr,
 	);
 
 	const businessCategory = [
@@ -84,6 +86,7 @@ function BusinessInfoArea({
 		switch (type) {
 			case '업체명':
 				setBusinessItem({ ...businessItem, name: e.target.value });
+				setIsCheckedName(false);
 				break;
 			case '운영시간':
 				setBusinessItem({ ...businessItem, businessHours: e.target.value });
@@ -105,30 +108,6 @@ function BusinessInfoArea({
 		setImgPreview(null);
 	};
 
-	const handleCheckDuplicateName = async () => {
-		setIsCheckName(true);
-
-		try {
-			const { data: checkNameData, error } = await refetch();
-			if (checkNameData) {
-				if (checkNameData.status === 200) {
-					toast.success('사용 가능한 이름입니다.');
-					setNameErr('');
-				} else {
-					toast.error('이미 사용중인 이름입니다.');
-					setNameErr('이미 사용중인 이름입니다.');
-				}
-			}
-			if (error) {
-				toast.error(error.message);
-			}
-		} catch (err) {
-			console.error(err);
-		} finally {
-			setIsCheckName(false);
-		}
-	};
-
 	return (
 		<div className='flex flex-col gap-[20px]'>
 			<div className={divClass}>
@@ -141,7 +120,7 @@ function BusinessInfoArea({
 					placeHolder='예시) (주)페이트펫'
 					onChange={(e) => onInputChange('업체명', e)}
 					buttonText='중복확인'
-					handleButtonClick={handleCheckDuplicateName}
+					handleButtonClick={checkDuplicateName}
 				/>
 				{nameErr !== '' && <p>{nameErr}</p>}
 			</div>

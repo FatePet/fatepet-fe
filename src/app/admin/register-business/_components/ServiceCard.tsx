@@ -141,8 +141,8 @@ function ServiceCard({
 	};
 
 	return (
-		<div className='w-[100%] rounded-[12px] border border-p-green-lite overflow-hidden'>
-			<div className='bg-p-black h-[50px] min-w-[343px] flex items-center px-[20px] justify-between'>
+		<div className='w-[100%] h-fit rounded-[12px] border border-p-black overflow-hidden'>
+			<div className='bg-p-black h-[50px] flex items-center px-[20px] justify-between'>
 				<p className='text-white text-[20px] font-bold'>
 					서비스 {serviceCount}
 				</p>
@@ -155,7 +155,7 @@ function ServiceCard({
 					/>
 				)}
 			</div>
-			<div className='bg-[#FBFFF2] flex flex-col gap-[20px] p-[20px] border border-p-green-lite'>
+			<div className='bg-[#FBFFF2] flex flex-col gap-[20px] p-[20px]'>
 				<div className={divClass}>
 					<p>
 						구분 <span className={requiredClass}>*</span>

@@ -120,6 +120,7 @@ function EditBusiness() {
 	const [removeAdditionalImageIds, setRemoveAdditionalImageIds] = useState<
 		number[]
 	>([]);
+	const [isCheckedName, setIsCheckedName] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (businessDetail) {
@@ -162,7 +163,9 @@ function EditBusiness() {
 				longitude: result?.lng ?? 0,
 			}));
 		});
+	}, [address]);
 
+	useEffect(() => {
 		const validAddServiceImage = addServiceImageList.filter(
 			(file): file is File => file !== null,
 		);
@@ -187,7 +190,6 @@ function EditBusiness() {
 			removeAdditionalImageIds: removeAdditionalImageIds,
 		}));
 	}, [
-		address,
 		patchMainImageFile,
 		addServiceList,
 		addAdditionalImageList,
@@ -214,6 +216,8 @@ function EditBusiness() {
 
 		if (patchBusinessItem.name === '') {
 			newErrors.nameError = '업체명을 입력해주세요.';
+		} else if (!isCheckedName) {
+			newErrors.nameError = '업체명 중복확인을 해주세요.';
 		} else {
 			newErrors.nameError = '';
 		}
@@ -241,7 +245,12 @@ function EditBusiness() {
 		}
 		setErrorMsgs(newErrors);
 
-		editBusiness(patchBusinessItem);
+		if (
+			Object.values(errorMsgs).every((msg) => msg === '') &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			editBusiness(patchBusinessItem);
+		}
 	};
 
 	return (
@@ -268,6 +277,8 @@ function EditBusiness() {
 						setAddress={setAddress}
 						detailAddress={detailAddress}
 						setDetailAddress={setDetailAddress}
+						setIsCheckedName={setIsCheckedName}
+						isCheckedName={isCheckedName}
 					/>
 				</div>
 				<div>
