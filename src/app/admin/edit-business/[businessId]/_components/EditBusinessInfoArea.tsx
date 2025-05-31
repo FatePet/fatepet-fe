@@ -128,7 +128,6 @@ function EditBusinessInfoArea({
 					buttonText='중복확인'
 					handleButtonClick={checkDuplicateName}
 				/>
-				{errorMsgs.nameError !== '' && <p>{errorMsgs.nameError}</p>}
 			</div>
 			<div className={divClass}>
 				<p>

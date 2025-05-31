@@ -120,7 +120,7 @@ function EditBusiness() {
 	const [removeAdditionalImageIds, setRemoveAdditionalImageIds] = useState<
 		number[]
 	>([]);
-	const [isCheckedName, setIsCheckedName] = useState<boolean>(false);
+	const [isCheckedName, setIsCheckedName] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (businessDetail) {
@@ -192,7 +192,6 @@ function EditBusiness() {
 	}, [
 		patchMainImageFile,
 		addServiceList,
-		addAdditionalImageList,
 		updateServiceList,
 		updateServiceImageList,
 		removeServiceIds,
@@ -206,7 +205,7 @@ function EditBusiness() {
 		setDetailAddress(splitedAddress[1]);
 	};
 
-	const isValidPhoneNumber = (phoneNumber: string) => {
+	const isValidPhoneNumber = (phoneNumber: string): boolean => {
 		const regex = /^010\d{8}$/;
 		return regex.test(phoneNumber);
 	};
@@ -237,7 +236,11 @@ function EditBusiness() {
 		}
 		if (patchBusinessItem.phoneNumber === '') {
 			newErrors.phoneError = '휴대폰번호를 입력해주세요.';
-		} else if (!isValidPhoneNumber(patchBusinessItem.phoneNumber ?? '')) {
+		} else if (
+			!isValidPhoneNumber(
+				patchBusinessItem.phoneNumber ?? originBusinessItem.phoneNumber,
+			)
+		) {
 			newErrors.phoneError = '형식이 올바르지 않습니다.';
 		} else {
 			newErrors.phoneError = '';
