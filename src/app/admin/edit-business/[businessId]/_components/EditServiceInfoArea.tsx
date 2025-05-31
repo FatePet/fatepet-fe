@@ -38,7 +38,7 @@ function EditServiceInfoArea({
 	serviceErrorMsgs,
 }: Props) {
 	const handleAddService = () => {
-		if (originServiceList.length === 100) {
+		if (originServiceList.length + addServiceList.length === 100) {
 			alert('서비스는 최대 100개까지 추가 가능합니다.');
 			return;
 		}
