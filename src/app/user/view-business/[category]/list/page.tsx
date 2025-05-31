@@ -9,9 +9,10 @@ import BusinessCard from '@/components/user/BusinessCard';
 import ModalLayout from '@/components/modals/ModalLayout';
 import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
 import useUserLocationStore from '@/store/useUserLocationStore';
-import { useGetUserBusiness } from '@/hooks/api/user/useGetUserBusiness';
+
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import toast from 'react-hot-toast';
+import { useGetUserBusiness } from '@/hooks/api/user/business/useGetUserBusiness';
 
 function ViewBusinessList() {
 	const router = useRouter();
@@ -20,7 +21,7 @@ function ViewBusinessList() {
 	const category = decodeURIComponent(rawCategory);
 	const [isSortOptionModalOpen, setIsSortOptionModalOpen] =
 		useState<boolean>(false);
-	const [sortOption, setSortOption] = useState<'거리순' | '인기순' | '추천순'>(
+	const [sortOption, setSortOption] = useState<'거리순' | '인기순' | '추천순' | '최저가순'>(
 		'인기순',
 	);
 	// zustand에 저장된 location 값을 불러오는 부분
@@ -62,7 +63,7 @@ function ViewBusinessList() {
 	};
 
 	const handleChangeSortOption = (
-		sortOption: '인기순' | '거리순' | '추천순',
+		sortOption: '인기순' | '거리순' | '추천순' | '최저가순',
 	) => {
 		if (!location && !lat && !lng && sortOption === '거리순') {
 			toast.error('위치를 먼저 설정해주세요.');

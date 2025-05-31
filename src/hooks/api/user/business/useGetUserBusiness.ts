@@ -16,6 +16,8 @@ export const useGetUserBusiness = (
 				return 'DISTANCE';
 			case '추천순':
 				return 'RECOMMEND';
+			case '최저가순':
+				return 'LOWEST_PRICE';
 			default:
 				return 'POPULAR';
 		}

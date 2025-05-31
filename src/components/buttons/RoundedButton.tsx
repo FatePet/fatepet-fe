@@ -6,7 +6,7 @@ interface Props {
 }
 
 function RoundedButton({ buttonText, handleClick }: Props) {
-	const className = 'w-[56px] h-[30px]';
+	const className = 'min-w-[56px] h-[30px] p-[5px]';
 	return (
 		<button
 			className={`bg-p-black text-white font-bold text-[12px] rounded-[16px] cursor-pointer ${className}`}
