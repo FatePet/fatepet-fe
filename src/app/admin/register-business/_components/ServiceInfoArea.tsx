@@ -51,7 +51,7 @@ function ServiceInfoArea({
 			))}
 
 			<div className='relative'>
-				<div className='absolute w-[22px] h-[18px] bg-p-green text-white flex justify-center items-center rounded-[4px] top-[15px] right-[170px]'>
+				<div className='absolute top-[50%] right-[50%]  w-[22px] h-[18px] bg-p-green text-white flex justify-center items-center rounded-[4px] translate-x-[80px] translate-y-[-50%]'>
 					{serviceList.length}
 				</div>
 				<BigButton buttonText='서비스 추가' handleClick={handleAddService} />
