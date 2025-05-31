@@ -120,6 +120,7 @@ function EditBusiness() {
 	const [removeAdditionalImageIds, setRemoveAdditionalImageIds] = useState<
 		number[]
 	>([]);
+	const [isCheckedName, setIsCheckedName] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (businessDetail) {
@@ -162,7 +163,9 @@ function EditBusiness() {
 				longitude: result?.lng ?? 0,
 			}));
 		});
+	}, [address]);
 
+	useEffect(() => {
 		const validAddServiceImage = addServiceImageList.filter(
 			(file): file is File => file !== null,
 		);
@@ -187,10 +190,8 @@ function EditBusiness() {
 			removeAdditionalImageIds: removeAdditionalImageIds,
 		}));
 	}, [
-		address,
 		patchMainImageFile,
 		addServiceList,
-		addAdditionalImageList,
 		updateServiceList,
 		updateServiceImageList,
 		removeServiceIds,
@@ -204,16 +205,27 @@ function EditBusiness() {
 		setDetailAddress(splitedAddress[1]);
 	};
 
-	const isValidPhoneNumber = (phoneNumber: string) => {
+	const isValidPhoneNumber = (phoneNumber: string): boolean => {
 		const regex = /^010\d{8}$/;
 		return regex.test(phoneNumber);
 	};
 
 	const handleBusinessRegisterButton = () => {
+		if (
+			handleCheckErrorMsgs() &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			editBusiness(patchBusinessItem);
+		}
+	};
+
+	const handleCheckErrorMsgs = (): boolean => {
 		const newErrors = { ...errorMsgs };
 
 		if (patchBusinessItem.name === '') {
 			newErrors.nameError = '업체명을 입력해주세요.';
+		} else if (!isCheckedName) {
+			newErrors.nameError = '업체명 중복확인을 해주세요.';
 		} else {
 			newErrors.nameError = '';
 		}
@@ -224,7 +236,11 @@ function EditBusiness() {
 		}
 		if (patchBusinessItem.phoneNumber === '') {
 			newErrors.phoneError = '휴대폰번호를 입력해주세요.';
-		} else if (!isValidPhoneNumber(patchBusinessItem.phoneNumber ?? '')) {
+		} else if (
+			!isValidPhoneNumber(
+				patchBusinessItem.phoneNumber ?? originBusinessItem.phoneNumber,
+			)
+		) {
 			newErrors.phoneError = '형식이 올바르지 않습니다.';
 		} else {
 			newErrors.phoneError = '';
@@ -241,7 +257,11 @@ function EditBusiness() {
 		}
 		setErrorMsgs(newErrors);
 
-		editBusiness(patchBusinessItem);
+		if (Object.values(newErrors).every((msg) => msg === '')) {
+			return true;
+		} else {
+			return false;
+		}
 	};
 
 	return (
@@ -268,6 +288,8 @@ function EditBusiness() {
 						setAddress={setAddress}
 						detailAddress={detailAddress}
 						setDetailAddress={setDetailAddress}
+						setIsCheckedName={setIsCheckedName}
+						isCheckedName={isCheckedName}
 					/>
 				</div>
 				<div>
