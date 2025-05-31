@@ -32,7 +32,7 @@ function TextArea({ inputData, onChange, maxLength, type }: Props) {
 	return (
 		<div className='w-full flex flex-col gap-[2px] items-end'>
 			<textarea
-				className={`w-full ${height} focus:outline-none border border-black p-[14px] text-[14px] font-medium text-[#010101] resize-none`}
+				className={`w-full ${height} focus:outline-none border border-black p-[14px] text-[14px] font-medium text-[#010101] resize-none rounded-[4px]`}
 				value={inputData}
 				onChange={onChange}
 				maxLength={maxLength}
