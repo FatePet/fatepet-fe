@@ -8,9 +8,9 @@ interface Props {
 
 function SortOptionModal({ handleSortOptionItemClick }: Props) {
 	const sortOptionArr: Array<'거리순' | '인기순' | '추천순'> = [
-		'거리순',
 		'인기순',
 		'추천순',
+		'거리순',
 	];
 	return (
 		<div className='flex flex-col w-[123px] h-[116px] rounded-[11px] bg-p-black font-bold text-[12px] text-white items-center'>
