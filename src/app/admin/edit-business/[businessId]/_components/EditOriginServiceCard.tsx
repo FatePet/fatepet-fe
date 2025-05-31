@@ -24,9 +24,8 @@ const servicePriceTypes = [
 
 interface Props {
 	serviceCount: number;
-	serviceId?: number;
+	serviceId: number;
 	serviceIdx: number;
-	isOrigin: boolean;
 	serviceItem: IServiceItemType | IServiceDetailType;
 	setOriginServiceList: React.Dispatch<
 		React.SetStateAction<IServiceDetailType[]>
@@ -35,30 +34,23 @@ interface Props {
 	setUpdateServiceList: React.Dispatch<
 		React.SetStateAction<IUpdateServiceItemType[]>
 	>;
-	addServiceList: IServiceItemType[];
-	setAddServiceList: React.Dispatch<React.SetStateAction<IServiceItemType[]>>;
 	setServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	setUpdateServiceImageList: React.Dispatch<
 		React.SetStateAction<(File | null)[]>
 	>;
-	setAddServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	setRemoveServiceIds: React.Dispatch<React.SetStateAction<number[]>>;
 	errorMsg: string;
 }
 
-function EditServiceCard({
+function EditOriginServiceCard({
 	serviceCount,
 	serviceItem,
 	serviceIdx,
-	isOrigin,
 	serviceId,
 	setOriginServiceList,
 	updateServiceList,
 	setUpdateServiceList,
-	addServiceList,
-	setAddServiceList,
 	setServiceImageList,
-	setAddServiceImageList,
 	setUpdateServiceImageList,
 	setRemoveServiceIds,
 	errorMsg,
@@ -87,50 +79,32 @@ function EditServiceCard({
 		const imgFile =
 			serviceImgFile instanceof File ? (serviceImgFile as File) : null;
 
-		if (isOrigin) {
-			setOriginServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceIdx ? { ...item, image: updatedImageFlag } : item,
-				),
-			);
-			setServiceImageList((prev) => {
-				if (prev.length === serviceIdx + 1) {
-					return prev.map((item, index) =>
-						index === serviceIdx ? imgFile : item,
-					);
-				} else {
-					return [...prev, imgFile];
-				}
-			});
-			handleUpdateServiceList('image', updatedImageFlag);
-			handleUpdateServiceList('imageType', 1);
+		setOriginServiceList((prev) =>
+			prev.map((item, index) =>
+				index === serviceIdx ? { ...item, image: updatedImageFlag } : item,
+			),
+		);
+		setServiceImageList((prev) => {
+			if (prev.length === serviceIdx + 1) {
+				return prev.map((item, index) =>
+					index === serviceIdx ? imgFile : item,
+				);
+			} else {
+				return [...prev, imgFile];
+			}
+		});
+		handleUpdateServiceList('image', updatedImageFlag);
+		handleUpdateServiceList('imageType', 1);
 
-			setUpdateServiceImageList((prev) => {
-				if (prev.length === serviceIdx + 1) {
-					return prev.map((item, index) =>
-						index === serviceIdx ? imgFile : item,
-					);
-				} else {
-					return [...prev, imgFile];
-				}
-			});
-		} else {
-			setAddServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceIdx ? { ...item, image: updatedImageFlag } : item,
-				),
-			);
-
-			setAddServiceImageList((prev) => {
-				if (prev.length === serviceIdx + 1) {
-					return prev.map((item, index) =>
-						index === serviceIdx ? imgFile : item,
-					);
-				} else {
-					return [...prev, imgFile];
-				}
-			});
-		}
+		setUpdateServiceImageList((prev) => {
+			if (prev.length === serviceIdx + 1) {
+				return prev.map((item, index) =>
+					index === serviceIdx ? imgFile : item,
+				);
+			} else {
+				return [...prev, imgFile];
+			}
+		});
 	}, [serviceImgFile]);
 
 	const handleUpdateServiceList = (
@@ -159,68 +133,32 @@ function EditServiceCard({
 		);
 	};
 
-	const handleAddServiceList = (
-		field: string,
-		data: string | number | boolean,
-	) => {
-		const updatedImageFlag = serviceImgPreview !== null;
-
-		if (addServiceList && addServiceList.length <= 0) {
-			const newAddServiceItem: IServiceItemType = {
-				type: '',
-				name: '',
-				description: '',
-				priceType: '',
-				price: '',
-				image: updatedImageFlag,
-			};
-			setAddServiceList([newAddServiceItem]);
-		}
-		setAddServiceList((prev) =>
+	const handleTypeClick = (type: string) => {
+		setOriginServiceList((prev) =>
 			prev.map((item, index) =>
-				index === serviceIdx ? { ...item, [field]: data } : item,
+				index === serviceIdx ? { ...item, type: type } : item,
 			),
 		);
-	};
-
-	const handleTypeClick = (type: string) => {
-		if (isOrigin) {
-			setOriginServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceIdx ? { ...item, type: type } : item,
-				),
-			);
-			handleUpdateServiceList('type', type);
-		} else {
-			handleAddServiceList('type', type);
-		}
+		handleUpdateServiceList('type', type);
 	};
 
 	const handlePriceTypeClick = (type: string) => {
-		if (isOrigin) {
-			setOriginServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceIdx ? { ...item, priceType: type } : item,
-				),
-			);
-			handleUpdateServiceList('priceType', type);
-		} else {
-			handleAddServiceList('priceType', type);
-		}
+		setOriginServiceList((prev) =>
+			prev.map((item, index) =>
+				index === serviceIdx ? { ...item, priceType: type } : item,
+			),
+		);
+		handleUpdateServiceList('priceType', type);
 	};
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (isOrigin) {
-			setOriginServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceIdx ? { ...item, name: e.target.value } : item,
-				),
-			);
+		setOriginServiceList((prev) =>
+			prev.map((item, index) =>
+				index === serviceIdx ? { ...item, name: e.target.value } : item,
+			),
+		);
 
-			handleUpdateServiceList('name', e.target.value);
-		} else {
-			handleAddServiceList('name', e.target.value);
-		}
+		handleUpdateServiceList('name', e.target.value);
 	};
 
 	const onTextAreaChange = (
@@ -229,65 +167,42 @@ function EditServiceCard({
 	) => {
 		switch (type) {
 			case 'info':
-				if (isOrigin) {
-					setOriginServiceList((prev) =>
-						prev.map((item, index) =>
-							index === serviceIdx
-								? { ...item, description: e.target.value }
-								: item,
-						),
-					);
-
-					handleUpdateServiceList('description', e.target.value);
-				} else {
-					handleAddServiceList('description', e.target.value);
-				}
+				setOriginServiceList((prev) =>
+					prev.map((item, index) =>
+						index === serviceIdx
+							? { ...item, description: e.target.value }
+							: item,
+					),
+				);
+				handleUpdateServiceList('description', e.target.value);
 
 				break;
 			case 'price':
-				if (isOrigin) {
-					setOriginServiceList((prev) =>
-						prev.map((item, index) =>
-							index === serviceIdx ? { ...item, price: e.target.value } : item,
-						),
-					);
-					setUpdateServiceList((prev) =>
-						prev.map((item, index) =>
-							index === serviceIdx ? { ...item, price: e.target.value } : item,
-						),
-					);
-				} else {
-					handleAddServiceList('price', e.target.value);
-				}
-
+				setOriginServiceList((prev) =>
+					prev.map((item, index) =>
+						index === serviceIdx ? { ...item, price: e.target.value } : item,
+					),
+				);
+				handleUpdateServiceList('price', e.target.value);
+			default:
 				break;
 		}
 	};
 
 	const handleDeleteImage = () => {
-		if (isOrigin && serviceId) {
-			setServiceImgFile(null);
-			setServiceImgPreview(null);
-			setServiceImageList((prev) =>
-				prev.map((item, index) => (index === serviceIdx ? null : item)),
-			);
-			handleUpdateServiceList('image', false);
-			handleUpdateServiceList('imageType', 2);
+		setServiceImgFile(null);
+		setServiceImgPreview(null);
+		setServiceImageList((prev) =>
+			prev.map((item, index) => (index === serviceIdx ? null : item)),
+		);
+		handleUpdateServiceList('image', false);
+		handleUpdateServiceList('imageType', 2);
 
-			setOriginServiceList((prev) =>
-				prev.map((item) =>
-					item.serviceId === serviceId ? { ...item, image: false } : item,
-				),
-			);
-		} else {
-			setServiceImgFile(null);
-			setServiceImgPreview(null);
-
-			handleAddServiceList('image', false);
-			setAddServiceImageList((prev) =>
-				prev.map((item, index) => (index === serviceIdx ? null : item)),
-			);
-		}
+		setOriginServiceList((prev) =>
+			prev.map((item) =>
+				item.serviceId === serviceId ? { ...item, image: false } : item,
+			),
+		);
 	};
 
 	const handleLeftButtonClick = () => {
@@ -296,16 +211,11 @@ function EditServiceCard({
 
 	const handleRightButtonClick = () => {
 		setIsOpenServiceDeleteModal(false);
-		if (isOrigin && serviceId) {
-			setOriginServiceList((prev) =>
-				prev.filter((_, index) => index !== serviceIdx),
-			);
-			setRemoveServiceIds((prev) => [...prev, serviceId]);
-		} else {
-			setAddServiceList((prev) =>
-				prev.filter((_, index) => index !== serviceIdx),
-			);
-		}
+
+		setOriginServiceList((prev) =>
+			prev.filter((_, index) => index !== serviceIdx),
+		);
+		setRemoveServiceIds((prev) => [...prev, serviceId]);
 	};
 
 	return (
@@ -419,4 +329,4 @@ function EditServiceCard({
 	);
 }
 
-export default EditServiceCard;
+export default EditOriginServiceCard;

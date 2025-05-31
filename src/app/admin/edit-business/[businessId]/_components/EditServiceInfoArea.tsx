@@ -1,6 +1,5 @@
 import React from 'react';
 import BigButton from '@/components/buttons/BigButton';
-import ServiceCard from '@/app/admin/register-business/_components/ServiceCard';
 import EditServiceCard from './EditServiceCard';
 
 interface Props {
