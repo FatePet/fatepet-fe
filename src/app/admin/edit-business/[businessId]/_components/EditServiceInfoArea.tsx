@@ -101,7 +101,9 @@ function EditServiceInfoArea({
 
 			<div className='relative'>
 				<div className='absolute w-[22px] h-[18px] bg-p-green text-white flex justify-center items-center rounded-[4px] top-[15px] right-[170px]'>
-					{originServiceList.length}
+					{addServiceList.length > 0
+						? originServiceList.length + addServiceList.length
+						: originServiceList.length}
 				</div>
 				<BigButton buttonText='서비스 추가' handleClick={handleAddService} />
 			</div>
