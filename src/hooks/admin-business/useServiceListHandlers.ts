@@ -87,7 +87,7 @@ export const useServiceListHandlers = ({
 					break;
 
 				default:
-					console.warn('Invalid service list type');
+					break;
 			}
 		},
 		[
