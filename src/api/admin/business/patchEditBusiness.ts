@@ -44,7 +44,9 @@ export const patchEditBusiness = async (
 	}
 
 	if (body.removeServiceIds && body.removeServiceIds.length > 0) {
-		formData.append('removeServiceIds', JSON.stringify(body.removeServiceIds));
+		body.removeServiceIds.forEach((id) =>
+			formData.append('removeServiceIds', String(id)),
+		);
 	}
 
 	if (body.addAdditionalImage && body.addAdditionalImage.length > 0) {
@@ -57,9 +59,8 @@ export const patchEditBusiness = async (
 		body.removeAdditionalImageIds &&
 		body.removeAdditionalImageIds.length > 0
 	) {
-		formData.append(
-			'removeAdditionalImageIds',
-			JSON.stringify(body.removeAdditionalImageIds),
+		body.removeAdditionalImageIds.forEach((id) =>
+			formData.append('removeAdditionalImageIds', String(id)),
 		);
 	}
 
