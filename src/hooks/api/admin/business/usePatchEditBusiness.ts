@@ -1,8 +1,7 @@
 'use client';
 
-import { deleteAdminBusiness } from '@/api/admin/business/deleteAdminBusiness';
 import { patchEditBusiness } from '@/api/admin/business/patchEditBusiness';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 export const usePatchEditBusiness = (

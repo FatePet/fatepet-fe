@@ -19,7 +19,7 @@ export const patchEditBusiness = async (
 	if (body.phoneNumber) formData.append('phoneNumber', body.phoneNumber);
 	if (body.email) formData.append('email', body.email);
 
-	if (body.addService) {
+	if (body.addService && body.addService.length > 0) {
 		formData.append('addService', JSON.stringify(body.addService));
 	}
 	if (body.addServiceImage && body.addServiceImage.length > 0) {
