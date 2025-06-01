@@ -7,6 +7,7 @@ import DaumPost from '../location/DaumPost';
 import { convertCoordinatesToAddress } from '@/hooks/useGetAddressFromCoords';
 import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
 import useUserLocationStore from '@/store/useUserLocationStore';
+import toast from 'react-hot-toast';
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,11 +28,11 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 					});
 				},
 				(error) => {
-					console.error('위치 가져오기 실패:', error);
+					toast.error(`위치 가져오기 실패:${error}`);
 				},
 			);
 		} else {
-			console.error('이 브라우저는 위치 정보를 지원하지 않습니다.');
+			toast.error('이 브라우저는 위치 정보를 지원하지 않습니다.');
 		}
 		return;
 	};

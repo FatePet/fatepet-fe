@@ -122,10 +122,6 @@ function EditBusiness() {
 	const [isCheckedName, setIsCheckedName] = useState<boolean>(true);
 
 	useEffect(() => {
-		console.log(patchBusinessItem);
-	}, [patchBusinessItem]);
-
-	useEffect(() => {
 		if (businessDetail) {
 			const itemData = businessDetail.data;
 

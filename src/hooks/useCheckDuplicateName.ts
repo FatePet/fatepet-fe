@@ -41,7 +41,7 @@ export function useCheckDuplicateName(
 				toast.error(error.message);
 			}
 		} catch (err) {
-			console.error(err);
+			toast.error(`${err}`);
 		}
 	}, [
 		isCheckedName,

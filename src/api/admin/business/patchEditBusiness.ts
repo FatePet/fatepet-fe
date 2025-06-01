@@ -34,7 +34,6 @@ export const patchEditBusiness = async (
 				Object.entries(item).filter(([_, value]) => value !== ''),
 			),
 		);
-		console.log(filtered);
 		formData.append('updateService', JSON.stringify(filtered));
 	}
 	if (body.updateServiceImage && body.updateServiceImage.length > 0) {
