@@ -21,7 +21,7 @@ export function useCheckDuplicateName(
 		if (isCheckedName || businessName === '') return;
 
 		try {
-			const { data: checkNameData, error } = await refetch();
+			const { error } = await refetch();
 
 			if (error) {
 				toast.error('이미 사용중인 이름입니다.');
@@ -32,14 +32,9 @@ export function useCheckDuplicateName(
 				return;
 			}
 
-			if (checkNameData) {
-				if (checkNameData.status === 200) {
-					toast.success('사용 가능한 이름입니다.');
-					setErrorMsgs((prev) => ({ ...prev, nameError: '' }));
-					setIsCheckedName(true);
-				}
-				return;
-			}
+			toast.success('사용 가능한 이름입니다.');
+			setErrorMsgs((prev) => ({ ...prev, nameError: '' }));
+			setIsCheckedName(true);
 		} catch (err) {
 			toast.error(`${err}`);
 		}
