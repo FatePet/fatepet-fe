@@ -4,8 +4,8 @@ import React from 'react';
 import BigButton from '../buttons/BigButton';
 import LongInput from '../inputs/LongInput';
 import DaumPost from '../location/DaumPost';
-import { convertCoordinatesToAddress } from '@/hooks/useGetAddressFromCoords';
-import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
+import { convertCoordinatesToAddress } from '@/hooks/admin-business/useGetAddressFromCoords';
+import { convertAddressToCoordinates } from '@/hooks/admin-business/useConvertAddressToCoordinates';
 import useUserLocationStore from '@/store/useUserLocationStore';
 import toast from 'react-hot-toast';
 

@@ -7,7 +7,7 @@ import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
 import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
 import useAuthStore from '@/store/useAuthStore';
-import { useCheckDuplicateName } from '@/hooks/useCheckDuplicateName';
+import { useCheckDuplicateName } from '@/hooks/admin-business/useCheckDuplicateName';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';

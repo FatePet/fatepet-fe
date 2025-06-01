@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import ServiceInfoArea from './_components/ServiceInfoArea';
 import BusinessInfoArea from './_components/BusinessInfoArea';
 import AdditionalInfoArea from './_components/AdditionalInfoArea';
-import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
+import { convertAddressToCoordinates } from '@/hooks/admin-business/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
 import { usePostCreateBusiness } from '@/hooks/api/admin/business/usePostCreateBusiness';
 

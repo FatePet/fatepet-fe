@@ -2,7 +2,7 @@
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
+import { convertAddressToCoordinates } from '@/hooks/admin-business/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
 import { useGetAdminBusinessDetail } from '@/hooks/api/admin/business/useGetAdminBusinessDetail';
 import { usePatchEditBusiness } from '@/hooks/api/admin/business/usePatchEditBusiness';
@@ -110,9 +110,6 @@ function EditBusiness() {
 		(File | null)[]
 	>([]);
 	const [removeServiceIds, setRemoveServiceIds] = useState<number[]>([]);
-
-	// const [originAdditionalImgFileList, setOriginAdditionalImgFileList] =
-	// 	useState<(File | null)[]>([]);
 	const [addAdditionalImageList, setAddAdditionalImageList] = useState<
 		(File | null)[]
 	>([]);
