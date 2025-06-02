@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback } from 'react';
-import { useGetCheckBusinessName } from './api/admin/business/useGetCheckBusinessName';
+import { useGetCheckBusinessName } from '../api/admin/business/useGetCheckBusinessName';
 import toast from 'react-hot-toast';
 import useAuthStore from '@/store/useAuthStore';
 
@@ -21,27 +21,22 @@ export function useCheckDuplicateName(
 		if (isCheckedName || businessName === '') return;
 
 		try {
-			const { data: checkNameData, error } = await refetch();
-
-			if (checkNameData) {
-				if (checkNameData.status === 200) {
-					toast.success('사용 가능한 이름입니다.');
-					setErrorMsgs((prev) => ({ ...prev, nameError: '' }));
-					setIsCheckedName(true);
-				} else {
-					toast.error('이미 사용중인 이름입니다.');
-					setErrorMsgs((prev) => ({
-						...prev,
-						nameError: '이미 사용중인 이름입니다.',
-					}));
-				}
-			}
+			const { error } = await refetch();
 
 			if (error) {
-				toast.error(error.message);
+				toast.error('이미 사용중인 이름입니다.');
+				setErrorMsgs((prev) => ({
+					...prev,
+					nameError: '이미 사용중인 이름입니다.',
+				}));
+				return;
 			}
+
+			toast.success('사용 가능한 이름입니다.');
+			setErrorMsgs((prev) => ({ ...prev, nameError: '' }));
+			setIsCheckedName(true);
 		} catch (err) {
-			console.error(err);
+			toast.error(`${err}`);
 		}
 	}, [
 		isCheckedName,

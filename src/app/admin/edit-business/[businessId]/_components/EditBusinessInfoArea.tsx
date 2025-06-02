@@ -5,7 +5,7 @@ import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
 import ImageUploadButton from '../../../register-business/_components/ImageUploadButton';
-import { useCheckDuplicateName } from '@/hooks/useCheckDuplicateName';
+import { useCheckDuplicateName } from '@/hooks/admin-business/useCheckDuplicateName';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';

@@ -2,9 +2,8 @@
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
+import { convertAddressToCoordinates } from '@/hooks/admin-business/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
-import AdditionalInfoArea from '../../register-business/_components/AdditionalInfoArea';
 import { useGetAdminBusinessDetail } from '@/hooks/api/admin/business/useGetAdminBusinessDetail';
 import { usePatchEditBusiness } from '@/hooks/api/admin/business/usePatchEditBusiness';
 import EditBusinessInfoArea from './_components/EditBusinessInfoArea';
@@ -111,9 +110,6 @@ function EditBusiness() {
 		(File | null)[]
 	>([]);
 	const [removeServiceIds, setRemoveServiceIds] = useState<number[]>([]);
-
-	// const [originAdditionalImgFileList, setOriginAdditionalImgFileList] =
-	// 	useState<(File | null)[]>([]);
 	const [addAdditionalImageList, setAddAdditionalImageList] = useState<
 		(File | null)[]
 	>([]);
@@ -181,8 +177,8 @@ function EditBusiness() {
 		setPatchBusinessItem((prev) => ({
 			...prev,
 			mainImage: patchMainImageFile as File,
-			addservice: addServiceList,
-			addServiceImage: validAddAdditionalImage,
+			addService: addServiceList,
+			addServiceImage: validAddServiceImage,
 			updateService: updateServiceList,
 			updateServiceImage: validUpdateServiceImage,
 			removeServiceIds: removeServiceIds,
@@ -208,15 +204,6 @@ function EditBusiness() {
 	const isValidPhoneNumber = (phoneNumber: string): boolean => {
 		const regex = /^010\d{8}$/;
 		return regex.test(phoneNumber);
-	};
-
-	const handleBusinessRegisterButton = () => {
-		if (
-			handleCheckErrorMsgs() &&
-			Object.values(serviceErrorMsgs).every((msg) => msg === '')
-		) {
-			editBusiness(patchBusinessItem);
-		}
 	};
 
 	const handleCheckErrorMsgs = (): boolean => {
@@ -264,6 +251,15 @@ function EditBusiness() {
 		}
 	};
 
+	const handleBusinessRegisterButton = () => {
+		if (
+			handleCheckErrorMsgs() &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			editBusiness(patchBusinessItem);
+		}
+	};
+
 	return (
 		<div className='mb-[60px]'>
 			<HeaderWithBackArrow
@@ -300,6 +296,7 @@ function EditBusiness() {
 						setOriginServiceList={setOriginServiceList}
 						addServiceList={addServiceList}
 						setAddServiceList={setAddServiceList}
+						updateServiceList={updateServiceList}
 						setUpdateServiceList={setUpdateServiceList}
 						serviceImageList={serviceImageList}
 						setServiceImageList={setServiceImageList}
