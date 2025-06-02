@@ -80,19 +80,11 @@ function ServiceCard({
 	};
 
 	const handlePriceTypeClick = (type: string) => {
-		if (type === '직접문의') {
-			setServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceCount - 1 ? { ...item, priceType: type } : item,
-				),
-			);
-		} else {
-			setServiceList((prev) =>
-				prev.map((item, index) =>
-					index === serviceCount - 1 ? { ...item, price: type } : item,
-				),
-			);
-		}
+		setServiceList((prev) =>
+			prev.map((item, index) =>
+				index === serviceCount - 1 ? { ...item, priceType: type } : item,
+			),
+		);
 	};
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,8 +141,8 @@ function ServiceCard({
 	};
 
 	return (
-		<div className='w-[100%] rounded-[12px] border border-p-green-lite overflow-hidden'>
-			<div className='bg-p-black h-[50px] min-w-[343px] flex items-center px-[20px] justify-between'>
+		<div className='w-[100%] h-fit rounded-[12px] border border-p-black overflow-hidden'>
+			<div className='bg-p-black h-[50px] flex items-center px-[20px] justify-between'>
 				<p className='text-white text-[20px] font-bold'>
 					서비스 {serviceCount}
 				</p>

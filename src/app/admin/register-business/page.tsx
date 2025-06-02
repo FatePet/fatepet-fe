@@ -62,6 +62,7 @@ function RegisterBusiness() {
 	const [additionalImgFileList, setAdditionalImgFileList] = useState<
 		(File | null)[]
 	>([]);
+	const [isCheckedName, setIsCheckedName] = useState<boolean>(false);
 
 	useEffect(() => {
 		const updatedErrorMsgs = serviceList.map((service) =>
@@ -79,6 +80,9 @@ function RegisterBusiness() {
 				longitude: result?.lng ?? 0,
 			}));
 		});
+	}, [address]);
+
+	useEffect(() => {
 		const validAdditionalImgFiles = additionalImgFileList.filter(
 			(file): file is File => file !== null,
 		);
@@ -92,13 +96,7 @@ function RegisterBusiness() {
 			additionalImage: validAdditionalImgFiles,
 			serviceImage: validServiceImgFiles,
 		}));
-	}, [
-		address,
-		thumbnailFile,
-		serviceImageList,
-		serviceList,
-		additionalImgFileList,
-	]);
+	}, [thumbnailFile, serviceImageList, serviceList, additionalImgFileList]);
 
 	const isValidPhoneNumber = (phoneNumber: string) => {
 		const regex = /^010\d{8}$/;
@@ -106,10 +104,21 @@ function RegisterBusiness() {
 	};
 
 	const handleBusinessRegisterButton = () => {
+		if (
+			handleCheckErrorMsgs() &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			createBusiness(businessItem);
+		}
+	};
+
+	const handleCheckErrorMsgs = (): boolean => {
 		const newErrors = { ...errorMsgs };
 
 		if (businessItem.name === '') {
 			newErrors.nameError = '업체명을 입력해주세요.';
+		} else if (!isCheckedName) {
+			newErrors.nameError = '업체명 중복확인을 해주세요.';
 		} else {
 			newErrors.nameError = '';
 		}
@@ -120,7 +129,7 @@ function RegisterBusiness() {
 		}
 		if (businessItem.phoneNumber === '') {
 			newErrors.phoneError = '휴대폰번호를 입력해주세요.';
-		} else if (!isValidPhoneNumber(businessItem.phoneNumber)) {
+		} else if (!isValidPhoneNumber(businessItem.phoneNumber ?? '')) {
 			newErrors.phoneError = '형식이 올바르지 않습니다.';
 		} else {
 			newErrors.phoneError = '';
@@ -137,7 +146,11 @@ function RegisterBusiness() {
 		}
 		setErrorMsgs(newErrors);
 
-		createBusiness(businessItem);
+		if (Object.values(newErrors).every((msg) => msg === '')) {
+			return true;
+		} else {
+			return false;
+		}
 	};
 
 	return (
@@ -163,6 +176,8 @@ function RegisterBusiness() {
 						setAddress={setAddress}
 						detailAddress={detailAddress}
 						setDetailAddress={setDetailAddress}
+						setIsCheckedName={setIsCheckedName}
+						isCheckedName={isCheckedName}
 					/>
 				</div>
 				<div>
