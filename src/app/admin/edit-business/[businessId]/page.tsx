@@ -9,6 +9,7 @@ import { usePatchEditBusiness } from '@/hooks/api/admin/business/usePatchEditBus
 import EditBusinessInfoArea from './_components/EditBusinessInfoArea';
 import EditServiceInfoArea from './_components/EditServiceInfoArea';
 import EditAdditionalInfoArea from './_components/EditAdditionalInfoArea';
+import toast from 'react-hot-toast';
 
 const areaNameClass = 'font-bold text-[14px] text-gray-middle mt-[10px]';
 const borderClass = 'w-[100%] h-[1px] bg-gray-middle mb-[10px]';
@@ -206,54 +207,51 @@ function EditBusiness() {
 		return regex.test(phoneNumber);
 	};
 
-	const handleCheckErrorMsgs = (): boolean => {
-		const newErrors = { ...errorMsgs };
-
+	const handleCheckErrorMsgs = () => {
 		if (patchBusinessItem.name === '') {
-			newErrors.nameError = '업체명을 입력해주세요.';
+			toast.error('업체명을 입력해주세요.');
+			return;
 		} else if (!isCheckedName) {
-			newErrors.nameError = '업체명 중복확인을 해주세요.';
-		} else {
-			newErrors.nameError = '';
+			toast.error('업체명 중복확인을 해주세요.');
+			return;
 		}
+
+		if (originBusinessItem.mainImageUrl === '' && patchMainImageFile === null) {
+			toast.error('대표사진을 등록해주세요.');
+			return;
+		}
+
 		if (patchBusinessItem.businessHours === '') {
-			newErrors.hoursError = '운영시간을 입력해주세요.';
-		} else {
-			newErrors.hoursError = '';
+			toast.error('운영시간을 입력해주세요.');
+			return;
 		}
+
 		if (patchBusinessItem.phoneNumber === '') {
-			newErrors.phoneError = '휴대폰번호를 입력해주세요.';
+			toast.error('휴대폰번호를 입력해주세요.');
+			return;
 		} else if (
 			!isValidPhoneNumber(
 				patchBusinessItem.phoneNumber ?? originBusinessItem.phoneNumber,
 			)
 		) {
-			newErrors.phoneError = '형식이 올바르지 않습니다.';
-		} else {
-			newErrors.phoneError = '';
+			toast.error('휴대폰번호 형식이 올바르지 않습니다.');
+			return;
 		}
 		if (patchBusinessItem.email === '') {
-			newErrors.emailError = '이메일을 입력해주세요.';
-		} else {
-			newErrors.emailError = '';
+			toast.error('이메일을 입력해주세요.');
+			return;
 		}
 		if (patchBusinessItem.address === '') {
-			newErrors.addressError = '주소를 설정해주세요.';
-		} else {
-			newErrors.addressError = '';
-		}
-		setErrorMsgs(newErrors);
-
-		if (Object.values(newErrors).every((msg) => msg === '')) {
-			return true;
-		} else {
-			return false;
+			toast.error('주소를 설정해주세요.');
+			return;
 		}
 	};
 
 	const handleBusinessRegisterButton = () => {
+		handleCheckErrorMsgs();
 		if (
-			handleCheckErrorMsgs() &&
+			(originBusinessItem.mainImageUrl !== '' || patchMainImageFile !== null) &&
+			Object.values(errorMsgs).every((msg) => msg === '') &&
 			Object.values(serviceErrorMsgs).every((msg) => msg === '')
 		) {
 			editBusiness(patchBusinessItem);
@@ -274,6 +272,7 @@ function EditBusiness() {
 					<div className={borderClass} />
 					<EditBusinessInfoArea
 						originBusinessItem={originBusinessItem}
+						setOriginBusinessItem={setOriginBusinessItem}
 						patchBusinessItem={patchBusinessItem}
 						setPatchBusinessItem={setPatchBusinessItem}
 						errorMsgs={errorMsgs}

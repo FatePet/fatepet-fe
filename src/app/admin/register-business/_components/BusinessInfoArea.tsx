@@ -6,6 +6,7 @@ import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
 import { useCheckDuplicateName } from '@/hooks/admin-business/useCheckDuplicateName';
+import toast from 'react-hot-toast';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -74,25 +75,67 @@ function BusinessInfoArea({
 	}, [address, detailAddress]);
 
 	const handleCategoryClick = (category: string) => {
-		setBusinessItem({ ...businessItem, category: category });
+		if (category === '장묘') {
+			setBusinessItem({ ...businessItem, category: category });
+		} else {
+			toast.error('아직 준비중인 서비스입니다.');
+		}
+	};
+
+	const handleErrorMsgs = (errType: string, msg: string) => {
+		setErrorMsgs((prev) => ({
+			...prev,
+			[errType]: msg,
+		}));
+	};
+
+	const isValidPhoneNumber = (phoneNumber: string): boolean => {
+		const regex = /^010\d{8}$/;
+		return regex.test(phoneNumber);
 	};
 
 	const onInputChange = (
 		type: string,
 		e: React.ChangeEvent<HTMLInputElement>,
 	) => {
+		const value = e.target.value;
+
 		switch (type) {
 			case '업체명':
+				if (value === '') {
+					handleErrorMsgs('nameError', '업체명을 입력해주세요.');
+				} else if (!isCheckedName) {
+					handleErrorMsgs('nameError', '업체명을 중복확인을 해주세요.');
+				} else {
+					handleErrorMsgs('nameError', '');
+				}
 				setBusinessItem({ ...businessItem, name: e.target.value });
 				setIsCheckedName(false);
 				break;
 			case '운영시간':
+				if (value === '') {
+					handleErrorMsgs('hoursError', '운영시간을 입력해주세요.');
+				} else {
+					handleErrorMsgs('hoursError', '');
+				}
 				setBusinessItem({ ...businessItem, businessHours: e.target.value });
 				break;
 			case '번호':
+				if (value === '') {
+					handleErrorMsgs('phoneError', '휴대폰번호를 입력해주세요.');
+				} else if (!isValidPhoneNumber(value)) {
+					handleErrorMsgs('phoneError', '형식이 올바르지 않습니다.');
+				} else {
+					handleErrorMsgs('phoneError', '');
+				}
 				setBusinessItem({ ...businessItem, phoneNumber: e.target.value });
 				break;
 			case '이메일':
+				if (value === '') {
+					handleErrorMsgs('emailError', '이메일을 입력해주세요.');
+				} else {
+					handleErrorMsgs('emailError', '');
+				}
 				setBusinessItem({ ...businessItem, email: e.target.value });
 				break;
 			case '상세주소':
@@ -119,6 +162,7 @@ function BusinessInfoArea({
 					onChange={(e) => onInputChange('업체명', e)}
 					buttonText='중복확인'
 					handleButtonClick={checkDuplicateName}
+					disabled={businessItem.name === ''}
 				/>
 			</div>
 			<div className={divClass}>

@@ -10,6 +10,7 @@ interface Props {
 	inputType?: string;
 	buttonText: string;
 	handleButtonClick: () => void;
+	disabled: boolean;
 }
 
 function RightButtonInput({
@@ -20,6 +21,7 @@ function RightButtonInput({
 	inputType,
 	buttonText,
 	handleButtonClick,
+	disabled,
 }: Props) {
 	return (
 		<div className='w-full flex flex-col gap-[2px]'>
@@ -31,7 +33,11 @@ function RightButtonInput({
 					onChange={onChange}
 					type={inputType}
 				/>
-				<MediumButton buttonText={buttonText} handleClick={handleButtonClick} />
+				<MediumButton
+					buttonText={buttonText}
+					handleClick={handleButtonClick}
+					disabled={disabled}
+				/>
 			</div>
 			<div className='text-[#FF0000] font-bold text-[12px]'>{errorMsg}</div>
 		</div>

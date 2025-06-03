@@ -8,6 +8,7 @@ import AdditionalInfoArea from './_components/AdditionalInfoArea';
 import { convertAddressToCoordinates } from '@/hooks/admin-business/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
 import { usePostCreateBusiness } from '@/hooks/api/admin/business/usePostCreateBusiness';
+import toast from 'react-hot-toast';
 
 const areaNameClass = 'font-bold text-[14px] text-gray-middle mt-[10px]';
 const borderClass = 'w-[100%] h-[1px] bg-gray-middle mb-[10px]';
@@ -104,52 +105,49 @@ function RegisterBusiness() {
 	};
 
 	const handleBusinessRegisterButton = () => {
+		handleCheckErrorMsgs();
 		if (
-			handleCheckErrorMsgs() &&
+			businessItem.mainImage !== null &&
+			Object.values(errorMsgs).every((msg) => msg === '') &&
 			Object.values(serviceErrorMsgs).every((msg) => msg === '')
 		) {
 			createBusiness(businessItem);
 		}
 	};
 
-	const handleCheckErrorMsgs = (): boolean => {
-		const newErrors = { ...errorMsgs };
-
+	const handleCheckErrorMsgs = () => {
 		if (businessItem.name === '') {
-			newErrors.nameError = '업체명을 입력해주세요.';
+			toast.error('업체명을 입력해주세요.');
+			return;
 		} else if (!isCheckedName) {
-			newErrors.nameError = '업체명 중복확인을 해주세요.';
-		} else {
-			newErrors.nameError = '';
+			toast.error('업체명 중복확인을 해주세요.');
+			return;
 		}
+
+		if (thumbnailFile === null) {
+			toast.error('대표사진을 등록해주세요.');
+			return;
+		}
+
 		if (businessItem.businessHours === '') {
-			newErrors.hoursError = '운영시간을 입력해주세요.';
-		} else {
-			newErrors.hoursError = '';
+			toast.error('운영시간을 입력해주세요.');
+			return;
 		}
+
 		if (businessItem.phoneNumber === '') {
-			newErrors.phoneError = '휴대폰번호를 입력해주세요.';
-		} else if (!isValidPhoneNumber(businessItem.phoneNumber ?? '')) {
-			newErrors.phoneError = '형식이 올바르지 않습니다.';
-		} else {
-			newErrors.phoneError = '';
+			toast.error('휴대폰번호를 입력해주세요.');
+			return;
+		} else if (!isValidPhoneNumber(businessItem.phoneNumber)) {
+			toast.error('휴대폰번호 형식이 올바르지 않습니다.');
+			return;
 		}
 		if (businessItem.email === '') {
-			newErrors.emailError = '이메일을 입력해주세요.';
-		} else {
-			newErrors.emailError = '';
+			toast.error('이메일을 입력해주세요.');
+			return;
 		}
 		if (businessItem.address === '') {
-			newErrors.addressError = '주소를 설정해주세요.';
-		} else {
-			newErrors.addressError = '';
-		}
-		setErrorMsgs(newErrors);
-
-		if (Object.values(newErrors).every((msg) => msg === '')) {
-			return true;
-		} else {
-			return false;
+			toast.error('주소를 설정해주세요.');
+			return;
 		}
 	};
 
