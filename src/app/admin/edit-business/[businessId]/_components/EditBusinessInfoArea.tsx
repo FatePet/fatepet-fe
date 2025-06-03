@@ -122,7 +122,7 @@ function EditBusinessInfoArea({
 				if (value === '') {
 					handleErrorMsgs('hoursError', '운영시간을 입력해주세요.');
 				} else {
-					handleErrorMsgs('phoneError', '');
+					handleErrorMsgs('hoursError', '');
 				}
 				setPatchBusinessItem({
 					...patchBusinessItem,

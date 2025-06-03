@@ -113,7 +113,7 @@ function BusinessInfoArea({
 				if (value === '') {
 					handleErrorMsgs('hoursError', '운영시간을 입력해주세요.');
 				} else {
-					handleErrorMsgs('phoneError', '');
+					handleErrorMsgs('hoursError', '');
 				}
 				setBusinessItem({ ...businessItem, businessHours: e.target.value });
 				break;
