@@ -84,22 +84,53 @@ function BusinessInfoArea({
 		}
 	};
 
+	const handleErrorMsgs = (errType: string, msg: string) => {
+		setErrorMsgs((prev) => ({
+			...prev,
+			[errType]: msg,
+		}));
+	};
+
 	const onInputChange = (
 		type: string,
 		e: React.ChangeEvent<HTMLInputElement>,
 	) => {
+		const value = e.target.value;
+
 		switch (type) {
 			case '업체명':
+				if (value === '') {
+					handleErrorMsgs('nameError', '업체명을 입력해주세요.');
+				} else if (!isCheckedName) {
+					handleErrorMsgs('nameError', '업체명을 중복확인을 해주세요.');
+				} else {
+					handleErrorMsgs('nameError', '');
+				}
 				setBusinessItem({ ...businessItem, name: e.target.value });
 				setIsCheckedName(false);
 				break;
 			case '운영시간':
+				if (value === '') {
+					handleErrorMsgs('hoursError', '운영시간을 입력해주세요.');
+				} else {
+					handleErrorMsgs('phoneError', '');
+				}
 				setBusinessItem({ ...businessItem, businessHours: e.target.value });
 				break;
 			case '번호':
+				if (value === '') {
+					handleErrorMsgs('phoneError', '휴대폰번호를 입력해주세요.');
+				} else {
+					handleErrorMsgs('phoneError', '');
+				}
 				setBusinessItem({ ...businessItem, phoneNumber: e.target.value });
 				break;
 			case '이메일':
+				if (value === '') {
+					handleErrorMsgs('emailError', '이메일을 입력해주세요.');
+				} else {
+					handleErrorMsgs('emailError', '');
+				}
 				setBusinessItem({ ...businessItem, email: e.target.value });
 				break;
 			case '상세주소':

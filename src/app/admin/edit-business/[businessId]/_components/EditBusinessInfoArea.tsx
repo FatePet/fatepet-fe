@@ -13,6 +13,9 @@ const requiredClass = 'text-p-red';
 
 interface Props {
 	originBusinessItem: IBusinessDetailDataType;
+	setOriginBusinessItem: React.Dispatch<
+		React.SetStateAction<IBusinessDetailDataType>
+	>;
 	patchBusinessItem: IPatchBusinessRequestType;
 	setPatchBusinessItem: React.Dispatch<
 		React.SetStateAction<IPatchBusinessRequestType>
@@ -33,6 +36,7 @@ function EditBusinessInfoArea({
 	errorMsgs,
 	setErrorMsgs,
 	originBusinessItem,
+	setOriginBusinessItem,
 	patchBusinessItem,
 	setPatchBusinessItem,
 	imageFile,
@@ -84,37 +88,78 @@ function EditBusinessInfoArea({
 		}
 	};
 
+	const handleErrorMsgs = (errType: string, msg: string) => {
+		setErrorMsgs((prev) => ({
+			...prev,
+			[errType]: msg,
+		}));
+	};
+
+	const isValidPhoneNumber = (phoneNumber: string): boolean => {
+		const regex = /^010\d{8}$/;
+		return regex.test(phoneNumber);
+	};
+
 	const onInputChange = (
 		type: string,
 		e: React.ChangeEvent<HTMLInputElement>,
 	) => {
+		const value = e.target.value;
+
 		switch (type) {
 			case '업체명':
-				setPatchBusinessItem({ ...patchBusinessItem, name: e.target.value });
+				if (value === '') {
+					handleErrorMsgs('nameError', '업체명을 입력해주세요.');
+				} else if (!isCheckedName) {
+					handleErrorMsgs('nameError', '업체명을 중복확인을 해주세요.');
+				} else {
+					handleErrorMsgs('nameError', '');
+				}
+				setPatchBusinessItem({ ...patchBusinessItem, name: value });
 				setIsCheckedName(false);
 				break;
 			case '운영시간':
+				if (value === '') {
+					handleErrorMsgs('hoursError', '운영시간을 입력해주세요.');
+				} else {
+					handleErrorMsgs('phoneError', '');
+				}
 				setPatchBusinessItem({
 					...patchBusinessItem,
-					businessHours: e.target.value,
+					businessHours: value,
 				});
 				break;
 			case '번호':
+				if (value === '') {
+					handleErrorMsgs('phoneError', '휴대폰번호를 입력해주세요.');
+				} else if (!isValidPhoneNumber(value)) {
+					handleErrorMsgs('phoneError', '형식이 올바르지 않습니다.');
+				} else {
+					handleErrorMsgs('phoneError', '');
+				}
 				setPatchBusinessItem({
 					...patchBusinessItem,
-					phoneNumber: e.target.value,
+					phoneNumber: value,
 				});
 				break;
 			case '이메일':
-				setPatchBusinessItem({ ...patchBusinessItem, email: e.target.value });
+				if (value === '') {
+					handleErrorMsgs('emailError', '이메일을 입력해주세요.');
+				} else {
+					handleErrorMsgs('emailError', '');
+				}
+				setPatchBusinessItem({ ...patchBusinessItem, email: value });
 				break;
 			case '상세주소':
-				setDetailAddress(e.target.value);
+				setDetailAddress(value);
 				break;
 		}
 	};
 
 	const handleDeleteImage = () => {
+		if (originBusinessItem.mainImageUrl !== '') {
+			setOriginBusinessItem((prev) => ({ ...prev, mainImageUrl: '' }));
+		}
 		setImageFile(null);
 		setImgPreview(null);
 	};
