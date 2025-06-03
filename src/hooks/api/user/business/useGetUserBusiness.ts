@@ -23,8 +23,13 @@ export const useGetUserBusiness = (
 		}
 	})();
 
+	const queryKey =
+		sortOption === 'DISTANCE'
+			? ['USER_BUSINESS_LIST', sortOption, latitude, longitude]
+			: ['USER_BUSINESS_LIST', sortOption];
+
 	return useQuery({
-		queryKey: ['USER_BUSINESS_LIST', sortOption],
+		queryKey: ['USER_BUSINESS_LIST', queryKey],
 		queryFn: () => getUserBusiness(sortOption, page, size, latitude, longitude),
 	});
 };

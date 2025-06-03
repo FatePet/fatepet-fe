@@ -5,11 +5,8 @@ import LocationBar from '@/components/location/LocationBar';
 import RegisterLocationModal from '@/components/modals/RegisterLocationModal';
 import ModalLayout from '@/components/modals/ModalLayout';
 import UserCategory from './_components/UserCategory';
-import useUserLocationStore from '@/store/useUserLocationStore';
 
 function UserMain() {
-	const { location } = useUserLocationStore();
-	const [address, setAddress] = useState<string>('');
 	const categories: ['장묘', '악세사리', '브리더', '행동상담'] = [
 		'장묘',
 		'악세사리',
@@ -19,12 +16,6 @@ function UserMain() {
 
 	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] =
 		useState<boolean>(false);
-
-	useEffect(() => {
-		if (location) {
-			setAddress(location);
-		}
-	}, [location]);
 
 	const handleRegisterLocationModalBtnClick = () => {
 		setIsRegisterLocationModalOpen(true);
@@ -43,7 +34,6 @@ function UserMain() {
 
 			<div className='min-w-[320px] max-[600px] -mx-[16.2px] my-3 mb-7'>
 				<LocationBar
-					location={address}
 					handleClick={handleRegisterLocationModalBtnClick}
 				/>
 			</div>
@@ -58,8 +48,6 @@ function UserMain() {
 				<ModalLayout setIsModalOpen={setIsRegisterLocationModalOpen}>
 					<RegisterLocationModal
 						setIsModalOpen={setIsRegisterLocationModalOpen}
-						address={address}
-						setAddress={setAddress}
 					/>
 				</ModalLayout>
 			)}
