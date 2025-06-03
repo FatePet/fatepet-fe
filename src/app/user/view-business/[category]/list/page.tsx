@@ -21,9 +21,9 @@ function ViewBusinessList() {
 	const category = decodeURIComponent(rawCategory);
 	const [isSortOptionModalOpen, setIsSortOptionModalOpen] =
 		useState<boolean>(false);
-	const [sortOption, setSortOption] = useState<'거리순' | '인기순' | '추천순' | '최저가순'>(
-		'인기순',
-	);
+	const [sortOption, setSortOption] = useState<
+		'거리순' | '인기순' | '추천순' | '최저가순'
+	>('인기순');
 	// zustand에 저장된 location 값을 불러오는 부분
 	const [address, setAddress] = useState<string>('');
 	const { location, lat, lng } = useUserLocationStore();
@@ -115,7 +115,7 @@ function ViewBusinessList() {
 					</div>
 				)}
 			</div>
-			<div className='flex flex-col w-full gap-[12px]'>
+			<div className='flex flex-col w-full gap-[12px] overflow-auto scrollbar-hide h-[85vh]'>
 				{userBusiness.data.map((businessItem) => (
 					<div
 						key={businessItem.businessId}

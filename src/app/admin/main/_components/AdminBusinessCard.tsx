@@ -15,7 +15,7 @@ function AdminBusinessCard({ adminBusinessItem }: Props) {
 
 	return (
 		<div
-			className='flex shadow-lg rounded-xl p-3 gap-[14px] cursor-pointer'
+			className='flex shadow-md rounded-[16px] p-3 gap-[14px] cursor-pointer'
 			onClick={handleClickFn}
 		>
 			<div className='relative flex flex-shrink-0 w-32 h-32'>

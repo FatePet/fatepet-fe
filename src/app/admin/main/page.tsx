@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 
 function AdminMain() {
 	const route = useRouter();
-	const { clearAuth ,accessToken, setAccessToken} = useAuthStore();
+	const { clearAuth, accessToken, setAccessToken } = useAuthStore();
 
 	const handleLogout = async () => {
 		// 로그아웃 로직(임시 프론트에서 처리)
@@ -23,12 +23,14 @@ function AdminMain() {
 		route.push('/admin/register-business');
 	};
 
-	const { data: adminBusiness, isLoading, error } = useGetAdminBusiness(
-		accessToken, setAccessToken
-	);
+	const {
+		data: adminBusiness,
+		isLoading,
+		error,
+	} = useGetAdminBusiness(accessToken, setAccessToken);
 
 	if (isLoading) {
-		return <LoadingSpinner/>
+		return <LoadingSpinner />;
 	}
 
 	if (error) {
@@ -37,7 +39,7 @@ function AdminMain() {
 
 	if (!adminBusiness) {
 		return null;
-	};
+	}
 
 	return (
 		<div>
@@ -55,7 +57,7 @@ function AdminMain() {
 						<div>업체를 추가해 주세요</div>
 					</div>
 				) : (
-					<div>
+					<div className='flex flex-col gap-[12px] h-[90vh] overflow-auto scrollbar-hide'>
 						{adminBusiness.data.map((businessItem, index) => (
 							<AdminBusinessCard key={index} adminBusinessItem={businessItem} />
 						))}
