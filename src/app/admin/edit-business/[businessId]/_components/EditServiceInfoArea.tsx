@@ -1,6 +1,5 @@
 import React from 'react';
 import BigButton from '@/components/buttons/BigButton';
-import ServiceCard from '@/app/admin/register-business/_components/ServiceCard';
 import EditServiceCard from './EditServiceCard';
 
 interface Props {
@@ -9,6 +8,7 @@ interface Props {
 	setOriginServiceList: React.Dispatch<
 		React.SetStateAction<IServiceDetailType[]>
 	>;
+	updateServiceList: IUpdateServiceItemType[];
 	setUpdateServiceList: React.Dispatch<
 		React.SetStateAction<IUpdateServiceItemType[]>
 	>;
@@ -26,6 +26,7 @@ interface Props {
 function EditServiceInfoArea({
 	originServiceList,
 	setOriginServiceList,
+	updateServiceList,
 	setUpdateServiceList,
 	addServiceList,
 	setAddServiceList,
@@ -36,16 +37,16 @@ function EditServiceInfoArea({
 	serviceErrorMsgs,
 }: Props) {
 	const handleAddService = () => {
-		if (originServiceList.length === 100) {
+		if (originServiceList.length + addServiceList.length === 100) {
 			alert('서비스는 최대 100개까지 추가 가능합니다.');
 			return;
 		}
 
 		const newServiceItem: IServiceItemType = {
-			type: '',
+			type: '기본항목',
 			name: '',
 			description: '',
-			priceType: '',
+			priceType: '직접입력',
 			price: '',
 			image: false,
 		};
@@ -67,7 +68,9 @@ function EditServiceInfoArea({
 					serviceId={service.serviceId}
 					serviceItem={service}
 					setOriginServiceList={setOriginServiceList}
+					addServiceList={addServiceList}
 					setAddServiceList={setAddServiceList}
+					updateServiceList={updateServiceList}
 					setUpdateServiceList={setUpdateServiceList}
 					setServiceImageList={setServiceImageList}
 					setAddServiceImageList={setAddServiceImageList}
@@ -84,7 +87,9 @@ function EditServiceInfoArea({
 					serviceIdx={idx}
 					serviceItem={service}
 					setOriginServiceList={setOriginServiceList}
+					addServiceList={addServiceList}
 					setAddServiceList={setAddServiceList}
+					updateServiceList={updateServiceList}
 					setUpdateServiceList={setUpdateServiceList}
 					setServiceImageList={setServiceImageList}
 					setAddServiceImageList={setAddServiceImageList}
@@ -96,7 +101,9 @@ function EditServiceInfoArea({
 
 			<div className='relative'>
 				<div className='absolute w-[22px] h-[18px] bg-p-green text-white flex justify-center items-center rounded-[4px] top-[15px] right-[170px]'>
-					{originServiceList.length}
+					{addServiceList.length > 0
+						? originServiceList.length + addServiceList.length
+						: originServiceList.length}
 				</div>
 				<BigButton buttonText='서비스 추가' handleClick={handleAddService} />
 			</div>

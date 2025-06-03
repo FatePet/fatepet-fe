@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast';
+
 interface KakaoAddressResponse {
 	road_address?: {
 		address_name: string;
@@ -22,7 +24,7 @@ export async function convertCoordinatesToAddress(
 	try {
 		const response = await fetch(url, { headers });
 		if (!response.ok) {
-			console.error('Failed to fetch from Kakao API:', response.status);
+			toast.error(`Failed to fetch from Kakao API: ${response.status}`);
 			return null;
 		}
 		const data = await response.json();
@@ -32,7 +34,7 @@ export async function convertCoordinatesToAddress(
 			bunjiAddress: document?.address?.address_name || null,
 		};
 	} catch (error) {
-		console.error('Error converting coordinates to address:', error);
+		toast.error(`Error converting coordinates to address: ${error}`);
 		return null;
 	}
 }

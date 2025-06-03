@@ -2,9 +2,8 @@
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { convertAddressToCoordinates } from '@/hooks/useConvertAddressToCoordinates';
+import { convertAddressToCoordinates } from '@/hooks/admin-business/useConvertAddressToCoordinates';
 import useAuthStore from '@/store/useAuthStore';
-import AdditionalInfoArea from '../../register-business/_components/AdditionalInfoArea';
 import { useGetAdminBusinessDetail } from '@/hooks/api/admin/business/useGetAdminBusinessDetail';
 import { usePatchEditBusiness } from '@/hooks/api/admin/business/usePatchEditBusiness';
 import EditBusinessInfoArea from './_components/EditBusinessInfoArea';
@@ -111,15 +110,13 @@ function EditBusiness() {
 		(File | null)[]
 	>([]);
 	const [removeServiceIds, setRemoveServiceIds] = useState<number[]>([]);
-
-	// const [originAdditionalImgFileList, setOriginAdditionalImgFileList] =
-	// 	useState<(File | null)[]>([]);
 	const [addAdditionalImageList, setAddAdditionalImageList] = useState<
 		(File | null)[]
 	>([]);
 	const [removeAdditionalImageIds, setRemoveAdditionalImageIds] = useState<
 		number[]
 	>([]);
+	const [isCheckedName, setIsCheckedName] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (businessDetail) {
@@ -162,7 +159,9 @@ function EditBusiness() {
 				longitude: result?.lng ?? 0,
 			}));
 		});
+	}, [address]);
 
+	useEffect(() => {
 		const validAddServiceImage = addServiceImageList.filter(
 			(file): file is File => file !== null,
 		);
@@ -178,8 +177,8 @@ function EditBusiness() {
 		setPatchBusinessItem((prev) => ({
 			...prev,
 			mainImage: patchMainImageFile as File,
-			addservice: addServiceList,
-			addServiceImage: validAddAdditionalImage,
+			addService: addServiceList,
+			addServiceImage: validAddServiceImage,
 			updateService: updateServiceList,
 			updateServiceImage: validUpdateServiceImage,
 			removeServiceIds: removeServiceIds,
@@ -187,10 +186,8 @@ function EditBusiness() {
 			removeAdditionalImageIds: removeAdditionalImageIds,
 		}));
 	}, [
-		address,
 		patchMainImageFile,
 		addServiceList,
-		addAdditionalImageList,
 		updateServiceList,
 		updateServiceImageList,
 		removeServiceIds,
@@ -204,16 +201,18 @@ function EditBusiness() {
 		setDetailAddress(splitedAddress[1]);
 	};
 
-	const isValidPhoneNumber = (phoneNumber: string) => {
+	const isValidPhoneNumber = (phoneNumber: string): boolean => {
 		const regex = /^010\d{8}$/;
 		return regex.test(phoneNumber);
 	};
 
-	const handleBusinessRegisterButton = () => {
+	const handleCheckErrorMsgs = (): boolean => {
 		const newErrors = { ...errorMsgs };
 
 		if (patchBusinessItem.name === '') {
 			newErrors.nameError = '업체명을 입력해주세요.';
+		} else if (!isCheckedName) {
+			newErrors.nameError = '업체명 중복확인을 해주세요.';
 		} else {
 			newErrors.nameError = '';
 		}
@@ -224,7 +223,11 @@ function EditBusiness() {
 		}
 		if (patchBusinessItem.phoneNumber === '') {
 			newErrors.phoneError = '휴대폰번호를 입력해주세요.';
-		} else if (!isValidPhoneNumber(patchBusinessItem.phoneNumber ?? '')) {
+		} else if (
+			!isValidPhoneNumber(
+				patchBusinessItem.phoneNumber ?? originBusinessItem.phoneNumber,
+			)
+		) {
 			newErrors.phoneError = '형식이 올바르지 않습니다.';
 		} else {
 			newErrors.phoneError = '';
@@ -241,7 +244,20 @@ function EditBusiness() {
 		}
 		setErrorMsgs(newErrors);
 
-		editBusiness(patchBusinessItem);
+		if (Object.values(newErrors).every((msg) => msg === '')) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	const handleBusinessRegisterButton = () => {
+		if (
+			handleCheckErrorMsgs() &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			editBusiness(patchBusinessItem);
+		}
 	};
 
 	return (
@@ -268,6 +284,8 @@ function EditBusiness() {
 						setAddress={setAddress}
 						detailAddress={detailAddress}
 						setDetailAddress={setDetailAddress}
+						setIsCheckedName={setIsCheckedName}
+						isCheckedName={isCheckedName}
 					/>
 				</div>
 				<div>
@@ -278,6 +296,7 @@ function EditBusiness() {
 						setOriginServiceList={setOriginServiceList}
 						addServiceList={addServiceList}
 						setAddServiceList={setAddServiceList}
+						updateServiceList={updateServiceList}
 						setUpdateServiceList={setUpdateServiceList}
 						serviceImageList={serviceImageList}
 						setServiceImageList={setServiceImageList}

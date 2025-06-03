@@ -8,7 +8,7 @@ export const useGetCheckBusinessName = (
 	enabled?: boolean,
 ) => {
 	return useQuery({
-		queryKey: ['CHECK_BUSINESS_NAME'],
+		queryKey: ['CHECK_BUSINESS_NAME', businessName],
 		queryFn: () => getCheckBusinessName(token, businessName, setAccessToken),
 		enabled: enabled,
 	});

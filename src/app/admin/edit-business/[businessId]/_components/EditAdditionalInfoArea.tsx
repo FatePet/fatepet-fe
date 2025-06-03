@@ -77,7 +77,7 @@ function EditAdditionalInfoArea({
 				additionalInfo: {
 					...prev.additionalInfo,
 					images: prev.additionalInfo.images.filter(
-						(_, imgIdx) => imgIdx !== index,
+						(item, imgIdx) => item.imageId !== index,
 					),
 				},
 			}));
@@ -100,7 +100,7 @@ function EditAdditionalInfoArea({
 							<div className='absolute top-[10px] right-[10px]'>
 								<DeleteButton
 									color='red'
-									handleClick={() => handleDeleteImage(idx, true)}
+									handleClick={() => handleDeleteImage(img.imageId, true)}
 								/>
 							</div>
 						</div>
