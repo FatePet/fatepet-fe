@@ -21,27 +21,20 @@ function ViewBusinessList() {
 	const category = decodeURIComponent(rawCategory);
 	const [isSortOptionModalOpen, setIsSortOptionModalOpen] =
 		useState<boolean>(false);
-	const [sortOption, setSortOption] = useState<
-		'거리순' | '인기순' | '추천순' | '최저가순'
-	>('인기순');
-	// zustand에 저장된 location 값을 불러오는 부분
-	const [address, setAddress] = useState<string>('');
+	const [sortOption, setSortOption] = useState<'거리순' | '인기순' | '추천순' | '최저가순'>(
+		'인기순',
+	);
+
 	const { location, lat, lng } = useUserLocationStore();
 
 	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] =
 		useState<boolean>(false);
 
 	useEffect(() => {
-		if (location) {
-			setAddress(location);
-		}
-	}, [location]);
-
-	useEffect(() => {
-		if (address) {
+		if (lat && lng) {
 			refetch();
 		}
-	}, [address]);
+	}, [lat, lng]);
 
 	const {
 		data: userBusiness,
@@ -98,7 +91,6 @@ function ViewBusinessList() {
 			/>
 			<div className='min-w-[320px] max-[600px] -mx-[16.2px]'>
 				<LocationBar
-					location={address}
 					handleClick={handleRegisterLocationBtnClick}
 				/>
 			</div>
@@ -131,8 +123,6 @@ function ViewBusinessList() {
 				<ModalLayout setIsModalOpen={setIsRegisterLocationModalOpen}>
 					<RegisterLocationModal
 						setIsModalOpen={setIsRegisterLocationModalOpen}
-						address={address}
-						setAddress={setAddress}
 					/>
 				</ModalLayout>
 			)}

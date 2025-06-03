@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import BigButton from '../buttons/BigButton';
+import useUserLocationStore from '@/store/useUserLocationStore';
 
 interface DaumPostcodeData {
 	address: string;
@@ -11,11 +12,8 @@ interface DaumPostcodeData {
 	sigungu: string;
 }
 
-interface Props {
-	setAddress: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const DaumPost: React.FC<Props> = ({ setAddress }) => {
+const DaumPost = () => {
+	const { setLocation } = useUserLocationStore();
 	const postcodeScriptUrl =
 		'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 	const open = useDaumPostcodePopup(postcodeScriptUrl);
@@ -37,7 +35,7 @@ const DaumPost: React.FC<Props> = ({ setAddress }) => {
 			fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
 		}
 
-		setAddress(fullAddress);
+		setLocation(fullAddress);
 	};
 
 	const handleClick = () => {

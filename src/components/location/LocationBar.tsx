@@ -1,13 +1,15 @@
 import Image from 'next/image';
 import React from 'react';
 import RegisterLocationButton from './RegisterLocationButton';
+import useUserLocationStore from '@/store/useUserLocationStore';
 
 interface Props {
-	location: string;
+	
 	handleClick: () => void;
 }
 
-function LocationBar({ location, handleClick }: Props) {
+function LocationBar({ handleClick }: Props) {
+	const { location } = useUserLocationStore();
 	const displayText = !location
 		? '현재 위치에서 가까운 업체를 찾아 보세요.'
 		: location;
