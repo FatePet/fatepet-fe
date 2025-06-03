@@ -5,8 +5,6 @@ import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
-import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
-import useAuthStore from '@/store/useAuthStore';
 import { useCheckDuplicateName } from '@/hooks/admin-business/useCheckDuplicateName';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
@@ -174,7 +172,7 @@ function BusinessInfoArea({
 					placeHolder='자세한 주소 직접 입력'
 					onChange={(e) => onInputChange('상세주소', e)}
 				/>
-				<DaumPost setAddress={setAddress} />
+				<DaumPost />
 			</div>
 			<div className={divClass}>
 				<p>
