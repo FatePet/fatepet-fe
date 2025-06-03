@@ -121,6 +121,7 @@ function BusinessInfoArea({
 					onChange={(e) => onInputChange('업체명', e)}
 					buttonText='중복확인'
 					handleButtonClick={checkDuplicateName}
+					disabled={businessItem.name === ''}
 				/>
 			</div>
 			<div className={divClass}>
