@@ -3,7 +3,7 @@ import RoundedButton from '@/components/buttons/RoundedButton';
 import HeaderWithBackArrow from '@/components/headers/HeaderWithBackArrow';
 import LocationBar from '@/components/location/LocationBar';
 import { useParams, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SortOptionModal from './_components/SortOptionModal';
 import BusinessCard from '@/components/user/BusinessCard';
 import ModalLayout from '@/components/modals/ModalLayout';
@@ -24,24 +24,13 @@ function ViewBusinessList() {
 	const [sortOption, setSortOption] = useState<
 		'거리순' | '인기순' | '추천순' | '최저가순'
 	>('인기순');
-	// zustand에 저장된 location 값을 불러오는 부분
-	const [address, setAddress] = useState<string>('');
+
 	const { location, lat, lng } = useUserLocationStore();
+	const initialLat = useRef(lat);
+	const initialLng = useRef(lng);
 
 	const [isRegisterLocationModalOpen, setIsRegisterLocationModalOpen] =
 		useState<boolean>(false);
-
-	useEffect(() => {
-		if (location) {
-			setAddress(location);
-		}
-	}, [location]);
-
-	useEffect(() => {
-		if (address) {
-			refetch();
-		}
-	}, [address]);
 
 	const {
 		data: userBusiness,
@@ -49,6 +38,16 @@ function ViewBusinessList() {
 		error,
 		refetch,
 	} = useGetUserBusiness(sortOption, 0, 20, lat, lng);
+
+	useEffect(() => {
+		const hasLatChanged = lat !== initialLat.current;
+		const hasLngChanged = lng !== initialLng.current;
+		if (hasLatChanged || hasLngChanged) {
+			refetch();
+			initialLat.current = lat;
+			initialLng.current = lng;
+		}
+	}, [lat, lng]);
 
 	const handleRegisterLocationBtnClick = () => {
 		setIsRegisterLocationModalOpen(true);
@@ -97,10 +96,7 @@ function ViewBusinessList() {
 				hasRightConfirmButton={false}
 			/>
 			<div className='min-w-[320px] max-[600px] -mx-[16.2px]'>
-				<LocationBar
-					location={address}
-					handleClick={handleRegisterLocationBtnClick}
-				/>
+				<LocationBar handleClick={handleRegisterLocationBtnClick} />
 			</div>
 			<div className='mt-[15px] mb-[10px] relative'>
 				<RoundedButton
@@ -131,8 +127,6 @@ function ViewBusinessList() {
 				<ModalLayout setIsModalOpen={setIsRegisterLocationModalOpen}>
 					<RegisterLocationModal
 						setIsModalOpen={setIsRegisterLocationModalOpen}
-						address={address}
-						setAddress={setAddress}
 					/>
 				</ModalLayout>
 			)}

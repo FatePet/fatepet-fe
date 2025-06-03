@@ -11,6 +11,13 @@ function PackageServiceList({ services }: Props) {
 		(service) => service.type === '패키지',
 	);
 
+	const priceTypeClass = (priceType: string, price: string): string => {
+		if (priceType === '직접입력') {
+			return price;
+		}
+		return priceType;
+	};
+
 	return (
 		<div className='w-full flex flex-col gap-[5px]'>
 			{packageServices.map((packageService) =>
@@ -19,14 +26,20 @@ function PackageServiceList({ services }: Props) {
 						name={packageService.name}
 						description={packageService.description}
 						imageUrl={packageService.imageUrl}
-						price={packageService.price}
+						price={priceTypeClass(
+							packageService.priceType,
+							packageService.price,
+						)}
 						key={packageService.serviceId}
 					/>
 				) : (
 					<ServiceCardWithNoImage
 						name={packageService.name}
 						description={packageService.description}
-						price={packageService.price}
+						price={priceTypeClass(
+							packageService.priceType,
+							packageService.price,
+						)}
 						key={packageService.serviceId}
 					/>
 				),

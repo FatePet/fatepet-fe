@@ -11,12 +11,10 @@ import toast from 'react-hot-toast';
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	address: string;
-	setAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
-	const { setLocation } = useUserLocationStore();
+function RegisterLocationModal({ setIsModalOpen }: Props) {
+	const { location, setLocation, setAddress } = useUserLocationStore();
 
 	const handleSetCurrentLocationBtnClick = () => {
 		if (navigator.geolocation) {
@@ -24,7 +22,7 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 				(position) => {
 					const { latitude, longitude } = position.coords;
 					convertCoordinatesToAddress(latitude, longitude).then((result) => {
-						setAddress(result?.roadAddress ?? '');
+						setLocation(result?.roadAddress ?? '');
 					});
 				},
 				(error) => {
@@ -42,8 +40,8 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 	};
 
 	const handleSaveBtnClick = () => {
-		convertAddressToCoordinates(address).then((result) => {
-			setLocation(address, result?.lat ?? 0, result?.lng ?? 0);
+		convertAddressToCoordinates(location).then((result) => {
+			setAddress(location, result?.lat ?? 0, result?.lng ?? 0);
 		});
 		setIsModalOpen(false);
 	};
@@ -52,7 +50,7 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 		<div className='w-full max-w-[360px] h-[342px] rounded-[15px] bg-white shadow-md p-[10px] flex flex-col gap-[25px] justify-center'>
 			<div className='text-[20px] font-black text-p-black'>내 위치 설정</div>
 			<div className='w-full flex flex-col gap-[8px]'>
-				<DaumPost setAddress={setAddress} />
+				<DaumPost  />
 				<BigButton
 					buttonText='현재 위치로 설정'
 					handleClick={handleSetCurrentLocationBtnClick}
@@ -60,7 +58,7 @@ function RegisterLocationModal({ setIsModalOpen, address, setAddress }: Props) {
 				<LongInput
 					disabled={true}
 					errorMsg=''
-					inputData={address}
+					inputData={location}
 					placeHolder='주소 검색을 진행해 주세요.'
 				/>
 			</div>

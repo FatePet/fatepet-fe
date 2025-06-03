@@ -184,7 +184,7 @@ function EditBusinessInfoArea({
 					placeHolder='자세한 주소 직접 입력'
 					onChange={(e) => onInputChange('상세주소', e)}
 				/>
-				<DaumPost setAddress={setAddress} />
+				<DaumPost />
 			</div>
 			<div className={divClass}>
 				<p>
