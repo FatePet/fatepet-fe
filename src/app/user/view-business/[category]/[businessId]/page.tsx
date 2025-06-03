@@ -107,7 +107,6 @@ function UserViewBusiness() {
 			<div className='min-w-[320px] w-full max-w-[550px] fixed bottom-[18px] left-[50%] -translate-x-[50%] z-50 flex justify-center'>
 				<StartConsultButton
 					handleClick={handleStartConsultBtnClick}
-					salePercentageNum={5}
 				/>
 			</div>
 			{isConsultModalOpen && (

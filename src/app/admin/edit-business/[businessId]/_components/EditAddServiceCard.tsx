@@ -1,29 +1,46 @@
-import BigButton from '@/components/buttons/BigButton';
 import { MiniButton } from '@/components/buttons/MiniButton';
 import LongInput from '@/components/inputs/LongInput';
 import TextArea from '@/components/inputs/TextArea';
-import React, { useEffect, useState } from 'react';
-import ImageUploadButton from './ImageUploadButton';
+import React, { useEffect, useRef, useState } from 'react';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import ModalLayout from '@/components/modals/ModalLayout';
 import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
+import ImageUploadButton from '@/app/admin/register-business/_components/ImageUploadButton';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
 
+const serviceTypes = [
+	{ type: '기본항목' },
+	{ type: '선택항목' },
+	{ type: '패키지' },
+];
+
+const servicePriceTypes = [
+	{ priceType: '직접입력' },
+	{ priceType: '무료' },
+	{ priceType: '직접문의' },
+];
+
 interface Props {
 	serviceCount: number;
+	serviceIdx: number;
 	serviceItem: IServiceItemType;
-	setServiceList: React.Dispatch<React.SetStateAction<IServiceItemType[]>>;
+	addServiceList: IServiceItemType[];
+	setAddServiceList: React.Dispatch<React.SetStateAction<IServiceItemType[]>>;
 	setServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
+	setAddServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	errorMsg: string;
 }
 
-function ServiceCard({
+function EditAddServiceCard({
 	serviceCount,
 	serviceItem,
-	setServiceList,
+	serviceIdx,
+	addServiceList,
+	setAddServiceList,
 	setServiceImageList,
+	setAddServiceImageList,
 	errorMsg,
 }: Props) {
 	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
@@ -35,35 +52,41 @@ function ServiceCard({
 	const [isOpenServiceDeleteModal, setIsOpenServiceDeleteModal] =
 		useState<boolean>(false);
 
-	const serviceTypes = [
-		{ type: '기본항목' },
-		{ type: '선택항목' },
-		{ type: '패키지' },
-	];
-
-	const servicePriceTypes = [
-		{ priceType: '직접입력' },
-		{ priceType: '무료' },
-		{ priceType: '직접문의' },
-	];
+	const isFirstRender = useRef(true);
 
 	useEffect(() => {
-		const targetIndex = serviceCount - 1;
-		const updatedImageFlag = serviceImgFile !== null;
+		if (isFirstRender.current) {
+			isFirstRender.current = false;
+			return;
+		}
 
-		setServiceList((prev) =>
-			prev.map((item, index) =>
-				index === targetIndex ? { ...item, image: updatedImageFlag } : item,
-			),
-		);
+		if (serviceImgFile === null) return;
+
+		const updatedImageFlag = serviceImgFile !== null;
 
 		const imgFile =
 			serviceImgFile instanceof File ? (serviceImgFile as File) : null;
 
 		setServiceImageList((prev) => {
-			if (prev.length === serviceCount) {
+			if (prev.length === serviceIdx + 1) {
 				return prev.map((item, index) =>
-					index === targetIndex ? imgFile : item,
+					index === serviceIdx ? imgFile : item,
+				);
+			} else {
+				return [...prev, imgFile];
+			}
+		});
+
+		setAddServiceList((prev) =>
+			prev.map((item, index) =>
+				index === serviceIdx ? { ...item, image: updatedImageFlag } : item,
+			),
+		);
+
+		setAddServiceImageList((prev) => {
+			if (prev.length === serviceIdx + 1) {
+				return prev.map((item, index) =>
+					index === serviceIdx ? imgFile : item,
 				);
 			} else {
 				return [...prev, imgFile];
@@ -71,28 +94,40 @@ function ServiceCard({
 		});
 	}, [serviceImgFile]);
 
-	const handleTypeClick = (type: string) => {
-		setServiceList((prev) =>
+	const handleAddServiceList = (
+		field: string,
+		data: string | number | boolean,
+	) => {
+		const updatedImageFlag = serviceImgPreview !== null;
+
+		if (addServiceList && addServiceList.length <= 0) {
+			const newAddServiceItem: IServiceItemType = {
+				type: '',
+				name: '',
+				description: '',
+				priceType: '',
+				price: '',
+				image: updatedImageFlag,
+			};
+			setAddServiceList([newAddServiceItem]);
+		}
+		setAddServiceList((prev) =>
 			prev.map((item, index) =>
-				index === serviceCount - 1 ? { ...item, type: type } : item,
+				index === serviceIdx ? { ...item, [field]: data } : item,
 			),
 		);
+	};
+
+	const handleTypeClick = (type: string) => {
+		handleAddServiceList('type', type);
 	};
 
 	const handlePriceTypeClick = (type: string) => {
-		setServiceList((prev) =>
-			prev.map((item, index) =>
-				index === serviceCount - 1 ? { ...item, priceType: type } : item,
-			),
-		);
+		handleAddServiceList('priceType', type);
 	};
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setServiceList((prev) =>
-			prev.map((item, index) =>
-				index === serviceCount - 1 ? { ...item, name: e.target.value } : item,
-			),
-		);
+		handleAddServiceList('name', e.target.value);
 	};
 
 	const onTextAreaChange = (
@@ -101,22 +136,12 @@ function ServiceCard({
 	) => {
 		switch (type) {
 			case 'info':
-				setServiceList((prev) =>
-					prev.map((item, index) =>
-						index === serviceCount - 1
-							? { ...item, description: e.target.value }
-							: item,
-					),
-				);
+				handleAddServiceList('description', e.target.value);
 				break;
 			case 'price':
-				setServiceList((prev) =>
-					prev.map((item, index) =>
-						index === serviceCount - 1
-							? { ...item, price: e.target.value }
-							: item,
-					),
-				);
+				handleAddServiceList('price', e.target.value);
+				break;
+			default:
 				break;
 		}
 	};
@@ -124,25 +149,26 @@ function ServiceCard({
 	const handleDeleteImage = () => {
 		setServiceImgFile(null);
 		setServiceImgPreview(null);
-		setServiceImageList((prev) =>
-			prev.map((item, index) => (index === serviceCount - 1 ? null : item)),
+		handleAddServiceList('image', false);
+		setAddServiceImageList((prev) =>
+			prev.map((item, index) => (index === serviceIdx ? null : item)),
 		);
 	};
 
 	const handleLeftButtonClick = () => {
 		setIsOpenServiceDeleteModal(false);
-		setServiceList((prevList) =>
-			prevList.filter((_, index) => index !== serviceCount - 1),
-		);
 	};
 
 	const handleRightButtonClick = () => {
 		setIsOpenServiceDeleteModal(false);
+		setAddServiceList((prev) =>
+			prev.filter((_, index) => index !== serviceIdx),
+		);
 	};
 
 	return (
-		<div className='w-[100%] h-fit rounded-[12px] border border-p-black overflow-hidden'>
-			<div className='bg-p-black h-[50px] flex items-center px-[20px] justify-between'>
+		<div className='w-[100%] rounded-[12px] border border-p-green-lite overflow-hidden'>
+			<div className='bg-p-black h-[50px] min-w-[343px] flex items-center px-[20px] justify-between'>
 				<p className='text-white text-[20px] font-bold'>
 					서비스 {serviceCount}
 				</p>
@@ -237,8 +263,8 @@ function ServiceCard({
 				<ModalLayout setIsModalOpen={setIsOpenServiceDeleteModal}>
 					<CancelConfirmModal
 						modalConfirmText={`입력하신 정보가 저장되지 않았어요.\n 해당 서비스를 정말 삭제하실 건가요?`}
-						handleRightButtonClick={handleLeftButtonClick}
-						handleLeftButtonClick={handleRightButtonClick}
+						handleRightButtonClick={handleRightButtonClick}
+						handleLeftButtonClick={handleLeftButtonClick}
 						rightButtonText='서비스 삭제'
 						leftButtonText='계속 입력'
 					/>
@@ -248,4 +274,4 @@ function ServiceCard({
 	);
 }
 
-export default ServiceCard;
+export default EditAddServiceCard;

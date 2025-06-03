@@ -17,6 +17,10 @@ module.exports = {
 				'p-blue-lite': 'var(--p-blue-lite)',
 				'p-red': 'var(--p-red)',
 			},
+			boxShadow: {
+				md: '0 0 6px -1px rgb(0 0 0/0.1), 0 2px 4px -2px rgb(0 0 0/0.1)',
+				lg: '0 0 15px -3px rgb(0 0 0/0.1), 0 4px 6px -4px rgb(0 0 0/0.1)'
+			}
 		},
 	},
 

@@ -26,6 +26,7 @@ type IServiceItemType = {
 
 type IUpdateServiceItemType = {
 	serviceId: number;
+	imageType: number;
 } & IServiceItemType;
 
 type IBusinessErrorMsgType = {

@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast';
+
 interface Coordinates {
 	lat: number;
 	lng: number;
@@ -32,7 +34,7 @@ export async function convertAddressToCoordinates(
 			lng: parseFloat(x),
 		};
 	} catch (error) {
-		console.error('Error fetching coordinates:', error);
+		toast.error(`Error fetching coordinates: ${error}`);
 		return null;
 	}
 }

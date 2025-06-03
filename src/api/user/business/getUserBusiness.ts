@@ -8,26 +8,14 @@ export const getUserBusiness = async (
     latitude: number | null,
     longitude: number | null,
 ) => {
-    const sortOption: string = (() => {
-        switch (sort) {
-            case '인기순':
-                return 'POPULAR';
-            case '추천순':
-                return 'RECOMMEND';
-            default:
-                return 'DISTANCE';
-        }
-    })();
+    
 
-    if (sortOption === 'DISTANCE') {
-        if (!(latitude && longitude)) {
-            // 위치를 설정하지 않았을 경우, 임의로 설정
-            latitude = 0;
-            longitude = 0;
+    if (sort === 'DISTANCE') {
+        if (!latitude || !longitude) {
+            return;
         }
-        
         const queryParams = new URLSearchParams({
-            sort: sortOption,
+            sort,
             page: page.toString(),
             size: size.toString(),
             latitude: latitude.toString(),
@@ -41,7 +29,7 @@ export const getUserBusiness = async (
         return response;
     } else {
         const queryParams = new URLSearchParams({
-            sort: sortOption,
+            sort: sort,
             page: page.toString(),
             size: size.toString(),
         }).toString();

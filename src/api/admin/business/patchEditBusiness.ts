@@ -19,7 +19,7 @@ export const patchEditBusiness = async (
 	if (body.phoneNumber) formData.append('phoneNumber', body.phoneNumber);
 	if (body.email) formData.append('email', body.email);
 
-	if (body.addService) {
+	if (body.addService && body.addService.length > 0) {
 		formData.append('addService', JSON.stringify(body.addService));
 	}
 	if (body.addServiceImage && body.addServiceImage.length > 0) {
@@ -29,7 +29,12 @@ export const patchEditBusiness = async (
 	}
 
 	if (body.updateService) {
-		formData.append('updateService', JSON.stringify(body.updateService));
+		const filtered = body.updateService.map((item) =>
+			Object.fromEntries(
+				Object.entries(item).filter(([_, value]) => value !== ''),
+			),
+		);
+		formData.append('updateService', JSON.stringify(filtered));
 	}
 	if (body.updateServiceImage && body.updateServiceImage.length > 0) {
 		body.updateServiceImage.forEach((file) => {
@@ -38,7 +43,9 @@ export const patchEditBusiness = async (
 	}
 
 	if (body.removeServiceIds && body.removeServiceIds.length > 0) {
-		formData.append('removeServiceIds', JSON.stringify(body.removeServiceIds));
+		body.removeServiceIds.forEach((id) =>
+			formData.append('removeServiceIds', String(id)),
+		);
 	}
 
 	if (body.addAdditionalImage && body.addAdditionalImage.length > 0) {
@@ -51,9 +58,8 @@ export const patchEditBusiness = async (
 		body.removeAdditionalImageIds &&
 		body.removeAdditionalImageIds.length > 0
 	) {
-		formData.append(
-			'removeAdditionalImageIds',
-			JSON.stringify(body.removeAdditionalImageIds),
+		body.removeAdditionalImageIds.forEach((id) =>
+			formData.append('removeAdditionalImageIds', String(id)),
 		);
 	}
 
