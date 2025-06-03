@@ -91,6 +91,11 @@ function BusinessInfoArea({
 		}));
 	};
 
+	const isValidPhoneNumber = (phoneNumber: string): boolean => {
+		const regex = /^010\d{8}$/;
+		return regex.test(phoneNumber);
+	};
+
 	const onInputChange = (
 		type: string,
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -120,6 +125,8 @@ function BusinessInfoArea({
 			case '번호':
 				if (value === '') {
 					handleErrorMsgs('phoneError', '휴대폰번호를 입력해주세요.');
+				} else if (!isValidPhoneNumber(value)) {
+					handleErrorMsgs('phoneError', '형식이 올바르지 않습니다.');
 				} else {
 					handleErrorMsgs('phoneError', '');
 				}
