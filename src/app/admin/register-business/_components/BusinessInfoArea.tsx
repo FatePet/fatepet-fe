@@ -5,8 +5,6 @@ import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
-import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
-import useAuthStore from '@/store/useAuthStore';
 import { useCheckDuplicateName } from '@/hooks/admin-business/useCheckDuplicateName';
 import toast from 'react-hot-toast';
 
