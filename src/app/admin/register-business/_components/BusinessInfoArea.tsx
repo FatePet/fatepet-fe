@@ -8,6 +8,7 @@ import DaumPost from '@/components/location/DaumPost';
 import { useGetCheckBusinessName } from '@/hooks/api/admin/business/useGetCheckBusinessName';
 import useAuthStore from '@/store/useAuthStore';
 import { useCheckDuplicateName } from '@/hooks/admin-business/useCheckDuplicateName';
+import toast from 'react-hot-toast';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -76,7 +77,11 @@ function BusinessInfoArea({
 	}, [address, detailAddress]);
 
 	const handleCategoryClick = (category: string) => {
-		setBusinessItem({ ...businessItem, category: category });
+		if (category === '장묘') {
+			setBusinessItem({ ...businessItem, category: category });
+		} else {
+			toast.error('아직 준비중인 서비스입니다.');
+		}
 	};
 
 	const onInputChange = (

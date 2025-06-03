@@ -6,6 +6,7 @@ import RightButtonInput from '@/components/inputs/RightButtonInput';
 import DaumPost from '@/components/location/DaumPost';
 import ImageUploadButton from '../../../register-business/_components/ImageUploadButton';
 import { useCheckDuplicateName } from '@/hooks/admin-business/useCheckDuplicateName';
+import toast from 'react-hot-toast';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -76,7 +77,11 @@ function EditBusinessInfoArea({
 	}, [address, detailAddress]);
 
 	const handleCategoryClick = (category: string) => {
-		setPatchBusinessItem({ ...patchBusinessItem, category: category });
+		if (category === '장묘') {
+			setPatchBusinessItem({ ...patchBusinessItem, category: category });
+		} else {
+			toast.error('아직 준비중인 서비스입니다.');
+		}
 	};
 
 	const onInputChange = (
