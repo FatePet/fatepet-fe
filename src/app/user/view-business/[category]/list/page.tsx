@@ -40,6 +40,12 @@ function ViewBusinessList() {
 	} = useGetUserBusiness(sortOption, 0, 20, lat, lng);
 
 	useEffect(() => {
+		if (!location || (lat === 0 && lng === 0)) {
+			setSortOption('인기순');
+		}
+	}, [location, lat, lng]);
+
+	useEffect(() => {
 		const hasLatChanged = lat !== initialLat.current;
 		const hasLngChanged = lng !== initialLng.current;
 		if (hasLatChanged || hasLngChanged) {
