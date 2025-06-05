@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import BigButton from '../buttons/BigButton';
 import LongInput from '../inputs/LongInput';
 import DaumPost from '../location/DaumPost';
@@ -15,6 +15,7 @@ interface Props {
 
 function RegisterLocationModal({ setIsModalOpen }: Props) {
 	const { location, setLocation, setAddress } = useUserLocationStore();
+	const [locationName, setLocationName] = useState<string>('');
 
 	const handleSetCurrentLocationBtnClick = () => {
 		if (navigator.geolocation) {
@@ -22,7 +23,7 @@ function RegisterLocationModal({ setIsModalOpen }: Props) {
 				(position) => {
 					const { latitude, longitude } = position.coords;
 					convertCoordinatesToAddress(latitude, longitude).then((result) => {
-						setLocation(result?.roadAddress ?? '');
+						setLocationName(result?.roadAddress ?? '');
 					});
 				},
 				(error) => {
@@ -40,8 +41,9 @@ function RegisterLocationModal({ setIsModalOpen }: Props) {
 	};
 
 	const handleSaveBtnClick = () => {
-		convertAddressToCoordinates(location).then((result) => {
-			setAddress(location, result?.lat ?? 0, result?.lng ?? 0);
+		convertAddressToCoordinates(locationName).then((result) => {
+			setAddress(locationName, result?.lat ?? 0, result?.lng ?? 0);
+			setLocation(locationName ?? '');
 		});
 		setIsModalOpen(false);
 	};
@@ -50,7 +52,7 @@ function RegisterLocationModal({ setIsModalOpen }: Props) {
 		<div className='w-full max-w-[360px] h-[342px] rounded-[15px] bg-white shadow-md p-[10px] flex flex-col gap-[25px] justify-center'>
 			<div className='text-[20px] font-black text-p-black'>내 위치 설정</div>
 			<div className='w-full flex flex-col gap-[8px]'>
-				<DaumPost  />
+				<DaumPost setLocationName={setLocationName} />
 				<BigButton
 					buttonText='현재 위치로 설정'
 					handleClick={handleSetCurrentLocationBtnClick}
@@ -58,7 +60,7 @@ function RegisterLocationModal({ setIsModalOpen }: Props) {
 				<LongInput
 					disabled={true}
 					errorMsg=''
-					inputData={location}
+					inputData={locationName}
 					placeHolder='주소 검색을 진행해 주세요.'
 				/>
 			</div>
