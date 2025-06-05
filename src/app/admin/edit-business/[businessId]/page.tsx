@@ -144,13 +144,13 @@ function EditBusiness() {
 		}
 	}, [businessDetail]);
 
-	useEffect(() => {
-		const updatedErrorMsgs = serviceList.map((service) =>
-			service.name === '' ? '서비스명을 입력해주세요.' : '',
-		);
+	// useEffect(() => {
+	// 	const updatedErrorMsgs = serviceList.map((service) =>
+	// 		service.name === '' ? '서비스명을 입력해주세요.' : '',
+	// 	);
 
-		setServiceErrorMsgs(updatedErrorMsgs);
-	}, [serviceList]);
+	// 	setServiceErrorMsgs(updatedErrorMsgs);
+	// }, [serviceList]);
 
 	useEffect(() => {
 		convertAddressToCoordinates(address).then((result) => {
@@ -303,6 +303,7 @@ function EditBusiness() {
 						setUpdateServiceImageList={setUpdateServiceImageList}
 						setRemoveServiceIds={setRemoveServiceIds}
 						serviceErrorMsgs={serviceErrorMsgs}
+						setServiceErrorMsgs={setServiceErrorMsgs}
 					/>
 				</div>
 				<div>

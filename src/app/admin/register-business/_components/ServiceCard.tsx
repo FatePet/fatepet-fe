@@ -17,6 +17,7 @@ interface Props {
 	setServiceList: React.Dispatch<React.SetStateAction<IServiceItemType[]>>;
 	setServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	errorMsg: string;
+	setServiceErrorMsgs: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 function ServiceCard({
@@ -25,6 +26,7 @@ function ServiceCard({
 	setServiceList,
 	setServiceImageList,
 	errorMsg,
+	setServiceErrorMsgs,
 }: Props) {
 	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
 		null,
@@ -93,6 +95,16 @@ function ServiceCard({
 				index === serviceCount - 1 ? { ...item, name: e.target.value } : item,
 			),
 		);
+
+		setServiceErrorMsgs((prev) => {
+			if (prev.length === serviceCount) {
+				return prev.map((item, index) =>
+					index === serviceCount ? e.target.value : item,
+				);
+			} else {
+				return [...prev, e.target.value];
+			}
+		});
 	};
 
 	const onTextAreaChange = (

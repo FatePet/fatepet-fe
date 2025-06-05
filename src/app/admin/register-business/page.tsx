@@ -187,6 +187,7 @@ function RegisterBusiness() {
 						serviceImageList={serviceImageList}
 						setServiceImageList={setServiceImageList}
 						serviceErrorMsgs={serviceErrorMsgs}
+						setServiceErrorMsgs={setServiceErrorMsgs}
 					/>
 				</div>
 				<div>

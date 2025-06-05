@@ -45,6 +45,7 @@ interface Props {
 	setAddServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	setRemoveServiceIds: React.Dispatch<React.SetStateAction<number[]>>;
 	errorMsg: string;
+	setServiceErrorMsgs: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 function EditServiceCard({
@@ -63,6 +64,7 @@ function EditServiceCard({
 	setUpdateServiceImageList,
 	setRemoveServiceIds,
 	errorMsg,
+	setServiceErrorMsgs,
 }: Props) {
 	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
 		null,
@@ -160,6 +162,19 @@ function EditServiceCard({
 		} else {
 			handleServiceListChange('add', 'name', value);
 		}
+
+		setServiceErrorMsgs((prev) => {
+			const newErrors = [...prev];
+
+			while (newErrors.length < serviceCount) {
+				newErrors.push('');
+			}
+
+			newErrors[serviceCount - 1] =
+				value === '' ? '서비스명을 입력해주세요.' : '';
+
+			return newErrors;
+		});
 	};
 
 	const onTextAreaChange = (
