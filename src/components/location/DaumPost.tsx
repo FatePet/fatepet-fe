@@ -12,8 +12,11 @@ interface DaumPostcodeData {
 	sigungu: string;
 }
 
-const DaumPost = () => {
-	const { setLocation } = useUserLocationStore();
+interface Props {
+	setLocationName: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const DaumPost = ({ setLocationName }: Props) => {
 	const postcodeScriptUrl =
 		'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 	const open = useDaumPostcodePopup(postcodeScriptUrl);
@@ -35,7 +38,7 @@ const DaumPost = () => {
 			fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
 		}
 
-		setLocation(fullAddress);
+		setLocationName(fullAddress);
 	};
 
 	const handleClick = () => {
