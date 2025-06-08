@@ -90,20 +90,25 @@ function ServiceCard({
 	};
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+
 		setServiceList((prev) =>
 			prev.map((item, index) =>
-				index === serviceCount - 1 ? { ...item, name: e.target.value } : item,
+				index === serviceCount - 1 ? { ...item, name: value } : item,
 			),
 		);
 
 		setServiceErrorMsgs((prev) => {
-			if (prev.length === serviceCount) {
-				return prev.map((item, index) =>
-					index === serviceCount ? e.target.value : item,
-				);
-			} else {
-				return [...prev, e.target.value];
+			const newErrors = [...prev];
+
+			while (newErrors.length < serviceCount) {
+				newErrors.push('');
 			}
+
+			newErrors[serviceCount - 1] =
+				value === '' ? '서비스명을 입력해주세요.' : '';
+
+			return newErrors;
 		});
 	};
 

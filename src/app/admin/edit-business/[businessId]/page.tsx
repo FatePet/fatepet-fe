@@ -207,6 +207,35 @@ function EditBusiness() {
 		return regex.test(phoneNumber);
 	};
 
+	const checkIsServiceFilled = (
+		callType: 'check' | 'alert',
+	): void | boolean => {
+		const hasName =
+			serviceList.every((item) => item.name.trim() !== '') &&
+			addServiceList.every((item) => item.name.trim() !== '');
+		const hasPrice =
+			serviceList.every(
+				(item) => item.priceType !== '직접입력' || item.price.trim() !== '',
+			) &&
+			addServiceList.every(
+				(item) => item.priceType !== '직접입력' || item.price.trim() !== '',
+			);
+
+		switch (callType) {
+			case 'check':
+				return hasName && hasPrice;
+			case 'alert':
+				if (!hasName) {
+					toast.error(`서비스명을 입력해주세요.`);
+				} else if (!hasPrice) {
+					toast.error('서비스 가격을 입력해주세요.');
+				}
+				break;
+			default:
+				break;
+		}
+	};
+
 	const handleCheckErrorMsgs = () => {
 		if (patchBusinessItem.name === '') {
 			toast.error('업체명을 입력해주세요.');
@@ -245,11 +274,13 @@ function EditBusiness() {
 			toast.error('주소를 설정해주세요.');
 			return;
 		}
+		checkIsServiceFilled('alert');
 	};
 
 	const handleBusinessRegisterButton = () => {
 		handleCheckErrorMsgs();
 		if (
+			checkIsServiceFilled('check') &&
 			(originBusinessItem.mainImageUrl !== '' || patchMainImageFile !== null) &&
 			Object.values(errorMsgs).every((msg) => msg === '') &&
 			Object.values(serviceErrorMsgs).every((msg) => msg === '')

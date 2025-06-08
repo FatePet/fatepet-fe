@@ -66,14 +66,6 @@ function RegisterBusiness() {
 	const [isCheckedName, setIsCheckedName] = useState<boolean>(false);
 
 	useEffect(() => {
-		const updatedErrorMsgs = serviceList.map((service) =>
-			service.name === '' ? '서비스명을 입력해주세요.' : '',
-		);
-
-		setServiceErrorMsgs(updatedErrorMsgs);
-	}, [serviceList]);
-
-	useEffect(() => {
 		convertAddressToCoordinates(address).then((result) => {
 			setBusinessItem((prev) => ({
 				...prev,
@@ -104,14 +96,26 @@ function RegisterBusiness() {
 		return regex.test(phoneNumber);
 	};
 
-	const handleBusinessRegisterButton = () => {
-		handleCheckErrorMsgs();
-		if (
-			businessItem.mainImage !== null &&
-			Object.values(errorMsgs).every((msg) => msg === '') &&
-			Object.values(serviceErrorMsgs).every((msg) => msg === '')
-		) {
-			createBusiness(businessItem);
+	const checkIsServiceFilled = (
+		callType: 'check' | 'alert',
+	): void | boolean => {
+		const hasName = serviceList.every((item) => item.name.trim() !== '');
+		const hasPrice = serviceList.every(
+			(item) => item.priceType !== '직접입력' || item.price.trim() !== '',
+		);
+
+		switch (callType) {
+			case 'check':
+				return hasName && hasPrice;
+			case 'alert':
+				if (!hasName) {
+					toast.error(`서비스명을 입력해주세요.`);
+				} else if (!hasPrice) {
+					toast.error('서비스 가격을 입력해주세요.');
+				}
+				break;
+			default:
+				break;
 		}
 	};
 
@@ -148,6 +152,19 @@ function RegisterBusiness() {
 		if (businessItem.address === '') {
 			toast.error('주소를 설정해주세요.');
 			return;
+		}
+		checkIsServiceFilled('alert');
+	};
+
+	const handleBusinessRegisterButton = () => {
+		handleCheckErrorMsgs();
+		if (
+			checkIsServiceFilled('check') &&
+			businessItem.mainImage !== null &&
+			Object.values(errorMsgs).every((msg) => msg === '') &&
+			Object.values(serviceErrorMsgs).every((msg) => msg === '')
+		) {
+			createBusiness(businessItem);
 		}
 	};
 
