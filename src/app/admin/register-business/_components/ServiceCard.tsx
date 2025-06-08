@@ -7,9 +7,22 @@ import ImageUploadButton from './ImageUploadButton';
 import DeleteButton from '@/components/buttons/DeleteButton';
 import ModalLayout from '@/components/modals/ModalLayout';
 import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
+import { useServiceInputChange } from '@/hooks/admin-business/useServiceInputChange';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
+
+const serviceTypes = [
+	{ type: '기본항목' },
+	{ type: '선택항목' },
+	{ type: '패키지' },
+];
+
+const servicePriceTypes = [
+	{ priceType: '직접입력' },
+	{ priceType: '무료' },
+	{ priceType: '직접문의' },
+];
 
 interface Props {
 	serviceCount: number;
@@ -36,18 +49,16 @@ function ServiceCard({
 	);
 	const [isOpenServiceDeleteModal, setIsOpenServiceDeleteModal] =
 		useState<boolean>(false);
-
-	const serviceTypes = [
-		{ type: '기본항목' },
-		{ type: '선택항목' },
-		{ type: '패키지' },
-	];
-
-	const servicePriceTypes = [
-		{ priceType: '직접입력' },
-		{ priceType: '무료' },
-		{ priceType: '직접문의' },
-	];
+	const {
+		onInputChange,
+		onTextAreaChange,
+		handleTypeClick,
+		handlePriceTypeClick,
+	} = useServiceInputChange({
+		serviceCount,
+		setServiceErrorMsgs,
+		setServiceList,
+	});
 
 	useEffect(() => {
 		const targetIndex = serviceCount - 1;
@@ -58,7 +69,6 @@ function ServiceCard({
 				index === targetIndex ? { ...item, image: updatedImageFlag } : item,
 			),
 		);
-
 		const imgFile =
 			serviceImgFile instanceof File ? (serviceImgFile as File) : null;
 
@@ -72,71 +82,6 @@ function ServiceCard({
 			}
 		});
 	}, [serviceImgFile]);
-
-	const handleTypeClick = (type: string) => {
-		setServiceList((prev) =>
-			prev.map((item, index) =>
-				index === serviceCount - 1 ? { ...item, type: type } : item,
-			),
-		);
-	};
-
-	const handlePriceTypeClick = (type: string) => {
-		setServiceList((prev) =>
-			prev.map((item, index) =>
-				index === serviceCount - 1 ? { ...item, priceType: type } : item,
-			),
-		);
-	};
-
-	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
-
-		setServiceList((prev) =>
-			prev.map((item, index) =>
-				index === serviceCount - 1 ? { ...item, name: value } : item,
-			),
-		);
-
-		setServiceErrorMsgs((prev) => {
-			const newErrors = [...prev];
-
-			while (newErrors.length < serviceCount) {
-				newErrors.push('');
-			}
-
-			newErrors[serviceCount - 1] =
-				value === '' ? '서비스명을 입력해주세요.' : '';
-
-			return newErrors;
-		});
-	};
-
-	const onTextAreaChange = (
-		e: React.ChangeEvent<HTMLTextAreaElement>,
-		type: string,
-	) => {
-		switch (type) {
-			case 'info':
-				setServiceList((prev) =>
-					prev.map((item, index) =>
-						index === serviceCount - 1
-							? { ...item, description: e.target.value }
-							: item,
-					),
-				);
-				break;
-			case 'price':
-				setServiceList((prev) =>
-					prev.map((item, index) =>
-						index === serviceCount - 1
-							? { ...item, price: e.target.value }
-							: item,
-					),
-				);
-				break;
-		}
-	};
 
 	const handleDeleteImage = () => {
 		setServiceImgFile(null);
