@@ -21,6 +21,7 @@ interface Props {
 	setAddServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	setRemoveServiceIds: React.Dispatch<React.SetStateAction<number[]>>;
 	serviceErrorMsgs: string[];
+	setServiceErrorMsgs: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 function EditServiceInfoArea({
@@ -35,6 +36,7 @@ function EditServiceInfoArea({
 	setAddServiceImageList,
 	setRemoveServiceIds,
 	serviceErrorMsgs,
+	setServiceErrorMsgs,
 }: Props) {
 	const handleAddService = () => {
 		if (originServiceList.length + addServiceList.length === 100) {
@@ -77,6 +79,7 @@ function EditServiceInfoArea({
 					setUpdateServiceImageList={setUpdateServiceImageList}
 					setRemoveServiceIds={setRemoveServiceIds}
 					errorMsg={serviceErrorMsgs[idx]}
+					setServiceErrorMsgs={setServiceErrorMsgs}
 				/>
 			))}
 			{addServiceList.map((service, idx) => (
@@ -96,6 +99,7 @@ function EditServiceInfoArea({
 					setUpdateServiceImageList={setUpdateServiceImageList}
 					setRemoveServiceIds={setRemoveServiceIds}
 					errorMsg={serviceErrorMsgs[idx]}
+					setServiceErrorMsgs={setServiceErrorMsgs}
 				/>
 			))}
 
