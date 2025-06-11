@@ -9,12 +9,14 @@ interface Props {
 	serviceImageList: (File | null)[];
 	setServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	serviceErrorMsgs: string[];
+	setServiceErrorMsgs: React.Dispatch<React.SetStateAction<string[]>>;
 }
 function ServiceInfoArea({
 	serviceList,
 	setServiceList,
 	setServiceImageList,
 	serviceErrorMsgs,
+	setServiceErrorMsgs,
 }: Props) {
 	const handleAddService = () => {
 		if (serviceList.length === 100) {
@@ -47,6 +49,7 @@ function ServiceInfoArea({
 					setServiceList={setServiceList}
 					setServiceImageList={setServiceImageList}
 					errorMsg={serviceErrorMsgs[idx]}
+					setServiceErrorMsgs={setServiceErrorMsgs}
 				/>
 			))}
 			<div className='relative'>

@@ -7,6 +7,7 @@ import ModalLayout from '@/components/modals/ModalLayout';
 import CancelConfirmModal from '@/components/modals/CancelConfirmModal';
 import ImageUploadButton from '@/app/admin/register-business/_components/ImageUploadButton';
 import { useServiceListHandlers } from '@/hooks/admin-business/useServiceListHandlers';
+import { useServiceInputChange } from '@/hooks/admin-business/useServiceInputChange';
 
 const divClass = 'flex flex-col gap-[5px] font-bold';
 const requiredClass = 'text-p-red';
@@ -45,6 +46,7 @@ interface Props {
 	setAddServiceImageList: React.Dispatch<React.SetStateAction<(File | null)[]>>;
 	setRemoveServiceIds: React.Dispatch<React.SetStateAction<number[]>>;
 	errorMsg: string;
+	setServiceErrorMsgs: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 function EditServiceCard({
@@ -63,6 +65,7 @@ function EditServiceCard({
 	setUpdateServiceImageList,
 	setRemoveServiceIds,
 	errorMsg,
+	setServiceErrorMsgs,
 }: Props) {
 	const [serviceImgFile, setServiceImgFile] = useState<string | File | null>(
 		null,
@@ -82,6 +85,17 @@ function EditServiceCard({
 		addServiceList,
 		setAddServiceList,
 		serviceImgPreview,
+	});
+	const {
+		onInputChange,
+		onTextAreaChange,
+		handleTypeClick,
+		handlePriceTypeClick,
+	} = useServiceInputChange({
+		serviceCount,
+		setServiceErrorMsgs,
+		handleServiceListChange,
+		isOrigin,
 	});
 
 	useEffect(() => {
@@ -132,62 +146,6 @@ function EditServiceCard({
 			});
 		}
 	}, [serviceImgFile]);
-
-	const handleTypeClick = (type: string) => {
-		if (isOrigin) {
-			handleServiceListChange('origin', 'type', type);
-			handleServiceListChange('update', 'type', type);
-		} else {
-			handleServiceListChange('add', 'type', type);
-		}
-	};
-
-	const handlePriceTypeClick = (type: string) => {
-		if (isOrigin) {
-			handleServiceListChange('origin', 'priceType', type);
-			handleServiceListChange('update', 'priceType', type);
-		} else {
-			handleServiceListChange('add', 'priceType', type);
-		}
-	};
-
-	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
-
-		if (isOrigin) {
-			handleServiceListChange('origin', 'name', value);
-			handleServiceListChange('update', 'name', value);
-		} else {
-			handleServiceListChange('add', 'name', value);
-		}
-	};
-
-	const onTextAreaChange = (
-		e: React.ChangeEvent<HTMLTextAreaElement>,
-		type: string,
-	) => {
-		const value = e.target.value;
-		switch (type) {
-			case 'info':
-				if (isOrigin) {
-					handleServiceListChange('origin', 'description', value);
-					handleServiceListChange('update', 'description', value);
-				} else {
-					handleServiceListChange('add', 'description', value);
-				}
-
-				break;
-			case 'price':
-				if (isOrigin) {
-					handleServiceListChange('origin', 'price', value);
-					handleServiceListChange('update', 'price', value);
-				} else {
-					handleServiceListChange('add', 'price', value);
-				}
-
-				break;
-		}
-	};
 
 	const handleDeleteImage = () => {
 		if (isOrigin && serviceId) {
