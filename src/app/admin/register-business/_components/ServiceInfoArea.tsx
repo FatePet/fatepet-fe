@@ -25,10 +25,10 @@ function ServiceInfoArea({
 		}
 
 		const newServiceItem: IServiceItemType = {
-			type: '',
+			type: '기본항목',
 			name: '',
 			description: '',
-			priceType: '',
+			priceType: '직접입력',
 			price: '',
 			image: false,
 		};
